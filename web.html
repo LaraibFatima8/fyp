@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MITS Drone | Swarm Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-nav {
+            background: rgba(9, 9, 11, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(39, 39, 42, 1);
+        }
+        .hero-glow {
+            background: radial-gradient(circle at center, rgba(34, 211, 238, 0.15) 0%, transparent 70%);
+        }
+        .modal-enter {
+            animation: fadeIn 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #09090b; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 selection:bg-cyan-500/30 overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-400"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
+                <span class="font-bold text-xl tracking-tight">MITS <span class="text-cyan-400 uppercase">Drone</span></span>
+            </div>
+            <div class="hidden md:flex gap-8 text-sm font-medium text-zinc-400">
+                <a href="#overview" class="hover:text-white transition-colors">Overview</a>
+                <a href="#phases" class="hover:text-white transition-colors">Phases</a>
+                <a href="#stats" class="hover:text-white transition-colors">Tech Specs</a>
+                <a href="https://github.com" target="_blank" class="px-4 py-2 bg-zinc-100 text-black rounded-full hover:bg-cyan-400 transition-all">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-40 pb-20 px-6 flex flex-col items-center text-center overflow-hidden">
+        <div class="absolute top-0 -z-10 w-full h-[600px] hero-glow"></div>
+        
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-medium text-cyan-400 mb-6 animate-pulse">
+            <div class="w-2 h-2 rounded-full bg-cyan-400"></div>
+            ACTIVE RESEARCH PROJECT
+        </div>
+        
+        <h1 class="text-5xl md:text-8xl font-bold tracking-tighter mb-6 bg-gradient-to-b from-white to-zinc-500 bg-clip-text text-transparent">
+            Swarm Intelligence <br> for Disasters
+        </h1>
+        
+        <p class="max-w-2xl text-lg md:text-xl text-zinc-400 mb-10 leading-relaxed">
+            MITS is a drone-based ecosystem designed to provide rapid aerial mapping and survival kit deployment in disaster zones using autonomous swarm protocols.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+            <button onclick="document.getElementById('phases').scrollIntoView({behavior:'smooth'})" class="px-8 py-4 bg-cyan-500 text-black font-bold rounded-lg hover:bg-cyan-400 transition-all shadow-[0_0_20px_rgba(34,211,238,0.3)]">
+                Explore Phases
+            </button>
+            <button class="px-8 py-4 bg-zinc-900 border border-zinc-800 font-bold rounded-lg hover:bg-zinc-800 transition-all">
+                Download Whitepaper
+            </button>
+        </div>
+    </section>
+
+    <!-- Project Overview Section -->
+    <section id="overview" class="max-w-7xl mx-auto px-6 py-20 border-b border-zinc-900">
+        <div class="mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">Project Overview</h2>
+            <div class="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8 md:p-12 backdrop-blur-sm">
+                <p class="text-lg text-zinc-300 leading-relaxed mb-6">
+                    The project aims to develop a deployable swarm of lightweight, low-cost UAVs utilizing decentralized communication and onboard AI to detect victims autonomously in disaster-stricken areas. Rapid response is critical when infrastructure is compromised, making ground access impossible.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                    <div class="bg-gradient-to-br from-cyan-500/10 to-cyan-400/5 border border-cyan-500/30 rounded-xl p-6">
+                        <p class="text-cyan-400 font-bold text-sm uppercase tracking-wide mb-2">Problem Statement</p>
+                        <p class="text-zinc-300 text-sm leading-relaxed">
+                            No open-source, micro-class (&lt;70g) UAV platform exists that is cost-effective (&lt;PKR 15k) while supporting decentralized communication and Edge AI.
+                        </p>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-500/10 to-purple-400/5 border border-purple-500/30 rounded-xl p-6">
+                        <p class="text-purple-400 font-bold text-sm uppercase tracking-wide mb-2">Key Objective</p>
+                        <p class="text-zinc-300 text-sm leading-relaxed">
+                            Autonomous hazard assessment (Fire, Smoke, Humans) processed locally on the drone to minimize bandwidth usage in disaster zones.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Benchmarking Table -->
+        <div class="mb-12">
+            <h3 class="text-2xl font-bold mb-6 text-white">Benchmarking & Hardware Selection</h3>
+            <div class="overflow-x-auto bg-zinc-900/30 border border-zinc-800 rounded-2xl">
+                <table class="w-full text-left">
+                    <thead class="bg-zinc-900/80 border-b border-zinc-800">
+                        <tr>
+                            <th class="px-6 py-4 text-xs font-bold uppercase text-cyan-400">Feature</th>
+                            <th class="px-6 py-4 text-xs font-bold uppercase text-zinc-400">Crazyflie</th>
+                            <th class="px-6 py-4 text-xs font-bold uppercase text-zinc-400">DJI Tello</th>
+                            <th class="px-6 py-4 text-xs font-bold uppercase text-cyan-400">Our Platform</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-zinc-800/50">
+                        <tr class="hover:bg-zinc-800/20 transition-colors">
+                            <td class="px-6 py-4 font-medium text-zinc-300">Weight</td>
+                            <td class="px-6 py-4 text-zinc-400">27g</td>
+                            <td class="px-6 py-4 text-zinc-400">80g</td>
+                            <td class="px-6 py-4 font-bold text-cyan-400">68g</td>
+                        </tr>
+                        <tr class="hover:bg-zinc-800/20 transition-colors">
+                            <td class="px-6 py-4 font-medium text-zinc-300">Cost (Approx)</td>
+                            <td class="px-6 py-4 text-zinc-400">&gt;PKR 60k</td>
+                            <td class="px-6 py-4 text-zinc-400">&gt;PKR 30k</td>
+                            <td class="px-6 py-4 font-bold text-emerald-400">&lt;PKR 15k</td>
+                        </tr>
+                        <tr class="hover:bg-zinc-800/20 transition-colors">
+                            <td class="px-6 py-4 font-medium text-zinc-300">AI Capability</td>
+                            <td class="px-6 py-4 text-zinc-500">Limited</td>
+                            <td class="px-6 py-4 text-red-400">No</td>
+                            <td class="px-6 py-4 text-emerald-400 font-bold">Yes (Edge AI)</td>
+                        </tr>
+                        <tr class="hover:bg-zinc-800/20 transition-colors">
+                            <td class="px-6 py-4 font-medium text-zinc-300">Open Firmware</td>
+                            <td class="px-6 py-4 text-emerald-400">Yes</td>
+                            <td class="px-6 py-4 text-red-400">No</td>
+                            <td class="px-6 py-4 text-emerald-400 font-bold">Yes</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Team & Institution -->
+        <div class="bg-gradient-to-r from-zinc-900/50 to-cyan-500/10 border border-zinc-800 rounded-2xl p-8 md:p-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <p class="text-cyan-400 text-xs font-bold uppercase tracking-widest mb-2">Team Members</p>
+                    <p class="text-zinc-300 text-sm">Laraib Fatima, Mian Saad Karim, Muhammad Khuzaifa</p>
+                </div>
+                <div>
+                    <p class="text-cyan-400 text-xs font-bold uppercase tracking-widest mb-2">Supervisor</p>
+                    <p class="text-zinc-300 text-sm">Dr. Waqas Ahmad</p>
+                </div>
+                <div>
+                    <p class="text-cyan-400 text-xs font-bold uppercase tracking-widest mb-2">Institution</p>
+                    <p class="text-zinc-300 text-sm font-semibold">PIEAS Islamabad</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="max-w-7xl mx-auto px-6 py-16 border-y border-zinc-900 grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="text-center">
+            <div class="text-3xl font-bold text-white">12km</div>
+            <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mt-2">Max Range</div>
+        </div>
+        <div class="text-center">
+            <div class="text-3xl font-bold text-white">45min</div>
+            <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mt-2">Flight Time</div>
+        </div>
+        <div class="text-center">
+            <div class="text-3xl font-bold text-white">2.5kg</div>
+            <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mt-2">Payload</div>
+        </div>
+        <div class="text-center">
+            <div class="text-3xl font-bold text-white">15+</div>
+            <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mt-2">Swarm Units</div>
+        </div>
+    </section>
+
+    <!-- Phases Section -->
+    <section id="phases" class="max-w-7xl mx-auto px-6 py-32">
+        <div class="mb-16">
+            <h2 class="text-4xl font-bold mb-4">Development Lifecycle</h2>
+            <p class="text-zinc-400 max-w-xl text-lg">Detailed progress of the MITS drone project from initial concept to field deployment.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Phase 1 -->
+            <div class="group p-8 bg-zinc-900/40 border border-zinc-800 rounded-2xl cursor-pointer hover:bg-zinc-800/40 hover:border-purple-500/50 transition-all duration-500 relative">
+                <div class="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-6 text-purple-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3 group-hover:text-purple-400 transition-colors">Prototyping</h3>
+                <p class="text-zinc-400 text-sm leading-relaxed mb-6">Circuit assembly and initial flight controller integration.</p>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-white transition-colors cursor-pointer" onclick="openModal('prototyping')">
+                        View Specs <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2"><path d="m9 18 6-6-6-6"/></svg>
+                    </div>
+                    <div class="relative dropdown-menu" onclick="event.stopPropagation()">
+                        <button onclick="toggleDropdown(event)" class="p-2 hover:bg-zinc-700 rounded transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-400"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                        </button>
+                        <div class="dropdown-content hidden absolute right-0 mt-1 w-48 bg-zinc-900 border border-zinc-700 rounded-lg shadow-lg z-40">
+                            <div class="text-xs font-bold text-zinc-400 uppercase tracking-widest p-3 border-b border-zinc-700">Multimedia</div>
+                            <div class="text-xs text-zinc-300 p-2">
+                                <div class="font-bold text-zinc-200 mb-2">Videos:</div>
+                                <div class="ml-2 space-y-1 mb-3">
+                                    <div class="text-zinc-400 hover:text-white cursor-pointer" onclick="openGallery('prototyping', 'videos', 0)">• veroboardvvvideo.mp4</div>
+                                    <div class="text-zinc-400 hover:text-white cursor-pointer" onclick="openGallery('prototyping', 'videos', 1)">• PXL_20251020_062310826~2.mp4</div>
+                                </div>
+                                <div class="font-bold text-zinc-200 mb-2">Photos:</div>
+                                <div class="ml-2 space-y-1">
+                                    <div class="text-zinc-400 hover:text-white cursor-pointer" onclick="openGallery('prototyping', 'photos', 0)">• veroboard1.jpg</div>
+                                    <div class="text-zinc-400 hover:text-white cursor-pointer" onclick="openGallery('prototyping', 'photos', 1)">• PXL_20250820_084742945.jpg</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 2 -->
+            <div onclick="openModal('designing')" class="group p-8 bg-zinc-900/40 border border-zinc-800 rounded-2xl cursor-pointer hover:bg-zinc-800/40 hover:border-cyan-500/50 transition-all duration-500">
+                <div class="w-12 h-12 bg-cyan-500/10 rounded-lg flex items-center justify-center mb-6 text-cyan-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3 group-hover:text-cyan-400 transition-colors">Designing</h3>
+                <p class="text-zinc-400 text-sm leading-relaxed mb-6">CAD modeling and structural aerodynamics for swarm efficiency.</p>
+                <div class="flex items-center text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-white transition-colors">
+                    View Specs <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2"><path d="m9 18 6-6-6-6"/></svg>
+                </div>
+            </div>
+
+            <!-- Phase 3 -->
+            <div onclick="openModal('testing')" class="group p-8 bg-zinc-900/40 border border-zinc-800 rounded-2xl cursor-pointer hover:bg-zinc-800/40 hover:border-emerald-500/50 transition-all duration-500">
+                <div class="w-12 h-12 bg-emerald-500/10 rounded-lg flex items-center justify-center mb-6 text-emerald-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2v20"/><path d="M2 14.5h20"/><path d="M2 9.5h20"/><path d="M9.5 2v20"/></svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3 group-hover:text-emerald-400 transition-colors">Testing</h3>
+                <p class="text-zinc-400 text-sm leading-relaxed mb-6">Rigorous field trials in varied environmental conditions.</p>
+                <div class="flex items-center text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-white transition-colors">
+                    View Specs <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2"><path d="m9 18 6-6-6-6"/></svg>
+                </div>
+            </div>
+
+            <!-- Phase 4 -->
+            <div onclick="openModal('manufacturing')" class="group p-8 bg-zinc-900/40 border border-zinc-800 rounded-2xl cursor-pointer hover:bg-zinc-800/40 hover:border-orange-500/50 transition-all duration-500">
+                <div class="w-12 h-12 bg-orange-500/10 rounded-lg flex items-center justify-center mb-6 text-orange-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M7 18v-4"/><path d="M12 18V9"/><path d="M17 18V4"/></svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3 group-hover:text-orange-400 transition-colors">Manufacturing</h3>
+                <p class="text-zinc-400 text-sm leading-relaxed mb-6">Batch production and quality assurance for final deployment.</p>
+                <div class="flex items-center text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-white transition-colors">
+                    View Specs <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2"><path d="m9 18 6-6-6-6"/></svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Overlay -->
+    <div id="modal-overlay" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 md:p-8 bg-black/90 backdrop-blur-sm">
+        <div id="modal-content" class="modal-enter relative w-full max-w-4xl bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:row max-h-[90vh]">
+            <!-- Content will be injected by JS -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="max-w-7xl mx-auto px-6 py-12 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="text-zinc-500 text-sm">
+            © 2024 MITS Drone Project. Developed for Disaster Resilience.
+        </div>
+        <div class="flex gap-6">
+            <a href="#" class="text-zinc-500 hover:text-white transition-colors">Documentation</a>
+            <a href="#" class="text-zinc-500 hover:text-white transition-colors">Twitter</a>
+            <a href="#" class="text-zinc-500 hover:text-white transition-colors">Contact</a>
+        </div>
+    </footer>
+
+    <!-- Gallery Overlay -->
+    <div id="gallery-overlay" class="fixed inset-0 z-[110] hidden items-center justify-center bg-black w-screen h-screen">
+        <div id="gallery-content" class="w-full h-full relative">
+            <!-- Content will be injected by JS -->
+        </div>
+    </div>
+
+    <script>
+        const phaseData = {
+            designing: {
+                title: "Designing Phase",
+                tags: ["Fusion 360", "SolidWorks", "Airfoil Sim"],
+                desc: "The design phase focused on optimizing the lift-to-weight ratio. Using Fusion 360, we developed a modular frame that allows for quick component replacement in the field. Swarm-specific aerodynamics were simulated to ensure stability during multi-unit maneuvers.",
+                img: "https://images.unsplash.com/photo-1558444479-c8f010b91939?auto=format&fit=crop&q=80&w=800"
+            },
+            prototyping: {
+                title: "Prototyping Phase",
+                tags: ["ESP32", "LiDAR", "PCB Design"],
+                desc: "We utilized ESP32 and specialized flight controllers to build our first alpha units. This phase involved heavy soldering, sensor calibration (IMU, Barometers), and establishing the long-range communication protocol for the swarm network.",
+                img: "prototyping.jpg",
+                multimedia: {
+                    videos: [
+                        "prototyping,multimedia/veroboardvvvideo.mp4",
+                        "prototyping,multimedia/PXL_20251020_062310826~2.mp4"
+                    ],
+                    photos: [
+                        "prototyping,multimedia/veroboard1.jpg",
+                        "prototyping,multimedia/PXL_20250820_084742945.jpg"
+                    ]
+                }
+            },
+            testing: {
+                title: "Testing Phase",
+                tags: ["Wind Tunnel", "Field Trials", "Crash Analysis"],
+                desc: "Testing involved over 50 hours of flight time. We simulated disaster scenarios including high-wind resistance, payload delivery accuracy, and mesh-network stability when one or more units go dark.",
+                img: "https://images.unsplash.com/photo-1506947411487-a56738267384?auto=format&fit=crop&q=80&w=800"
+            },
+            manufacturing: {
+                title: "Manufacturing Phase",
+                tags: ["Carbon Fiber", "Batch QC", "Assembly Line"],
+                desc: "The final phase transitions to batch manufacturing. We use carbon fiber reinforced polymers and standardized assembly lines to ensure every unit in the swarm meets strict tolerance levels.",
+                img: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=800"
+            }
+        };
+
+        function openModal(id) {
+            const data = phaseData[id];
+            const overlay = document.getElementById('modal-overlay');
+            const content = document.getElementById('modal-content');
+
+            content.innerHTML = `
+                <button onclick="closeModal()" class="absolute top-4 right-4 z-10 p-2 bg-black/50 text-white rounded-full hover:bg-zinc-700 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
+                <div class="flex flex-col md:flex-row h-full">
+                    <div class="md:w-1/2 h-64 md:h-auto">
+                        <img src="${data.img}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="md:w-1/2 p-8 md:p-12 overflow-y-auto">
+                        <h2 class="text-3xl font-bold mb-4">${data.title}</h2>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            ${data.tags.map(t => `<span class="px-2 py-1 bg-zinc-800 text-zinc-400 text-[10px] font-bold uppercase rounded border border-zinc-700">${t}</span>`).join('')}
+                        </div>
+                        <p class="text-zinc-300 leading-relaxed mb-8">${data.desc}</p>
+                        <h4 class="text-sm font-bold text-zinc-100 uppercase mb-4 tracking-widest">Multimedia Gallery</h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            ${data.multimedia ? `
+                                ${data.multimedia.videos.map((video, idx) => `
+                                    <div onclick="openGallery('prototyping', 'videos', ${idx})" class="aspect-video bg-zinc-800 rounded-lg cursor-pointer hover:opacity-75 transition-opacity relative group overflow-hidden">
+                                        <video class="w-full h-full object-cover" preload="metadata">
+                                            <source src="${video}" type="video/mp4">
+                                        </video>
+                                        <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all flex items-center justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="white" class="group-hover:scale-110 transition-transform"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                                ${data.multimedia.photos.map((photo, idx) => `
+                                    <div onclick="openGallery('prototyping', 'photos', ${idx})" class="aspect-video bg-zinc-800 rounded-lg cursor-pointer hover:opacity-75 transition-opacity relative group overflow-hidden">
+                                        <img src="${photo}" class="w-full h-full object-cover">
+                                        <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><circle cx="9" cy="10" r="0.5" fill="white"></circle><circle cx="17" cy="6" r="1"></circle><path d="m20.5 10-4-4m2 6h2M2 2h2M7 9l2-2"></path></svg>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            ` : `
+                                <div class="aspect-video bg-zinc-800 rounded-lg flex items-center justify-center text-zinc-600 text-xs text-center p-2">[Video: Technical Demo]</div>
+                                <div class="aspect-video bg-zinc-800 rounded-lg flex items-center justify-center text-zinc-600 text-xs text-center p-2">[Blueprint: V2.1 Rev]</div>
+                            `}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const overlay = document.getElementById('modal-overlay');
+            overlay.classList.add('hidden');
+            overlay.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+            if (e.key === 'Escape') closeGallery();
+            if (e.key === 'Escape') closeAllDropdowns();
+        });
+
+        // Dropdown toggle function
+        function toggleDropdown(e) {
+            e.stopPropagation();
+            const dropdownMenu = e.target.closest('.dropdown-menu');
+            const dropdownContent = dropdownMenu.querySelector('.dropdown-content');
+            dropdownContent.classList.toggle('hidden');
+            
+            // Close other dropdowns
+            document.querySelectorAll('.dropdown-content').forEach(el => {
+                if (el !== dropdownContent) el.classList.add('hidden');
+            });
+        }
+
+        function closeAllDropdowns() {
+            document.querySelectorAll('.dropdown-content').forEach(el => {
+                el.classList.add('hidden');
+            });
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', closeAllDropdowns);
+
+        // Gallery functions
+        let currentGalleryPhase = '';
+        let currentGalleryType = '';
+        let currentGalleryIndex = 0;
+
+        function openGallery(phase, type, index) {
+            currentGalleryPhase = phase;
+            currentGalleryType = type;
+            currentGalleryIndex = index;
+            updateGalleryDisplay();
+            const galleryOverlay = document.getElementById('gallery-overlay');
+            galleryOverlay.classList.remove('hidden');
+            galleryOverlay.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            // Request fullscreen
+            const galleryContent = document.getElementById('gallery-content');
+            if (galleryContent.requestFullscreen) {
+                galleryContent.requestFullscreen().catch(() => {});
+            }
+        }
+
+        function closeGallery() {
+            const galleryOverlay = document.getElementById('gallery-overlay');
+            galleryOverlay.classList.add('hidden');
+            galleryOverlay.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            }
+        }
+
+        function updateGalleryDisplay() {
+            const data = phaseData[currentGalleryPhase];
+            if (!data.multimedia) return;
+
+            const items = currentGalleryType === 'videos' ? data.multimedia.videos : data.multimedia.photos;
+            const currentItem = items[currentGalleryIndex];
+            const galleryContent = document.getElementById('gallery-content');
+            const isVideo = currentGalleryType === 'videos';
+
+            galleryContent.innerHTML = `
+                <button onclick="closeGallery()" class="absolute top-4 right-4 z-10 p-3 bg-black/70 text-white rounded-full hover:bg-black transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
+
+                <div class="w-full h-full flex items-center justify-center bg-black">
+                    ${isVideo ? `
+                        <video class="max-w-full max-h-full" controls autoplay>
+                            <source src="${currentItem}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    ` : `
+                        <img src="${currentItem}" class="max-w-full max-h-full object-contain">
+                    `}
+                </div>
+
+                <button onclick="previousGalleryItem()" class="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 bg-black/70 text-white rounded-full hover:bg-black transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <button onclick="nextGalleryItem()" class="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 bg-black/70 text-white rounded-full hover:bg-black transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+
+                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-full text-sm">
+                    ${currentGalleryIndex + 1} / ${items.length}
+                </div>
+            `;
+        }
+
+        function nextGalleryItem() {
+            const data = phaseData[currentGalleryPhase];
+            const items = currentGalleryType === 'videos' ? data.multimedia.videos : data.multimedia.photos;
+            currentGalleryIndex = (currentGalleryIndex + 1) % items.length;
+            updateGalleryDisplay();
+        }
+
+        function previousGalleryItem() {
+            const data = phaseData[currentGalleryPhase];
+            const items = currentGalleryType === 'videos' ? data.multimedia.videos : data.multimedia.photos;
+            currentGalleryIndex = (currentGalleryIndex - 1 + items.length) % items.length;
+            updateGalleryDisplay();
+        }
+
+        // Keyboard navigation for gallery
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('gallery-overlay').classList.contains('flex')) {
+                if (e.key === 'ArrowRight') nextGalleryItem();
+                if (e.key === 'ArrowLeft') previousGalleryItem();
+            }
+        });
+    </script>
+</body>
+</html>
