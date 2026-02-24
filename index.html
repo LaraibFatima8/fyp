@@ -28,6 +28,70 @@
         ::-webkit-scrollbar-track { background: #09090b; }
         ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+        
+        /* Light Theme */
+        body.light-theme {
+            background-color: #f5f5f5;
+            color: #18181b;
+        }
+        
+        body.light-theme .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(200, 200, 200, 1);
+        }
+        
+        body.light-theme .text-zinc-950 { color: #18181b; }
+        body.light-theme .text-zinc-100 { color: #fafafa; }
+        body.light-theme .text-white { color: #000; }
+        body.light-theme .text-zinc-400 { color: #666; }
+        body.light-theme .text-zinc-500 { color: #777; }
+        body.light-theme .text-zinc-300 { color: #333; }
+        body.light-theme .bg-zinc-950 { background-color: #f5f5f5; }
+        body.light-theme .bg-zinc-900 { background-color: #e8e8e8; }
+        body.light-theme .bg-zinc-900\/50 { background-color: rgba(232, 232, 232, 0.5); }
+        body.light-theme .bg-zinc-800 { background-color: #d0d0d0; }
+        body.light-theme .bg-zinc-800\/20 { background-color: rgba(208, 208, 208, 0.2); }
+        body.light-theme .bg-zinc-800\/60 { background-color: rgba(208, 208, 208, 0.6); }
+        body.light-theme .border-zinc-900 { border-color: #d0d0d0; }
+        body.light-theme .border-zinc-800 { border-color: #c0c0c0; }
+        body.light-theme .border-zinc-700 { border-color: #b0b0b0; }
+        body.light-theme .hover\:bg-zinc-800:hover { background-color: #d0d0d0; }
+        body.light-theme .group:hover .group-hover\:opacity-100 { opacity: 1; }
+        
+        body.light-theme .hero-glow {
+            background: radial-gradient(circle at center, rgba(34, 211, 238, 0.1) 0%, transparent 70%);
+        }
+        
+        body.light-theme .selection\:bg-cyan-500\/30::selection {
+            background-color: rgba(34, 211, 238, 0.3);
+        }
+        
+        body.light-theme ::-webkit-scrollbar-track { background: #f5f5f5; }
+        body.light-theme ::-webkit-scrollbar-thumb { background: #c0c0c0; border-radius: 4px; }
+        body.light-theme ::-webkit-scrollbar-thumb:hover { background: #b0b0b0; }
+        
+        body.light-theme .divide-zinc-800\/50 { border-color: rgba(208, 208, 208, 0.5); }
+        body.light-theme .from-white { background: linear-gradient(to bottom, #000 0%, #666 100%); }
+        body.light-theme .to-zinc-500 { color: #666; }
+        body.light-theme .bg-gradient-to-b { background-image: linear-gradient(to bottom, var(--tw-gradient-stops)); }
+        body.light-theme .border-cyan-500\/30 { border-color: rgba(6, 182, 212, 0.3); }
+        body.light-theme .border-purple-500\/30 { border-color: rgba(168, 85, 247, 0.3); }
+        body.light-theme .border-emerald-500\/30 { border-color: rgba(16, 185, 129, 0.3); }
+        body.light-theme .border-orange-500\/30 { border-color: rgba(249, 115, 22, 0.3); }
+        body.light-theme .from-cyan-500\/10 { background-color: rgba(6, 182, 212, 0.1); }
+        body.light-theme .from-purple-500\/10 { background-color: rgba(168, 85, 247, 0.1); }
+        body.light-theme .from-emerald-500\/10 { background-color: rgba(16, 185, 129, 0.1); }
+        body.light-theme .from-orange-500\/10 { background-color: rgba(249, 115, 22, 0.1); }
+        body.light-theme .text-cyan-400 { color: #06b6d4 !important; }
+        body.light-theme .text-purple-400 { color: #a855f7 !important; }
+        body.light-theme .text-emerald-400 { color: #10b981 !important; }
+        body.light-theme .text-orange-400 { color: #f97316 !important; }
+        body.light-theme .bg-cyan-500 { background-color: #06b6d4; }
+        body.light-theme .font-bold { font-weight: 700; }
+        body.light-theme a { color: #06b6d4; }
+        body.light-theme .overflow-x-hidden { overflow-x: hidden; }
+        body.light-theme .to-zinc-500::selection { color: #666; }
     </style>
 </head>
 <body class="bg-zinc-950 text-zinc-100 selection:bg-cyan-500/30 overflow-x-hidden">
@@ -39,11 +103,18 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-400"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
                 <span class="font-bold text-xl tracking-tight">MITS <span class="text-cyan-400 uppercase">Drone</span></span>
             </div>
-            <div class="hidden md:flex gap-8 text-sm font-medium text-zinc-400">
-                <a href="#overview" class="hover:text-white transition-colors">Overview</a>
-                <a href="#phases" class="hover:text-white transition-colors">Phases</a>
-                <a href="#stats" class="hover:text-white transition-colors">Tech Specs</a>
-                <a href="https://github.com" target="_blank" class="px-4 py-2 bg-zinc-100 text-black rounded-full hover:bg-cyan-400 transition-all">GitHub</a>
+            <div class="flex items-center gap-8">
+                <div class="hidden md:flex gap-8 text-sm font-medium text-zinc-400">
+                    <a href="#overview" class="hover:text-white transition-colors">Overview</a>
+                    <a href="#phases" class="hover:text-white transition-colors">Phases</a>
+                    <a href="#stats" class="hover:text-white transition-colors">Tech Specs</a>
+                    <a href="https://github.com" target="_blank" class="px-4 py-2 bg-zinc-100 text-black rounded-full hover:bg-cyan-400 transition-all">GitHub</a>
+                </div>
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" onclick="toggleTheme()" class="p-2 rounded-lg bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 transition-colors text-zinc-400 hover:text-white">
+                    <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
             </div>
         </div>
     </nav>
@@ -182,92 +253,17 @@
         </div>
     </section>
 
-    <!-- Phases Section -->
-    <section id="phases" class="max-w-7xl mx-auto px-6 py-32">
+    <!-- Phases Section - Vertical Display -->
+    <section id="phases" class="max-w-7xl mx-auto px-6 py-20 border-b border-zinc-900">
         <div class="mb-16">
-            <h2 class="text-4xl font-bold mb-4">Development Lifecycle</h2>
-            <p class="text-zinc-400 max-w-xl text-lg">Detailed progress of the MITS drone project from initial concept to field deployment.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Phase 1 -->
-            <div class="group p-8 bg-zinc-900/40 border border-zinc-800 rounded-2xl cursor-pointer hover:bg-zinc-800/40 hover:border-purple-500/50 transition-all duration-500 relative">
-                <div class="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-6 text-purple-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
-                </div>
-                <h3 class="text-xl font-bold mb-3 group-hover:text-purple-400 transition-colors">Prototyping</h3>
-                <p class="text-zinc-400 text-sm leading-relaxed mb-6">Circuit assembly and initial flight controller integration.</p>
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-white transition-colors cursor-pointer" onclick="openModal('prototyping')">
-                        View Specs <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2"><path d="m9 18 6-6-6-6"/></svg>
-                    </div>
-                    <div class="relative dropdown-menu" onclick="event.stopPropagation()">
-                        <button onclick="toggleDropdown(event)" class="p-2 hover:bg-zinc-700 rounded transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-400"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
-                        </button>
-                        <div class="dropdown-content hidden absolute right-0 mt-1 w-48 bg-zinc-900 border border-zinc-700 rounded-lg shadow-lg z-40">
-                            <div class="text-xs font-bold text-zinc-400 uppercase tracking-widest p-3 border-b border-zinc-700">Multimedia</div>
-                            <div class="text-xs text-zinc-300 p-2">
-                                <div class="font-bold text-zinc-200 mb-2">Videos:</div>
-                                <div class="ml-2 space-y-1 mb-3">
-                                    <div class="text-zinc-400 hover:text-white cursor-pointer" onclick="openGallery('prototyping', 'videos', 0)">• veroboardvvvideo.mp4</div>
-                                    <div class="text-zinc-400 hover:text-white cursor-pointer" onclick="openGallery('prototyping', 'videos', 1)">• PXL_20251020_062310826~2.mp4</div>
-                                </div>
-                                <div class="font-bold text-zinc-200 mb-2">Photos:</div>
-                                <div class="ml-2 space-y-1">
-                                    <div class="text-zinc-400 hover:text-white cursor-pointer" onclick="openGallery('prototyping', 'photos', 0)">• veroboard1.jpg</div>
-                                    <div class="text-zinc-400 hover:text-white cursor-pointer" onclick="openGallery('prototyping', 'photos', 1)">• PXL_20250820_084742945.jpg</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Phase 2 -->
-            <div onclick="openModal('designing')" class="group p-8 bg-zinc-900/40 border border-zinc-800 rounded-2xl cursor-pointer hover:bg-zinc-800/40 hover:border-cyan-500/50 transition-all duration-500">
-                <div class="w-12 h-12 bg-cyan-500/10 rounded-lg flex items-center justify-center mb-6 text-cyan-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
-                </div>
-                <h3 class="text-xl font-bold mb-3 group-hover:text-cyan-400 transition-colors">Designing</h3>
-                <p class="text-zinc-400 text-sm leading-relaxed mb-6">CAD modeling and structural aerodynamics for swarm efficiency.</p>
-                <div class="flex items-center text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-white transition-colors">
-                    View Specs <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2"><path d="m9 18 6-6-6-6"/></svg>
-                </div>
-            </div>
-
-            <!-- Phase 3 -->
-            <div onclick="openModal('testing')" class="group p-8 bg-zinc-900/40 border border-zinc-800 rounded-2xl cursor-pointer hover:bg-zinc-800/40 hover:border-emerald-500/50 transition-all duration-500">
-                <div class="w-12 h-12 bg-emerald-500/10 rounded-lg flex items-center justify-center mb-6 text-emerald-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2v20"/><path d="M2 14.5h20"/><path d="M2 9.5h20"/><path d="M9.5 2v20"/></svg>
-                </div>
-                <h3 class="text-xl font-bold mb-3 group-hover:text-emerald-400 transition-colors">Testing</h3>
-                <p class="text-zinc-400 text-sm leading-relaxed mb-6">Rigorous field trials in varied environmental conditions.</p>
-                <div class="flex items-center text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-white transition-colors">
-                    View Specs <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2"><path d="m9 18 6-6-6-6"/></svg>
-                </div>
-            </div>
-
-            <!-- Phase 4 -->
-            <div onclick="openModal('manufacturing')" class="group p-8 bg-zinc-900/40 border border-zinc-800 rounded-2xl cursor-pointer hover:bg-zinc-800/40 hover:border-orange-500/50 transition-all duration-500">
-                <div class="w-12 h-12 bg-orange-500/10 rounded-lg flex items-center justify-center mb-6 text-orange-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M7 18v-4"/><path d="M12 18V9"/><path d="M17 18V4"/></svg>
-                </div>
-                <h3 class="text-xl font-bold mb-3 group-hover:text-orange-400 transition-colors">Manufacturing</h3>
-                <p class="text-zinc-400 text-sm leading-relaxed mb-6">Batch production and quality assurance for final deployment.</p>
-                <div class="flex items-center text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-white transition-colors">
-                    View Specs <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2"><path d="m9 18 6-6-6-6"/></svg>
-                </div>
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-white">Development Lifecycle</h2>
+            
+            <!-- Phases Vertical Stack -->
+            <div id="phases-container" class="space-y-16">
+                <!-- Phases will be rendered here by JS -->
             </div>
         </div>
     </section>
-
-    <!-- Modal Overlay -->
-    <div id="modal-overlay" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 md:p-8 bg-black/90 backdrop-blur-sm">
-        <div id="modal-content" class="modal-enter relative w-full max-w-4xl bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]">
-            <!-- Content will be injected by JS -->
-        </div>
-    </div>
 
     <!-- Footer -->
     <footer class="max-w-7xl mx-auto px-6 py-12 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-6">
@@ -289,15 +285,62 @@
     </div>
 
     <script>
+        // Theme toggle function
+        function toggleTheme() {
+            const body = document.body;
+            const sunIcon = document.getElementById('theme-icon-sun');
+            const moonIcon = document.getElementById('theme-icon-moon');
+            
+            body.classList.toggle('light-theme');
+            
+            // Update icon visibility
+            if (body.classList.contains('light-theme')) {
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+                localStorage.setItem('theme', 'light');
+            } else {
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Load theme on page load
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const body = document.body;
+            const sunIcon = document.getElementById('theme-icon-sun');
+            const moonIcon = document.getElementById('theme-icon-moon');
+            
+            if (savedTheme === 'light') {
+                body.classList.add('light-theme');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            }
+        }
+
+        // Load theme when page starts
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadTheme);
+        } else {
+            loadTheme();
+        }
+
         const phaseData = {
             designing: {
                 title: "Designing Phase",
+                colorClass: "cyan",
+                colorBg: "from-cyan-500/10 to-cyan-400/5",
+                borderColor: "border-cyan-500/30",
                 tags: ["Fusion 360", "SolidWorks", "Airfoil Sim"],
                 desc: "The design phase focused on optimizing the lift-to-weight ratio. Using Fusion 360, we developed a modular frame that allows for quick component replacement in the field. Swarm-specific aerodynamics were simulated to ensure stability during multi-unit maneuvers.",
                 img: "https://images.unsplash.com/photo-1558444479-c8f010b91939?auto=format&fit=crop&q=80&w=800"
             },
             prototyping: {
                 title: "Prototyping Phase",
+                colorClass: "purple",
+                colorBg: "from-purple-500/10 to-purple-400/5",
+                borderColor: "border-purple-500/30",
                 tags: ["ESP32", "LiDAR", "PCB Design"],
                 desc: "We utilized ESP32 and specialized flight controllers to build our first alpha units. This phase involved heavy soldering, sensor calibration (IMU, Barometers), and establishing the long-range communication protocol for the swarm network.",
                 img: "prototyping.jpg",
@@ -314,107 +357,113 @@
             },
             testing: {
                 title: "Testing Phase",
+                colorClass: "emerald",
+                colorBg: "from-emerald-500/10 to-emerald-400/5",
+                borderColor: "border-emerald-500/30",
                 tags: ["Wind Tunnel", "Field Trials", "Crash Analysis"],
                 desc: "Testing involved over 50 hours of flight time. We simulated disaster scenarios including high-wind resistance, payload delivery accuracy, and mesh-network stability when one or more units go dark.",
                 img: "https://images.unsplash.com/photo-1506947411487-a56738267384?auto=format&fit=crop&q=80&w=800"
             },
             manufacturing: {
                 title: "Manufacturing Phase",
+                colorClass: "orange",
+                colorBg: "from-orange-500/10 to-orange-400/5",
+                borderColor: "border-orange-500/30",
                 tags: ["Carbon Fiber", "Batch QC", "Assembly Line"],
                 desc: "The final phase transitions to batch manufacturing. We use carbon fiber reinforced polymers and standardized assembly lines to ensure every unit in the swarm meets strict tolerance levels.",
                 img: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=800"
             }
         };
 
-        function openModal(id) {
-            const data = phaseData[id];
-            const overlay = document.getElementById('modal-overlay');
-            const content = document.getElementById('modal-content');
+        const phaseOrder = ['prototyping', 'designing', 'testing', 'manufacturing'];
 
-            content.innerHTML = `
-                <button onclick="closeModal()" class="absolute top-4 right-4 z-10 p-2 bg-black/50 text-white rounded-full hover:bg-zinc-700 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-                </button>
-                <div class="flex flex-col md:flex-row h-full overflow-y-auto">
-                    <div class="md:w-1/2 h-64 md:h-auto flex-shrink-0">
-                        <img src="${data.img}" class="w-full h-full object-cover">
+        function getColorClasses(phase) {
+            const colorMap = {
+                purple: { text: 'text-purple-400', bg: 'bg-purple-500/10', hex: '#a855f7' },
+                cyan: { text: 'text-cyan-400', bg: 'bg-cyan-500/10', hex: '#06b6d4' },
+                emerald: { text: 'text-emerald-400', bg: 'bg-emerald-500/10', hex: '#10b981' },
+                orange: { text: 'text-orange-400', bg: 'bg-orange-500/10', hex: '#f97316' }
+            };
+            return colorMap[phaseData[phase].colorClass];
+        }
+
+        function renderPhaseCard(phaseId, index) {
+            const phase = phaseData[phaseId];
+            const colors = getColorClasses(phaseId);
+
+            let mediaHTML = '';
+            if (phase.multimedia) {
+                const totalItems = (phase.multimedia.videos.length || 0) + (phase.multimedia.photos.length || 0);
+                mediaHTML = `
+                    <div class="mt-8 pt-8 border-t border-zinc-800">
+                        <p class="text-sm font-bold text-zinc-400 uppercase tracking-widest mb-6">Media Gallery</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                `;
+                
+                // Show all videos
+                if (phase.multimedia.videos.length > 0) {
+                    phase.multimedia.videos.forEach((video, idx) => {
+                        mediaHTML += `
+                            <div onclick="openGallery('${phaseId}', 'videos', ${idx})" class="aspect-video bg-zinc-800 rounded-lg cursor-pointer hover:opacity-75 transition-opacity relative group overflow-hidden">
+                                <video class="w-full h-full object-cover" preload="metadata">
+                                    <source src="${video}" type="video/mp4">
+                                </video>
+                                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="white" class="group-hover:scale-110 transition-transform"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                </div>
+                                <span class="absolute top-2 left-2 px-2 py-1 bg-black/70 text-white text-xs font-bold rounded">VIDEO</span>
+                            </div>
+                        `;
+                    });
+                }
+                
+                // Show all photos
+                if (phase.multimedia.photos.length > 0) {
+                    phase.multimedia.photos.forEach((photo, idx) => {
+                        mediaHTML += `
+                            <div onclick="openGallery('${phaseId}', 'photos', ${idx})" class="aspect-square bg-zinc-800 rounded-lg cursor-pointer hover:opacity-75 transition-opacity relative group overflow-hidden">
+                                <img src="${photo}" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                                </div>
+                                <span class="absolute top-2 left-2 px-2 py-1 bg-black/70 text-white text-xs font-bold rounded">PHOTO</span>
+                            </div>
+                        `;
+                    });
+                }
+
+                mediaHTML += `</div></div>`;
+            }
+
+            return `
+                <div class="bg-gradient-to-br from-zinc-900/50 to-black/30 border ${phase.borderColor} rounded-2xl p-8 md:p-12 scroll-mt-20" id="phase-${phaseId}">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border ${phase.borderColor} text-xs font-medium ${colors.text} mb-6">
+                        <div class="w-2 h-2 rounded-full" style="background-color: ${colors.hex}"></div>
+                        Phase ${index + 1} of 4
                     </div>
-                    <div class="md:w-1/2 p-8 md:p-12">
-                        <h2 class="text-3xl font-bold mb-4">${data.title}</h2>
-                        <div class="flex flex-wrap gap-2 mb-8">
-                            ${data.tags.map(t => `<span class="px-2 py-1 bg-zinc-800 text-zinc-400 text-[10px] font-bold uppercase rounded border border-zinc-700">${t}</span>`).join('')}
-                        </div>
-                        <p class="text-zinc-300 leading-relaxed mb-8">${data.desc}</p>
-                        <h4 class="text-sm font-bold text-zinc-100 uppercase mb-4 tracking-widest">Multimedia Gallery</h4>
-                        <div class="grid grid-cols-2 gap-4">
-                            ${data.multimedia ? `
-                                ${data.multimedia.videos.map((video, idx) => `
-                                    <div onclick="openGallery('prototyping', 'videos', ${idx})" class="aspect-video bg-zinc-800 rounded-lg cursor-pointer hover:opacity-75 transition-opacity relative group overflow-hidden">
-                                        <video class="w-full h-full object-cover" preload="metadata">
-                                            <source src="${video}" type="video/mp4">
-                                        </video>
-                                        <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all flex items-center justify-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="white" class="group-hover:scale-110 transition-transform"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                                        </div>
-                                    </div>
-                                `).join('')}
-                                ${data.multimedia.photos.map((photo, idx) => `
-                                    <div onclick="openGallery('prototyping', 'photos', ${idx})" class="aspect-video bg-zinc-800 rounded-lg cursor-pointer hover:opacity-75 transition-opacity relative group overflow-hidden">
-                                        <img src="${photo}" class="w-full h-full object-cover">
-                                        <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><circle cx="9" cy="10" r="0.5" fill="white"></circle><circle cx="17" cy="6" r="1"></circle><path d="m20.5 10-4-4m2 6h2M2 2h2M7 9l2-2"></path></svg>
-                                        </div>
-                                    </div>
-                                `).join('')}
-                            ` : `
-                                <div class="aspect-video bg-zinc-800 rounded-lg flex items-center justify-center text-zinc-600 text-xs text-center p-2">[Video: Technical Demo]</div>
-                                <div class="aspect-video bg-zinc-800 rounded-lg flex items-center justify-center text-zinc-600 text-xs text-center p-2">[Blueprint: V2.1 Rev]</div>
-                            `}
-                        </div>
+                    
+                    <h3 class="text-3xl md:text-4xl font-bold mb-6 text-white">${phase.title}</h3>
+                    
+                    <p class="text-lg text-zinc-300 leading-relaxed mb-8">${phase.desc}</p>
+                    
+                    <!-- Tags -->
+                    <div class="flex flex-wrap gap-2 mb-8">
+                        ${phase.tags.map(t => `<span class="px-3 py-1 bg-zinc-800/60 border border-zinc-700 text-zinc-400 text-xs font-bold uppercase rounded-lg">${t}</span>`).join('')}
                     </div>
+                    
+                    ${mediaHTML}
                 </div>
             `;
-            
-            overlay.classList.remove('hidden');
-            overlay.classList.add('flex');
-            document.body.style.overflow = 'hidden';
         }
 
-        function closeModal() {
-            const overlay = document.getElementById('modal-overlay');
-            overlay.classList.add('hidden');
-            overlay.classList.remove('flex');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Close on escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-            if (e.key === 'Escape') closeGallery();
-            if (e.key === 'Escape') closeAllDropdowns();
-        });
-
-        // Dropdown toggle function
-        function toggleDropdown(e) {
-            e.stopPropagation();
-            const dropdownMenu = e.target.closest('.dropdown-menu');
-            const dropdownContent = dropdownMenu.querySelector('.dropdown-content');
-            dropdownContent.classList.toggle('hidden');
-            
-            // Close other dropdowns
-            document.querySelectorAll('.dropdown-content').forEach(el => {
-                if (el !== dropdownContent) el.classList.add('hidden');
+        function renderPhases() {
+            const container = document.getElementById('phases-container');
+            let html = '';
+            phaseOrder.forEach((phaseId, index) => {
+                html += renderPhaseCard(phaseId, index);
             });
+            container.innerHTML = html;
         }
-
-        function closeAllDropdowns() {
-            document.querySelectorAll('.dropdown-content').forEach(el => {
-                el.classList.add('hidden');
-            });
-        }
-
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', closeAllDropdowns);
 
         // Gallery functions
         let currentGalleryPhase = '';
@@ -430,11 +479,6 @@
             galleryOverlay.classList.remove('hidden');
             galleryOverlay.classList.add('flex');
             document.body.style.overflow = 'hidden';
-            // Request fullscreen
-            const galleryContent = document.getElementById('gallery-content');
-            if (galleryContent.requestFullscreen) {
-                galleryContent.requestFullscreen().catch(() => {});
-            }
         }
 
         function closeGallery() {
@@ -499,13 +543,29 @@
             updateGalleryDisplay();
         }
 
-        // Keyboard navigation for gallery
-        document.addEventListener('keydown', (e) => {
-            if (document.getElementById('gallery-overlay').classList.contains('flex')) {
-                if (e.key === 'ArrowRight') nextGalleryItem();
-                if (e.key === 'ArrowLeft') previousGalleryItem();
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const galleryOverlay = document.getElementById('gallery-overlay');
+            if (galleryOverlay && !galleryOverlay.contains(e.target)) {
+                // Handle any other click logic if needed
             }
         });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const galleryOverlay = document.getElementById('gallery-overlay');
+            if (galleryOverlay && galleryOverlay.classList.contains('flex')) {
+                if (e.key === 'ArrowRight') nextGalleryItem();
+                if (e.key === 'ArrowLeft') previousGalleryItem();
+                if (e.key === 'Escape') closeGallery();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', renderPhases);
+        if (document.readyState !== 'loading') {
+            renderPhases();
+        }
     </script>
 </body>
 </html>
