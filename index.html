@@ -7,7 +7,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { 
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #09090b 0%, #1a1625 25%, #0d1a2e 50%, #09090b 100%);
+            min-height: 100vh;
+        }
         .glass-nav {
             background: rgba(9, 9, 11, 0.8);
             backdrop-filter: blur(12px);
@@ -23,25 +27,135 @@
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
         }
+        
+        /* Page Transition Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        section {
+            animation: slideInUp 0.6s ease-out both;
+        }
+        
+        section:nth-of-type(1) { animation-delay: 0s; }
+        section:nth-of-type(2) { animation-delay: 0.1s; }
+        section:nth-of-type(3) { animation-delay: 0.2s; }
+        section:nth-of-type(4) { animation-delay: 0.3s; }
+        section:nth-of-type(5) { animation-delay: 0.4s; }
+        
+        /* Page Divider */
+        .page-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(34, 211, 238, 0.3) 25%, rgba(34, 211, 238, 0.3) 75%, transparent 100%);
+            margin: 40px 0;
+        }
+        
+        /* Team Heading Underline */
+        .team-heading-underline {
+            display: block;
+            width: fit-content;
+            margin: 0 auto;
+            position: relative;
+            padding-bottom: 8px;
+        }
+        
+        .team-heading-underline::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, rgba(34, 211, 238, 0.5) 25%, rgba(34, 211, 238, 0.5) 75%, transparent 100%);
+        }
+        
+        /* Flow Diagram Animations */
+        @keyframes arrow-dash {
+            from {
+                stroke-dashoffset: 250;
+            }
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        .animate-arrow-dash {
+            animation: arrow-dash 2.5s ease-in-out infinite;
+        }
+        
+        @keyframes arrowhead-move {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        
+        .animate-arrowhead {
+            animation: arrowhead-move 2.5s ease-in-out infinite;
+        }
+        
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #09090b; }
         ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
         
+        /* Slideshow Background */
+        .slideshow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 600px;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .slide.active {
+            opacity: 1;
+        }
+        
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(9, 9, 11, 0.7) 0%, rgba(9, 9, 11, 0.5) 100%);
+            z-index: 1;
+        }
+        
         /* Light Theme */
         body.light-theme {
             background-color: #f5f5f5;
+            background: linear-gradient(135deg, #f5f5f5 0%, #ede9fe 25%, #e0f2fe 50%, #f5f5f5 100%);
             color: #18181b;
         }
         
         body.light-theme .glass-nav {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(200, 200, 200, 1);
+            border-bottom: 1px solid rgba(50, 50, 50, 1);
         }
         
-        body.light-theme .text-zinc-950 { color: #18181b; }
+        body.light-theme .text-zinc-950 { color: #dcdce7; }
         body.light-theme .text-zinc-100 { color: #fafafa; }
         body.light-theme .text-white { color: #000; }
         body.light-theme .text-zinc-400 { color: #666; }
@@ -92,12 +206,20 @@
         body.light-theme a { color: #06b6d4; }
         body.light-theme .overflow-x-hidden { overflow-x: hidden; }
         body.light-theme .to-zinc-500::selection { color: #666; }
+        
+        /* Hero Title in Light Theme */
+        body.light-theme h1 {
+            color: #fff !important;
+            background: none !important;
+            -webkit-background-clip: unset !important;
+            -webkit-text-fill-color: unset !important;
+        }
     </style>
 </head>
-<body class="bg-zinc-950 text-zinc-100 selection:bg-cyan-500/30 overflow-x-hidden">
+<body class="text-zinc-100 selection:bg-cyan-500/30 overflow-x-hidden">
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass-nav">
+    <nav class="absolute w-full z-50 glass-nav">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <div class="flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-400"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
@@ -106,6 +228,7 @@
             <div class="flex items-center gap-8">
                 <div class="hidden md:flex gap-8 text-sm font-medium text-zinc-400">
                     <a href="#overview" class="hover:text-white transition-colors">Overview</a>
+                    <a href="#team" class="hover:text-white transition-colors">Team</a>
                     <a href="#phases" class="hover:text-white transition-colors">Phases</a>
                     <a href="#stats" class="hover:text-white transition-colors">Tech Specs</a>
                     <a href="https://github.com" target="_blank" class="px-4 py-2 bg-zinc-100 text-black rounded-full hover:bg-cyan-400 transition-all">GitHub</a>
@@ -121,6 +244,13 @@
 
     <!-- Hero Section -->
     <section class="relative pt-40 pb-20 px-6 flex flex-col items-center text-center overflow-hidden">
+        <!-- Slideshow Background -->
+        <div class="slideshow-container">
+            <div class="slide active" style="background-image: url('firstpagebackground/slide1.jpg');"></div>
+            <div class="slide" style="background-image: url('firstpagebackground/slide2.jpg');"></div>
+            <div class="slide" style="background-image: url('firstpagebackground/slide3.jpg');"></div>
+            <div class="slide-overlay"></div>
+        </div>
         <div class="absolute top-0 -z-10 w-full h-[600px] hero-glow"></div>
         
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-medium text-cyan-400 mb-6 animate-pulse">
@@ -146,11 +276,83 @@
         </div>
     </section>
 
+    <!-- Page Separator -->
+    <div class="page-divider"></div>
+
+    <!-- Team Section -->
+    <section id="team" class="max-w-7xl mx-auto px-6 py-20 border-b border-zinc-900">
+        <div class="mb-16">
+            <h2 class="text-5xl md:text-6xl font-bold mb-12 text-white text-center -mt-8 team-heading-underline">Team</h2>
+
+            <!-- Team Members -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold mb-8 text-white">Members</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Member 1 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-40 h-40 rounded-full bg-gradient-to-br from-cyan-500/20 to-cyan-400/10 border border-cyan-500/30 flex items-center justify-center mb-6 overflow-hidden">
+                            <img src="teamimages/laraib.jpg" alt="Laraib Fatima" class="w-full h-full object-cover">
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-2">Laraib Fatima</h4>
+                        <p class="text-sm text-zinc-400">Lead Developer</p>
+                        <p class="text-xs text-zinc-500 mt-3">Hardware & Firmware Design</p>
+                    </div>
+
+                    <!-- Member 2 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-40 h-40 rounded-full bg-gradient-to-br from-purple-500/20 to-purple-400/10 border border-purple-500/30 flex items-center justify-center mb-6 overflow-hidden">
+                            <img src="teamimages/saad karim.jpg" alt="Mian Saad Karim" class="w-full h-full object-cover">
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-2">Mian Saad Karim</h4>
+                        <p class="text-sm text-zinc-400">Systems Engineer</p>
+                        <p class="text-xs text-zinc-500 mt-3">Flight Control & Integration</p>
+                    </div>
+
+                    <!-- Member 3 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-40 h-40 rounded-full bg-gradient-to-br from-emerald-500/20 to-emerald-400/10 border border-emerald-500/30 flex items-center justify-center mb-6 overflow-hidden">
+                            <img src="teamimages/khuzaifa.jpg" alt="Muhammad Khuzaifa" class="w-full h-full object-cover">
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-2">Muhammad Khuzaifa</h4>
+                        <p class="text-sm text-zinc-400">Software Engineer</p>
+                        <p class="text-xs text-zinc-500 mt-3">AI & Computer Vision</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Supervisors/Advisory -->
+            <h3 class="text-2xl font-bold mb-8 text-white">Supervision</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-gradient-to-br from-zinc-700/40 to-zinc-800/20 border border-zinc-800 rounded-xl p-6">
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-br from-orange-500/20 to-orange-400/10 border border-orange-500/30 flex items-center justify-center mb-4 overflow-hidden">
+                        <img src="teamimages/dr waqas.png" alt="Dr. Waqas Ahmad" class="w-full h-full object-cover">
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-1">Dr. Waqas Ahmad</h4>
+                    <p class="text-sm text-orange-400 font-medium">Supervisor</p>
+                    <p class="text-xs text-zinc-500 mt-3">Department of Electrical Engineering, PIEAS</p>
+                </div>
+
+                <!-- Supervisor 2 -->
+                <div class="bg-gradient-to-br from-zinc-700/40 to-zinc-800/20 border border-zinc-800 rounded-xl p-6">
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-br from-cyan-500/20 to-cyan-400/10 border border-cyan-500/30 flex items-center justify-center mb-4 overflow-hidden">
+                        <img src="teamimages/cosupervisor.jpg" alt="Co-Supervisor" class="w-full h-full object-cover">
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-1">Co-Supervisor</h4>
+                    <p class="text-sm text-cyan-400 font-medium">Co-Advisor</p>
+                    <p class="text-xs text-zinc-500 mt-3">Department of Electrical Engineering, PIEAS</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page Separator -->
+    <div class="page-divider"></div>
+
     <!-- Project Overview Section -->
     <section id="overview" class="max-w-7xl mx-auto px-6 py-20 border-b border-zinc-900">
         <div class="mb-12">
             <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">Project Overview</h2>
-            <div class="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8 md:p-12 backdrop-blur-sm">
+            <div class="bg-gradient-to-br from-zinc-700/40 to-zinc-800/20 border border-zinc-800 rounded-2xl p-8 md:p-12 backdrop-blur-sm">
                 <p class="text-lg text-zinc-300 leading-relaxed mb-6">
                     The project aims to develop a deployable swarm of lightweight, low-cost UAVs utilizing decentralized communication and onboard AI to detect victims autonomously in disaster-stricken areas. Rapid response is critical when infrastructure is compromised, making ground access impossible.
                 </p>
@@ -174,9 +376,9 @@
         <!-- Benchmarking Table -->
         <div class="mb-12">
             <h3 class="text-2xl font-bold mb-6 text-white">Benchmarking & Hardware Selection</h3>
-            <div class="overflow-x-auto bg-zinc-900/30 border border-zinc-800 rounded-2xl">
+            <div class="overflow-x-auto bg-gradient-to-br from-zinc-700/40 to-zinc-800/20 border border-zinc-800 rounded-2xl">
                 <table class="w-full text-left">
-                    <thead class="bg-zinc-900/80 border-b border-zinc-800">
+                    <thead class="bg-zinc-700/50 border-b border-zinc-800">
                         <tr>
                             <th class="px-6 py-4 text-xs font-bold uppercase text-cyan-400">Feature</th>
                             <th class="px-6 py-4 text-xs font-bold uppercase text-zinc-400">Crazyflie</th>
@@ -215,23 +417,11 @@
         </div>
 
         <!-- Team & Institution -->
-        <div class="bg-gradient-to-r from-zinc-900/50 to-cyan-500/10 border border-zinc-800 rounded-2xl p-8 md:p-10">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div>
-                    <p class="text-cyan-400 text-xs font-bold uppercase tracking-widest mb-2">Team Members</p>
-                    <p class="text-zinc-300 text-sm">Laraib Fatima, Mian Saad Karim, Muhammad Khuzaifa</p>
-                </div>
-                <div>
-                    <p class="text-cyan-400 text-xs font-bold uppercase tracking-widest mb-2">Supervisor</p>
-                    <p class="text-zinc-300 text-sm">Dr. Waqas Ahmad</p>
-                </div>
-                <div>
-                    <p class="text-cyan-400 text-xs font-bold uppercase tracking-widest mb-2">Institution</p>
-                    <p class="text-zinc-300 text-sm font-semibold">PIEAS Islamabad</p>
-                </div>
-            </div>
-        </div>
+        
     </section>
+
+    <!-- Page Separator -->
+    <div class="page-divider"></div>
 
     <!-- Stats Section -->
     <section id="stats" class="max-w-7xl mx-auto px-6 py-16 border-y border-zinc-900 grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -253,13 +443,121 @@
         </div>
     </section>
 
+    <!-- Page Separator -->
+    <div class="page-divider"></div>
+
     <!-- Phases Section - Vertical Display -->
     <section id="phases" class="max-w-7xl mx-auto px-6 py-20 border-b border-zinc-900">
         <div class="mb-16">
             <h2 class="text-3xl md:text-4xl font-bold mb-12 text-white">Development Lifecycle</h2>
             
+            <!-- Development Flow Diagram -->
+            <div class="mb-16">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-2">
+                    <!-- Prototyping Box -->
+                    <div onclick="document.getElementById('phase-prototyping').scrollIntoView({behavior:'smooth'})" class="flow-box cursor-pointer group relative flex-shrink-0">
+                        <div class="w-40 h-28 bg-gradient-to-br from-purple-500/20 to-purple-400/10 border-2 border-purple-500/50 rounded-lg flex items-center justify-center hover:border-purple-500 hover:from-purple-500/30 transition-all">
+                            <div class="text-center">
+                                <p class="text-purple-400 font-bold text-xs uppercase tracking-wide">Phase 1</p>
+                                <p class="text-white font-bold">Prototyping</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Arrow 1 -->
+                    <div class="hidden md:block flex-1 h-12 relative">
+                        <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 200 48">
+                            <defs>
+                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#a855f7;stop-opacity:0.5" />
+                                    <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.5" />
+                                </linearGradient>
+                            </defs>
+                            <path id="path1" d="M 10 24 Q 100 8 190 24" stroke="url(#grad1)" stroke-width="2" fill="none" stroke-dasharray="250" stroke-dashoffset="250" class="animate-arrow-dash"/>
+                            <!-- Animated Arrowhead -->
+                            <g class="animate-arrowhead">
+                                <animateMotion dur="2.5s" repeatCount="indefinite" begin="0s">
+                                    <mpath href="#path1"/>
+                                </animateMotion>
+                                <polygon points="0,-3 6,0 0,3" fill="#06b6d4" opacity="0.9"/>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <!-- Designing Box -->
+                    <div onclick="document.getElementById('phase-designing').scrollIntoView({behavior:'smooth'})" class="flow-box cursor-pointer group relative flex-shrink-0">
+                        <div class="w-40 h-28 bg-gradient-to-br from-cyan-500/20 to-cyan-400/10 border-2 border-cyan-500/50 rounded-lg flex items-center justify-center hover:border-cyan-500 hover:from-cyan-500/30 transition-all">
+                            <div class="text-center">
+                                <p class="text-cyan-400 font-bold text-xs uppercase tracking-wide">Phase 2</p>
+                                <p class="text-white font-bold">Designing</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Arrow 2 -->
+                    <div class="hidden md:block flex-1 h-12 relative">
+                        <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 200 48">
+                            <defs>
+                                <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.5" />
+                                    <stop offset="100%" style="stop-color:#10b981;stop-opacity:0.5" />
+                                </linearGradient>
+                            </defs>
+                            <path id="path2" d="M 10 24 Q 100 40 190 24" stroke="url(#grad2)" stroke-width="2" fill="none" stroke-dasharray="250" stroke-dashoffset="250" class="animate-arrow-dash" style="animation-delay: 0s;"/>
+                            <!-- Animated Arrowhead -->
+                            <g class="animate-arrowhead">
+                                <animateMotion dur="2.5s" repeatCount="indefinite" begin="0s">
+                                    <mpath href="#path2"/>
+                                </animateMotion>
+                                <polygon points="0,-3 6,0 0,3" fill="#10b981" opacity="0.9"/>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <!-- Testing Box -->
+                    <div onclick="document.getElementById('phase-testing').scrollIntoView({behavior:'smooth'})" class="flow-box cursor-pointer group relative flex-shrink-0">
+                        <div class="w-40 h-28 bg-gradient-to-br from-emerald-500/20 to-emerald-400/10 border-2 border-emerald-500/50 rounded-lg flex items-center justify-center hover:border-emerald-500 hover:from-emerald-500/30 transition-all">
+                            <div class="text-center">
+                                <p class="text-emerald-400 font-bold text-xs uppercase tracking-wide">Phase 3</p>
+                                <p class="text-white font-bold">Testing</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Arrow 3 -->
+                    <div class="hidden md:block flex-1 h-12 relative">
+                        <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 200 48">
+                            <defs>
+                                <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.5" />
+                                    <stop offset="100%" style="stop-color:#f97316;stop-opacity:0.5" />
+                                </linearGradient>
+                            </defs>
+                            <path id="path3" d="M 10 24 Q 100 8 190 24" stroke="url(#grad3)" stroke-width="2" fill="none" stroke-dasharray="250" stroke-dashoffset="250" class="animate-arrow-dash" style="animation-delay: 0s;"/>
+                            <!-- Animated Arrowhead -->
+                            <g class="animate-arrowhead">
+                                <animateMotion dur="2.5s" repeatCount="indefinite" begin="0s">
+                                    <mpath href="#path3"/>
+                                </animateMotion>
+                                <polygon points="0,-3 6,0 0,3" fill="#f97316" opacity="0.9"/>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <!-- Manufacturing Box -->
+                    <div onclick="document.getElementById('phase-manufacturing').scrollIntoView({behavior:'smooth'})" class="flow-box cursor-pointer group relative flex-shrink-0">
+                        <div class="w-40 h-28 bg-gradient-to-br from-orange-500/20 to-orange-400/10 border-2 border-orange-500/50 rounded-lg flex items-center justify-center hover:border-orange-500 hover:from-orange-500/30 transition-all">
+                            <div class="text-center">
+                                <p class="text-orange-400 font-bold text-xs uppercase tracking-wide">Phase 4</p>
+                                <p class="text-white font-bold">Manufacturing</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <!-- Phases Vertical Stack -->
-            <div id="phases-container" class="space-y-16">
+            <div id="phases-container" class="space-y-16 mt-20">
                 <!-- Phases will be rendered here by JS -->
             </div>
         </div>
@@ -397,14 +695,14 @@
                 mediaHTML = `
                     <div class="mt-8 pt-8 border-t border-zinc-800">
                         <p class="text-sm font-bold text-zinc-400 uppercase tracking-widest mb-6">Media Gallery</p>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 `;
                 
                 // Show all videos
                 if (phase.multimedia.videos.length > 0) {
                     phase.multimedia.videos.forEach((video, idx) => {
                         mediaHTML += `
-                            <div onclick="openGallery('${phaseId}', 'videos', ${idx})" class="aspect-video bg-zinc-800 rounded-lg cursor-pointer hover:opacity-75 transition-opacity relative group overflow-hidden">
+                            <div onclick="openGallery('${phaseId}', 'videos', ${idx})" class="aspect-square bg-zinc-800 rounded-lg cursor-pointer hover:opacity-75 transition-opacity relative group overflow-hidden">
                                 <video class="w-full h-full object-cover" preload="metadata">
                                     <source src="${video}" type="video/mp4">
                                 </video>
@@ -436,11 +734,7 @@
             }
 
             return `
-                <div class="bg-gradient-to-br from-zinc-900/50 to-black/30 border ${phase.borderColor} rounded-2xl p-8 md:p-12 scroll-mt-20" id="phase-${phaseId}">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border ${phase.borderColor} text-xs font-medium ${colors.text} mb-6">
-                        <div class="w-2 h-2 rounded-full" style="background-color: ${colors.hex}"></div>
-                        Phase ${index + 1} of 4
-                    </div>
+                <div class="bg-gradient-to-br from-zinc-700/40 to-zinc-800/20 border ${phase.borderColor} rounded-2xl p-8 md:p-12 scroll-mt-20" id="phase-${phaseId}">
                     
                     <h3 class="text-3xl md:text-4xl font-bold mb-6 text-white">${phase.title}</h3>
                     
@@ -561,10 +855,38 @@
             }
         });
 
+        // Slideshow Function
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+        
+        function startSlideshow() {
+            // Change slide every 5 seconds
+            setInterval(nextSlide, 5000);
+        }
+        
         // Initialize
-        document.addEventListener('DOMContentLoaded', renderPhases);
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPhases();
+            startSlideshow();
+        });
         if (document.readyState !== 'loading') {
             renderPhases();
+            startSlideshow();
         }
     </script>
 </body>
