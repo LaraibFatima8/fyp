@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Custom Drone | Swarm Intelligence</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body { 
@@ -269,7 +270,7 @@
             <button onclick="document.getElementById('phases').scrollIntoView({behavior:'smooth'})" class="px-6 md:px-8 py-3 md:py-4 bg-cyan-500 text-black font-bold rounded-lg hover:bg-cyan-400 transition-all shadow-[0_0_20px_rgba(34,211,238,0.3)] text-sm md:text-base">
                 Explore Phases
             </button>
-            <button class="px-6 md:px-8 py-3 md:py-4 bg-zinc-900 border border-zinc-800 font-bold rounded-lg hover:bg-zinc-800 transition-all text-sm md:text-base">
+            <button onclick="downloadWhitepaper()" class="px-6 md:px-8 py-3 md:py-4 bg-zinc-900 border border-zinc-800 font-bold rounded-lg hover:bg-zinc-800 transition-all text-sm md:text-base">
                 Download Whitepaper
             </button>
         </div>
@@ -913,6 +914,106 @@
         if (document.readyState !== 'loading') {
             renderPhases();
             startSlideshow();
+        }
+
+        // PDF Download Function
+        async function downloadWhitepaper() {
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = 'Generating PDF...';
+            button.disabled = true;
+
+            try {
+                // Fetch README.md
+                const response = await fetch('README.md');
+                const markdownContent = await response.text();
+
+                // Convert markdown to HTML
+                const htmlContent = markdownToHTML(markdownContent);
+
+                // Create a temporary element for PDF generation
+                const element = document.createElement('div');
+                element.innerHTML = htmlContent;
+                element.style.padding = '20px';
+                element.style.fontFamily = "'Inter', sans-serif";
+                element.style.lineHeight = '1.6';
+                element.style.color = '#1f2937';
+                element.style.backgroundColor = '#fff';
+
+                // PDF options
+                const options = {
+                    margin: 10,
+                    filename: 'Custom_Drone_Platform_Whitepaper.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, useCORS: true },
+                    jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+                };
+
+                // Generate PDF
+                await html2pdf().set(options).from(element).save();
+
+                button.textContent = originalText;
+                button.disabled = false;
+            } catch (error) {
+                console.error('Error generating PDF:', error);
+                button.textContent = 'Download Failed';
+                button.disabled = false;
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                }, 2000);
+            }
+        }
+
+        // Convert Markdown to HTML
+        function markdownToHTML(markdown) {
+            let html = markdown;
+
+            // Headers
+            html = html.replace(/^### (.*?)$/gm, '<h3 style="font-size: 1.5em; font-weight: bold; margin-top: 1.5em; margin-bottom: 0.5em; color: #000;">$1</h3>');
+            html = html.replace(/^## (.*?)$/gm, '<h2 style="font-size: 1.875em; font-weight: bold; margin-top: 1.5em; margin-bottom: 0.5em; color: #000;">$1</h2>');
+            html = html.replace(/^# (.*?)$/gm, '<h1 style="font-size: 2.25em; font-weight: bold; margin-top: 1em; margin-bottom: 0.5em; color: #000;">$1</h1>');
+
+            // Bold and italic
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong style="font-weight: bold;">$1</strong>');
+            html = html.replace(/\*(.*?)\*/g, '<em style="font-style: italic;">$1</em>');
+
+            // Lists
+            html = html.replace(/^\* (.*?)$/gm, '<li style="margin-left: 1.5em; margin-bottom: 0.3em;">$1</li>');
+            html = html.replace(/^\✓ (.*?)$/gm, '<li style="margin-left: 1.5em; margin-bottom: 0.3em;">✓ $1</li>');
+            html = html.replace(/^✓ (.*?)$/gm, '<li style="margin-left: 1.5em; margin-bottom: 0.3em;">✓ $1</li>');
+            html = html.replace(/(<li.*?<\/li>)/s, '<ul style="list-style: none;">$1</ul>');
+
+            // Links
+            html = html.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" style="color: #06b6d4; text-decoration: underline;">$1</a>');
+
+            // Code blocks
+            html = html.replace(/```([\s\S]*?)```/g, '<pre style="background: #f3f4f6; padding: 1em; border-radius: 0.5em; overflow-x: auto; margin: 1em 0;"><code style="font-family: monospace;">$1</code></pre>');
+
+            // Inline code
+            html = html.replace(/`(.*?)`/g, '<code style="background: #f3f4f6; padding: 0.2em 0.4em; border-radius: 0.3em; font-family: monospace; color: #d97706;">$1</code>');
+
+            // Horizontal rules
+            html = html.replace(/^---$/gm, '<hr style="margin: 2em 0; border: none; border-top: 1px solid #e5e7eb;">');
+
+            // Tables
+            html = html.replace(/^\| (.*?) \|$/gm, (match) => {
+                const cells = match.split('|').filter(c => c.trim()).map(c => c.trim());
+                return '<tr style="border-bottom: 1px solid #d1d5db;"><td style="padding: 0.75em; border-right: 1px solid #e5e7eb;">' + cells.join('</td><td style="padding: 0.75em; border-right: 1px solid #e5e7eb;">') + '</td></tr>';
+            });
+
+            // Paragraphs
+            html = html.split('\n\n').map(para => {
+                if (!para.match(/^(<[^>]+>|---|\||```)/)) {
+                    return '<p style="margin-bottom: 1em; line-height: 1.6;">' + para + '</p>';
+                }
+                return para;
+            }).join('');
+
+            // Wrap tables
+            html = html.replace(/(<tr.*?<\/tr>)/s, '<table style="width: 100%; border-collapse: collapse; margin: 1em 0;">$1</table>');
+
+            return html;
         }
     </script>
 </body>
