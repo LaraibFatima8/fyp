@@ -2,17 +2,7 @@ TECHNICAL PORTFOLIO: DECENTRALIZED UAV SWARM WITH ONBOARD EDGE AI
 
 A Joint Venture: PIEAS & SAFSHIKAN
 
-1. System Architecture Overview
 
-This project presents an autonomous, decentralized micro-UAV swarm platform engineered specifically for rapid, localized disaster assessment in communication-denied environments. By decoupling flight dynamics from high-level intelligence and mesh networking, the system achieves a resilient, low-latency architecture capable of real-time computer vision inference directly on the edge.
-
-## System Architecture
-
-The platform decouples high-level machine learning and communication tasks from low-level flight control using a dedicated **Dual-MCU Architecture**. This guarantees deterministic flight stability while handling heavy parallel computing workloads.
-
-## System Architecture
-
-The platform decouples high-level machine learning and communication tasks from low-level flight control using a dedicated **Dual-MCU Architecture**. This guarantees deterministic flight stability while handling heavy parallel computing workloads.
 
 # Autonomous Decentralized UAV Swarm with Onboard Edge AI
 
@@ -24,7 +14,7 @@ This repository contains the architecture, firmware configuration guidelines, an
 
 ## System Architecture
 
-The platform decouples high-level machine learning and communication tasks from low-level flight control using a dedicated **Dual-MCU Architecture**. This guarantees deterministic flight stability while handling heavy parallel computing workloads.
+This project presents an autonomous, decentralized micro-UAV swarm platform engineered specifically for rapid, localized disaster assessment in communication-denied environments. By decoupling flight dynamics from high-level intelligence and mesh networking, the system achieves a resilient, low-latency architecture capable of real-time computer vision inference directly on the edge.
 
 ```mermaid
 graph TD
@@ -51,9 +41,9 @@ graph TD
 
 
 
-2. Core Subsystems & Technical Deep Dive
+# 2. Core Subsystems & Technical Deep Dive
 
-A. Dual-MCU Embedded System & Inter-Processor Communication
+# A. Dual-MCU Embedded System & Inter-Processor Communication
 
 To guarantee deterministic flight performance while simultaneously executing heavy machine learning workloads, the system features a dedicated Dual-MCU Architecture:
 
@@ -77,7 +67,7 @@ An asynchronous UART link connects both microcontrollers. Communication is forma
 
 The ESP32-S3 acts as an onboard companion computer, parsing raw visual data, making navigational decisions, and feeding state-adjusting telemetry packets or guided waypoint commands directly to the STM32 flight controller.
 
-B. Hardware Design & Prototyping Evolution
+# B. Hardware Design & Prototyping Evolution
 
 The physical hardware evolved through a systematic, multi-stage engineering cycle, scaling from bench-top validation to a flight-ready custom design:
 
@@ -99,7 +89,7 @@ Designed custom lightweight CAD frames optimized for structural rigidity, impact
 
 Developed two parallel mechanical form-factors: a compact custom frame for safe, indoor swarm experiments, and a robust F450-class frame for long-endurance field tests.
 
-C. Decentralized Swarming & ESP-NOW Mesh Network
+# C. Decentralized Swarming & ESP-NOW Mesh Network
 
 Unlike centralized drone systems that rely on a single, vulnerable Ground Control Station (GCS) or expensive 4G/LTE/Wi-Fi Access Points, this system implements a completely decentralized peer-to-peer network:
 
@@ -115,7 +105,7 @@ Scalability: Tested to support up to 20 independent nodes simultaneously.
 
 Resilience: Self-healing network topology; if any single node drops out or is destroyed in a disaster zone, the remaining nodes dynamically reroute data to maintain absolute swarm situational awareness.
 
-D. TinyML Engine (Onboard Edge AI)
+# D. TinyML Engine (Onboard Edge AI)
 
 To eliminate latency, high power consumption, and the bandwidth constraints of streaming raw high-definition video back to a base station, all visual intelligence is processed locally on the edge:
 
@@ -133,7 +123,7 @@ Hazard Detection (Fire/Smoke): Executes locally with an inference latency of $67
 
 Zero-Latency Stream: Raw frame buffers are captured at $320 \times 240$ resolution, with the downscaled $96 \times 96$ matrix fed directly into the neural network for parallel processing. Detections are immediately packetized and shared over the ESP-NOW mesh.
 
-3. Top-Tier Industry Skills Demonstrated
+# 3. Top-Tier Industry Skills Demonstrated
 
 By building this project, you have mastered highly competitive skills sought after by aerospace, defense, automotive, and industrial robotics firms:
 
