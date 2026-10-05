@@ -1,8 +1,5 @@
 TECHNICAL PORTFOLIO: DECENTRALIZED UAV SWARM WITH ONBOARD EDGE AI
 
-A Joint Venture: PIEAS & SAFSHIKAN
-
-
 
 # Autonomous Decentralized UAV Swarm with Onboard Edge AI
 
