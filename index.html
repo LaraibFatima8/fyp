@@ -454,6 +454,46 @@
             </div>
         </div>
 
+        <!-- Architectural Schematics & Hardware Topology Showcase -->
+        <div class="mb-8">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-xs uppercase tracking-wider text-umber font-bold">Hardware Topology &amp; Microcontroller Schematics</span>
+                <span class="text-xs text-umber">Click any schematic to inspect high-res</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div onclick="openCustomLightbox('assets/images/drone-architecture.webp', 'Fig. 1.1: Dual-MCU Hardware Architecture &amp; Interconnect Topology')" class="figure-card group" title="Click to inspect">
+                    <div class="figure-media-box">
+                        <img src="assets/images/drone-architecture.webp" alt="Dual-MCU System Architecture" loading="lazy">
+                        <span class="absolute top-3 left-3 px-2 py-0.5 bg-[#1B130E]/85 text-white text-[10px] font-mono font-bold uppercase tracking-wider rounded">Fig. 1.1</span>
+                    </div>
+                    <div class="figure-caption-box">
+                        <h4 class="text-xs sm:text-sm font-bold text-espresso group-hover:text-[#991B5B] transition-colors leading-snug">System Interconnect Topology</h4>
+                        <p class="text-[11px] text-taupe leading-relaxed font-normal">Dedicated 57,600 baud MAVLink UART bridge separating deterministic 400Hz flight loops from edge AI inference.</p>
+                    </div>
+                </div>
+                <div onclick="openCustomLightbox('assets/images/stm32-schm.webp', 'Fig. 1.2: STM32F405RGT6 Autopilot &amp; Sensor Bus Schematic')" class="figure-card group" title="Click to inspect">
+                    <div class="figure-media-box">
+                        <img src="assets/images/stm32-schm.webp" alt="STM32F405 Autopilot Schematic" loading="lazy">
+                        <span class="absolute top-3 left-3 px-2 py-0.5 bg-[#1B130E]/85 text-white text-[10px] font-mono font-bold uppercase tracking-wider rounded">Fig. 1.2</span>
+                    </div>
+                    <div class="figure-caption-box">
+                        <h4 class="text-xs sm:text-sm font-bold text-espresso group-hover:text-[#991B5B] transition-colors leading-snug">STM32F405 Autopilot Schematic</h4>
+                        <p class="text-[11px] text-taupe leading-relaxed font-normal">LQFP-64 pinout showing 16MHz/32.768kHz crystals, 24MHz SPI bus for ICM-42688-P IMU, and I2C barometer.</p>
+                    </div>
+                </div>
+                <div onclick="openCustomLightbox('assets/images/esp32-schm.webp', 'Fig. 1.3: ESP32-S3 Companion AI &amp; Camera Interface Schematic')" class="figure-card group" title="Click to inspect">
+                    <div class="figure-media-box">
+                        <img src="assets/images/esp32-schm.webp" alt="ESP32-S3 Schematics" loading="lazy">
+                        <span class="absolute top-3 left-3 px-2 py-0.5 bg-[#1B130E]/85 text-white text-[10px] font-mono font-bold uppercase tracking-wider rounded">Fig. 1.3</span>
+                    </div>
+                    <div class="figure-caption-box">
+                        <h4 class="text-xs sm:text-sm font-bold text-espresso group-hover:text-[#991B5B] transition-colors leading-snug">ESP32-S3 Companion Schematic</h4>
+                        <p class="text-[11px] text-taupe leading-relaxed font-normal">DVP camera bus wiring, octal PSRAM connections, and isolated 3.3V power domain to prevent RF noise injection.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- FreeRTOS Task Scheduling & AHB Bus Contention -->
         <div class="editorial-card p-6 text-left">
             <h3 class="text-base font-bold text-espresso tracking-tight mb-2">
@@ -563,7 +603,7 @@
         </div>
 
         <!-- Inference Benchmark Table (Directly from Paper Table I) -->
-        <div class="editorial-card p-6 text-left">
+        <div class="editorial-card p-6 text-left mb-8">
             <h3 class="text-base font-bold text-espresso tracking-tight mb-2">
                 On-Device TinyML Inference Benchmarks (ESP32-S3 @ 240 MHz)
             </h3>
@@ -604,6 +644,56 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+
+        <!-- Real In-Flight Detection Evidence & Neural Matrix -->
+        <div>
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-xs uppercase tracking-wider text-umber font-bold">Empirical Field Validation &amp; On-Device Detection Evidence</span>
+                <span class="text-xs text-umber">Click any figure to inspect</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div onclick="openCustomLightbox('assets/images/live-person-detection-drone-in-flight.webp', 'Fig. 2.1: In-Flight Live Person Detection Telemetry')" class="figure-card group" title="Click to inspect">
+                    <div class="figure-media-box">
+                        <img src="assets/images/live-person-detection-drone-in-flight.webp" alt="In-Flight Survivor Detection" loading="lazy">
+                        <span class="absolute top-3 left-3 px-2 py-0.5 bg-[#1B130E]/85 text-white text-[10px] font-mono font-bold uppercase tracking-wider rounded">Fig. 2.1</span>
+                    </div>
+                    <div class="figure-caption-box">
+                        <h4 class="text-xs font-bold text-espresso group-hover:text-[#991B5B] transition-colors leading-snug">In-Flight Survivor HUD</h4>
+                        <p class="text-[11px] text-taupe leading-relaxed font-normal">Live HUD capture during autonomous hover over target personnel with real-time bounding box overlay.</p>
+                    </div>
+                </div>
+                <div onclick="openCustomLightbox('assets/images/live-multiple-persons-detection.webp', 'Fig. 2.2: Multi-Person Aerial Detection in Field Trials')" class="figure-card group" title="Click to inspect">
+                    <div class="figure-media-box">
+                        <img src="assets/images/live-multiple-persons-detection.webp" alt="Multi-Person Detection" loading="lazy">
+                        <span class="absolute top-3 left-3 px-2 py-0.5 bg-[#1B130E]/85 text-white text-[10px] font-mono font-bold uppercase tracking-wider rounded">Fig. 2.2</span>
+                    </div>
+                    <div class="figure-caption-box">
+                        <h4 class="text-xs font-bold text-espresso group-hover:text-[#991B5B] transition-colors leading-snug">Multi-Person Detection</h4>
+                        <p class="text-[11px] text-taupe leading-relaxed font-normal">Simultaneous multi-target detection in outdoor open-field trials demonstrating spatial cluster resolution.</p>
+                    </div>
+                </div>
+                <div onclick="openCustomLightbox('assets/images/confusion-matrix.webp', 'Fig. 2.3: Quantized INT8 Classification Confusion Matrix')" class="figure-card group" title="Click to inspect">
+                    <div class="figure-media-box">
+                        <img src="assets/images/confusion-matrix.webp" alt="Confusion Matrix" loading="lazy">
+                        <span class="absolute top-3 left-3 px-2 py-0.5 bg-[#1B130E]/85 text-white text-[10px] font-mono font-bold uppercase tracking-wider rounded">Fig. 2.3</span>
+                    </div>
+                    <div class="figure-caption-box">
+                        <h4 class="text-xs font-bold text-espresso group-hover:text-[#991B5B] transition-colors leading-snug">Validation Confusion Matrix</h4>
+                        <p class="text-[11px] text-taupe leading-relaxed font-normal">Edge Impulse validation proving 100% background precision (0% false alarms) and 93.7% multi-pass fire recall.</p>
+                    </div>
+                </div>
+                <div onclick="openCustomLightbox('assets/gifs/v3-esp32-human-detection.gif', 'Demo 2.4 (GIF): Active-Flight 1.5 FPS Neural Inference Stream')" class="figure-card group" title="Click to inspect">
+                    <div class="figure-media-box">
+                        <img src="assets/gifs/v3-esp32-human-detection.gif" alt="Real-Time Human Detection Stream" loading="lazy">
+                        <span class="absolute top-3 left-3 px-2 py-0.5 bg-[#991B5B] text-white text-[10px] font-mono font-bold uppercase tracking-wider rounded">Demo 2.4 (GIF)</span>
+                    </div>
+                    <div class="figure-caption-box">
+                        <h4 class="text-xs font-bold text-espresso group-hover:text-[#991B5B] transition-colors leading-snug">Active-Flight Stream</h4>
+                        <p class="text-[11px] text-taupe leading-relaxed font-normal">Live video stream showing on-device INT8 MobileNetV2 inference operating continuously at 1.5 FPS.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -658,6 +748,40 @@
                         Each ESP-NOW frame packs compressed GPS coordinates (latitude, longitude, altitude), heading, battery voltage, flight status, and AI detection alert flags (fire confidence, survivor coordinates). Simultaneously, Node 1 acts as a local SoftAP hotspot broadcasting a captive-portal mobile web dashboard, enabling rescue teams on the ground to monitor swarm telemetry on any smartphone or tablet without external software or internet connectivity.
                     </p>
                 </div>
+
+                <!-- Field Mesh Visuals -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
+                    <div onclick="openCustomLightbox('assets/images/live-dashboard-feed-and-arm-disarm-buttons.webp', 'Fig. 3.1: Captive-Portal Web Ground Station HUD &amp; Arm Controls')" class="figure-card group" title="Click to inspect">
+                        <div class="figure-media-box">
+                            <img src="assets/images/live-dashboard-feed-and-arm-disarm-buttons.webp" alt="Mesh Web Dashboard" loading="lazy">
+                            <span class="absolute top-3 left-3 px-2 py-0.5 bg-[#1B130E]/85 text-white text-[10px] font-mono font-bold uppercase tracking-wider rounded">Fig. 3.1</span>
+                        </div>
+                        <div class="figure-caption-box">
+                            <h4 class="text-xs font-bold text-espresso group-hover:text-[#991B5B] transition-colors leading-snug">Browser Ground Station</h4>
+                            <p class="text-[11px] text-taupe leading-relaxed font-normal">Captive-portal web GUI served from ESP32-S3 SoftAP displaying telemetry, HUD video, and arm controls.</p>
+                        </div>
+                    </div>
+                    <div onclick="openCustomLightbox('assets/images/drone-single-vs-swarm-converage-comparison.webp', 'Fig. 3.2: Single-Drone vs Swarm Search Area Coverage Comparison')" class="figure-card group" title="Click to inspect">
+                        <div class="figure-media-box">
+                            <img src="assets/images/drone-single-vs-swarm-converage-comparison.webp" alt="Coverage Comparison" loading="lazy">
+                            <span class="absolute top-3 left-3 px-2 py-0.5 bg-[#1B130E]/85 text-white text-[10px] font-mono font-bold uppercase tracking-wider rounded">Fig. 3.2</span>
+                        </div>
+                        <div class="figure-caption-box">
+                            <h4 class="text-xs font-bold text-espresso group-hover:text-[#991B5B] transition-colors leading-snug">Swarm Coverage Scaling</h4>
+                            <p class="text-[11px] text-taupe leading-relaxed font-normal">Spatial simulation showing linear N-fold search area expansion using decentralized ESP-NOW coordination.</p>
+                        </div>
+                    </div>
+                    <div onclick="openCustomLightbox('assets/gifs/v3-two-drone-bench-test.gif', 'Demo 3.3 (GIF): Dual Drone Synchronized ESP-NOW Bench Test')" class="figure-card group" title="Click to inspect">
+                        <div class="figure-media-box">
+                            <img src="assets/gifs/v3-two-drone-bench-test.gif" alt="Dual Drone Bench Test" loading="lazy">
+                            <span class="absolute top-3 left-3 px-2 py-0.5 bg-[#991B5B] text-white text-[10px] font-mono font-bold uppercase tracking-wider rounded">Demo 3.3 (GIF)</span>
+                        </div>
+                        <div class="figure-caption-box">
+                            <h4 class="text-xs font-bold text-espresso group-hover:text-[#991B5B] transition-colors leading-snug">Mesh Bench Sync</h4>
+                            <p class="text-[11px] text-taupe leading-relaxed font-normal">Real-time telemetry packet interchange between two active flight nodes verified without external Wi-Fi.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -676,7 +800,7 @@
             </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left mb-8">
             <!-- 4-Layer Stackup -->
             <div class="editorial-card p-6">
                 <span class="text-[10px] uppercase tracking-wider text-[#991B5B] font-bold block mb-1">Faraday Shielding</span>
@@ -704,18 +828,82 @@
                 </p>
             </div>
         </div>
+
+        <!-- Physical Fabrication & Board Assembly Evidence -->
+        <div>
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-xs uppercase tracking-wider text-umber font-bold">Physical Fabrication, SMT Soldering &amp; Airframe Integration</span>
+                <span class="text-xs text-umber">Click any figure to inspect</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div onclick="openCustomLightbox('assets/images/custom-fc-top-prominent.webp', 'Fig. 4.1: Custom 4-Layer Flight Controller (Top SMT Assembly)')" class="figure-card group" title="Click to inspect">
+                    <div class="figure-media-box">
+                        <img src="assets/images/custom-fc-top-prominent.webp" alt="Custom Flight Controller Top" loading="lazy">
+                        <span class="absolute top-3 left-3 px-2 py-0.5 bg-[#1B130E]/85 text-white text-[10px] font-mono font-bold uppercase tracking-wider rounded">Fig. 4.1</span>
+                    </div>
+                    <div class="figure-caption-box">
+                        <h4 class="text-xs font-bold text-espresso group-hover:text-[#991B5B] transition-colors leading-snug">Custom FC Board (Top View)</h4>
+                        <p class="text-[11px] text-taupe leading-relaxed font-normal">Fabricated 4-layer flight controller with STM32F405, ICM-42688-P IMU, and buck-boost power stage.</p>
+                    </div>
+                </div>
+                <div onclick="openCustomLightbox('assets/images/custom-fc-soldered-bottom.webp', 'Fig. 4.2: Flight Controller Underside (ESP32-S3 &amp; Power Filtering)')" class="figure-card group" title="Click to inspect">
+                    <div class="figure-media-box">
+                        <img src="assets/images/custom-fc-soldered-bottom.webp" alt="Custom Flight Controller Bottom" loading="lazy">
+                        <span class="absolute top-3 left-3 px-2 py-0.5 bg-[#1B130E]/85 text-white text-[10px] font-mono font-bold uppercase tracking-wider rounded">Fig. 4.2</span>
+                    </div>
+                    <div class="figure-caption-box">
+                        <h4 class="text-xs font-bold text-espresso group-hover:text-[#991B5B] transition-colors leading-snug">Custom FC Board (Bottom View)</h4>
+                        <p class="text-[11px] text-taupe leading-relaxed font-normal">Populated ESP32-S3 module with antenna keepout zone and low-noise analog sensor decoupling.</p>
+                    </div>
+                </div>
+                <div onclick="openCustomLightbox('assets/images/custom-drone-final-top.webp', 'Fig. 4.3: Fully Assembled 18g Micro-Airframe Drone')" class="figure-card group" title="Click to inspect">
+                    <div class="figure-media-box">
+                        <img src="assets/images/custom-drone-final-top.webp" alt="Assembled Micro-Drone" loading="lazy">
+                        <span class="absolute top-3 left-3 px-2 py-0.5 bg-[#1B130E]/85 text-white text-[10px] font-mono font-bold uppercase tracking-wider rounded">Fig. 4.3</span>
+                    </div>
+                    <div class="figure-caption-box">
+                        <h4 class="text-xs font-bold text-espresso group-hover:text-[#991B5B] transition-colors leading-snug">Assembled Micro-Airframe</h4>
+                        <p class="text-[11px] text-taupe leading-relaxed font-normal">Complete physical flight unit integrating custom avionics, 8520 coreless motors, and 65mm props.</p>
+                    </div>
+                </div>
+                <div onclick="openCustomLightbox('assets/gifs/v3-custom-fc-first-powerup.gif', 'Demo 4.4 (GIF): Custom FC Initial Power-Up &amp; Diagnostics')" class="figure-card group" title="Click to inspect">
+                    <div class="figure-media-box">
+                        <img src="assets/gifs/v3-custom-fc-first-powerup.gif" alt="Initial Board Power-Up" loading="lazy">
+                        <span class="absolute top-3 left-3 px-2 py-0.5 bg-[#991B5B] text-white text-[10px] font-mono font-bold uppercase tracking-wider rounded">Demo 4.4 (GIF)</span>
+                    </div>
+                    <div class="figure-caption-box">
+                        <h4 class="text-xs font-bold text-espresso group-hover:text-[#991B5B] transition-colors leading-snug">Board Bring-Up &amp; Smoke Test</h4>
+                        <p class="text-[11px] text-taupe leading-relaxed font-normal">First electrical bring-up verifying regulated 5V/3.3V rails, bootloader flashing, and status LEDs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <div class="editorial-divider max-w-6xl mx-auto"></div>
 
     <!-- Section 05: Comparative Benchmarking Section (Directly from Paper Table IV) -->
     <section id="benchmarking" class="max-w-6xl mx-auto px-6 py-16 scroll-mt-20">
-        <div class="mb-6 text-left">
-            <span class="text-xs uppercase tracking-wider text-[#991B5B] font-bold block mb-1.5">05 / Comparative Analysis</span>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-espresso tracking-tight">Empirical Platform Benchmarking</h2>
-            <p class="text-taupe text-sm font-normal mt-1 max-w-2xl">
-                Direct comparative analysis published in Table IV of our research paper, contrasting our integrated Dual-MCU node against standard commercial and experimental drone platforms.
-            </p>
+        <div class="mb-6 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+            <div class="md:col-span-8 text-left">
+                <span class="text-xs uppercase tracking-wider text-[#991B5B] font-bold block mb-1.5">05 / Comparative Analysis</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-espresso tracking-tight">Empirical Platform Benchmarking</h2>
+                <p class="text-taupe text-sm font-normal mt-1 leading-relaxed">
+                    Direct comparative analysis published in Table IV of our research paper, contrasting our integrated Dual-MCU node against standard commercial and experimental drone platforms.
+                </p>
+            </div>
+            <div class="md:col-span-4">
+                <div onclick="openCustomLightbox('assets/images/both-drones.webp', 'Fig. 5.1: Comparative Scale: F450 Testbed vs Custom Micro-Drone')" class="figure-card group" title="Click to inspect">
+                    <div class="figure-media-box" style="aspect-ratio: 16 / 9;">
+                        <img src="assets/images/both-drones.webp" alt="F450 Testbed vs Custom Micro-Drone" loading="lazy">
+                        <span class="absolute top-3 left-3 px-2 py-0.5 bg-[#1B130E]/85 text-white text-[10px] font-mono font-bold uppercase tracking-wider rounded">Fig. 5.1</span>
+                    </div>
+                    <div class="figure-caption-box">
+                        <h4 class="text-xs font-bold text-espresso group-hover:text-[#991B5B] transition-colors leading-snug">Physical Scale Comparison</h4>
+                        <p class="text-[11px] text-taupe">F450 multirotor testbed vs custom 18g micro-drone.</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="editorial-card overflow-hidden">
@@ -964,11 +1152,11 @@
 
         // Hero Showcase Slideshow Data & Interactive Controls (Expanded Curated Pool)
         const heroSlidesData = [
+            { url: 'assets/images/custom-fc-top-prominent.webp', title: 'Custom 4-Layer Flight Controller (Top View)', caption: 'Precision SMT stencil assembly: STM32F405, ICM-42688-P IMU, SPL06 barometer, and dual regulators' },
             { url: 'assets/images/both-drones.webp', title: 'F450 Testbed & Custom Micro-Drone', caption: 'Comparative validation testbed alongside custom 18g micro-airframe' },
             { url: 'assets/images/custom-drone-final-top.webp', title: 'Assembled Micro-Drone (Top View)', caption: 'Carbon/PLA airframe with 3.5-inch props and integrated avionics' },
             { url: 'assets/images/custom-drone-final-bottom.webp', title: 'Assembled Micro-Drone (Bottom View)', caption: 'Direct-drive coreless motor wiring and central LiPo bay' },
             { url: 'assets/images/v3-top-bottom-pcb.webp', title: 'Custom 4-Layer Flight Controller', caption: 'STM32F405 + ESP32-S3 dual-MCU architecture with Faraday ground plane' },
-            { url: 'assets/images/custom-fc-soldered-top.webp', title: 'Soldered Custom FC Board (Top View)', caption: 'SMT assembly showing STM32F405, ICM-42688-P IMU, and power stage' },
             { url: 'assets/images/custom-fc-soldered-bottom.webp', title: 'Soldered Custom FC Board (Bottom View)', caption: 'ESP32-S3 module, antenna keepout zone, and passive decoupling' },
             { url: 'assets/images/live-person-detection-drone-in-flight.webp', title: 'In-Flight Survivor Detection', caption: 'Real-time INT8 FOMO MobileNetV2 inference during active flight' },
             { url: 'assets/images/live-multiple-persons-detection.webp', title: 'Multi-Person Aerial Detection', caption: 'Concurrent multi-target detection in outdoor open-field trials' },
@@ -1143,7 +1331,7 @@
                 items: [
                     { type: "image", url: "assets/images/v3-top-bottom-pcb.webp", label: "Integrated 4-Layer Flight Controller", caption: "Fabricated 4-layer flight controller with internal solid ground Faraday plane." },
                     { type: "image", url: "assets/images/v3-pcbs-size-comparison.webp", label: "PCB Size Comparison Across Iterations", caption: "Miniaturization timeline from veroboard to the final custom 4-layer flight board." },
-                    { type: "image", url: "assets/images/custom-fc-soldered-top.webp", label: "Soldered Custom FC Board (Top View)", caption: "SMD stencil soldered board top showing STM32F405, ICM-42688-P IMU, and power stage." },
+                    { type: "image", url: "assets/images/custom-fc-top-prominent.webp", label: "Custom 4-Layer Flight Controller (Top View)", caption: "SMD stencil soldered board top showing STM32F405, ICM-42688-P IMU, and power stage." },
                     { type: "image", url: "assets/images/custom-fc-soldered-bottom.webp", label: "Soldered Custom FC Board (Bottom View)", caption: "Underside assembly showing ESP32-S3 module, antenna keepout, and passives." },
                     { type: "image", url: "assets/images/custom-drone-final-top.webp", label: "Assembled Micro-Drone (Top View)", caption: "Complete assembled micro-drone with 3.5-inch props and integrated avionics." },
                     { type: "image", url: "assets/images/custom-drone-final-bottom.webp", label: "Assembled Micro-Drone (Bottom View)", caption: "Underside view showing motor driver routing and central LiPo retention bracket." },
@@ -1290,6 +1478,7 @@
                         &#8594;
                     </button>
                 ` : ''}
+            `;
         }
 
         function nextLightbox() {
