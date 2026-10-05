@@ -1,1019 +1,1372 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Drone | Swarm Intelligence</title>
+    <title>UAV Swarm for Autonomous Disaster Assessment</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Solid, Professional, Highly Legible Font: Plus Jakarta Sans & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        paper: '#FAF9F6',
+                        espresso: '#1B130E',
+                        taupe: '#3D2F27',
+                        umber: '#635348',
+                        borderSepia: '#E5DED6',
+                        magentaTone: '#991B5B',
+                        magentaSubtle: '#FDF2F8',
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
+        :root {
+            --bg-paper: #FAF9F6;
+            --bg-card: #FFFFFF;
+            --text-dark: #1B130E;
+            --text-muted: #3D2F27;
+            --text-faint: #635348;
+            --border-line: #E5DED6;
+            --border-hover: #1B130E;
+            --accent-magenta: #991B5B;
+            --magenta-light: #FDF2F8;
+        }
+
         body { 
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #09090b 0%, #1a1625 25%, #0d1a2e 50%, #09090b 100%);
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-paper);
+            color: var(--text-dark);
+            font-weight: 400;
+            line-height: 1.6;
             min-height: 100vh;
         }
-        .glass-nav {
-            background: rgba(9, 9, 11, 0.8);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(39, 39, 42, 1);
+
+        .classic-nav {
+            background: rgba(250, 249, 246, 0.96);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-line);
         }
-        .hero-glow {
-            background: radial-gradient(circle at center, rgba(34, 211, 238, 0.15) 0%, transparent 70%);
+
+        .editorial-card {
+            background-color: #FFFFFF;
+            border: 1px solid var(--border-line);
+            border-radius: 12px;
+            transition: all 0.2s ease;
         }
-        .modal-enter {
-            animation: fadeIn 0.3s ease-out;
+
+        .editorial-card:hover {
+            border-color: #1B130E;
+            box-shadow: 0 4px 20px -5px rgba(27, 19, 14, 0.08);
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        
-        /* Page Transition Animations */
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        section {
-            animation: slideInUp 0.6s ease-out both;
-        }
-        
-        section:nth-of-type(1) { animation-delay: 0s; }
-        section:nth-of-type(2) { animation-delay: 0.1s; }
-        section:nth-of-type(3) { animation-delay: 0.2s; }
-        section:nth-of-type(4) { animation-delay: 0.3s; }
-        section:nth-of-type(5) { animation-delay: 0.4s; }
-        
-        /* Page Divider */
-        .page-divider {
+
+        .editorial-divider {
             height: 1px;
-            background: linear-gradient(90deg, transparent 0%, rgba(34, 211, 238, 0.3) 25%, rgba(34, 211, 238, 0.3) 75%, transparent 100%);
-            margin: 40px 0;
-        }
-        
-        /* Team Heading Underline */
-        .team-heading-underline {
-            display: block;
-            width: fit-content;
-            margin: 0 auto;
-            position: relative;
-            padding-bottom: 8px;
-        }
-        
-        .team-heading-underline::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 300px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent 0%, rgba(34, 211, 238, 0.5) 25%, rgba(34, 211, 238, 0.5) 75%, transparent 100%);
-        }
-        
-        /* Flow Diagram Animations */
-        @keyframes arrow-dash {
-            from {
-                stroke-dashoffset: 250;
-            }
-            to {
-                stroke-dashoffset: 0;
-            }
-        }
-        
-        .animate-arrow-dash {
-            animation: arrow-dash 2.5s ease-in-out infinite;
-        }
-        
-        @keyframes arrowhead-move {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-        
-        .animate-arrowhead {
-            animation: arrowhead-move 2.5s ease-in-out infinite;
-        }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #09090b; }
-        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
-        
-        /* Slideshow Background */
-        .slideshow-container {
-            position: absolute;
-            top: 0;
-            left: 0;
+            background-color: var(--border-line);
             width: 100%;
-            height: 100%;
+        }
+
+        /* Hero Showcase Frame (Enlarged, Centered, No Cropping) */
+        .hero-slideshow-frame {
+            position: relative;
+            width: 100%;
+            min-height: 520px;
+            aspect-ratio: 16 / 11;
+            border-radius: 16px;
             overflow: hidden;
-            z-index: -1;
+            background: radial-gradient(circle at center, #241A14 0%, #0E0907 100%);
+            border: 1px solid var(--border-line);
+            box-shadow: 0 24px 50px -12px rgba(27, 19, 14, 0.25);
         }
-        
-        @media (max-width: 768px) {
-            .slideshow-container {
-                height: 100%;
-            }
-        }
-        
-        .slide {
+
+        .hero-slide {
             position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
-            background-size: cover;
-            background-position: center;
+            background-size: contain;
+            background-position: center center;
             background-repeat: no-repeat;
+            cursor: pointer;
         }
-        
-        .slide.active {
+
+        .hero-slide.active {
             opacity: 1;
         }
-        
-        .slide-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
+
+        /* Research Figure Cards (Academic / Scientific Publication Standard) */
+        .figure-card {
+            background-color: #FFFFFF;
+            border: 1px solid var(--border-line);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .figure-card:hover {
+            border-color: #991B5B;
+            transform: translateY(-3px);
+            box-shadow: 0 14px 30px -8px rgba(27, 19, 14, 0.14);
+        }
+
+        .figure-media-box {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 11;
+            background-color: #F8F5F1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border-line);
+            padding: 12px;
+        }
+
+        .figure-media-box img {
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(9, 9, 11, 0.7) 0%, rgba(9, 9, 11, 0.5) 100%);
-            z-index: 1;
+            object-fit: contain;
+            transition: transform 0.35s ease;
         }
-        
-        /* Light Theme */
-        body.light-theme {
-            background-color: #f5f5f5;
-            background: linear-gradient(135deg, #f5f5f5 0%, #ede9fe 25%, #e0f2fe 50%, #f5f5f5 100%);
-            color: #18181b;
+
+        .figure-card:hover .figure-media-box img {
+            transform: scale(1.03);
         }
-        
-        body.light-theme .glass-nav {
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(50, 50, 50, 1);
+
+        .figure-caption-box {
+            padding: 12px 14px 14px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            background-color: #FFFFFF;
+            flex-grow: 1;
         }
-        
-        body.light-theme .text-zinc-950 { color: #dcdce7; }
-        body.light-theme .text-zinc-100 { color: #fafafa; }
-        body.light-theme .text-white { color: #000; }
-        body.light-theme .text-zinc-400 { color: #666; }
-        body.light-theme .text-zinc-500 { color: #777; }
-        body.light-theme .text-zinc-300 { color: #333; }
-        body.light-theme .bg-zinc-950 { background-color: #f5f5f5; }
-        body.light-theme .bg-zinc-900 { background-color: #e8e8e8; }
-        body.light-theme .bg-zinc-900\/50 { background-color: rgba(232, 232, 232, 0.5); }
-        body.light-theme .bg-zinc-800 { background-color: #d0d0d0; }
-        body.light-theme .bg-zinc-800\/20 { background-color: rgba(208, 208, 208, 0.2); }
-        body.light-theme .bg-zinc-800\/60 { background-color: rgba(208, 208, 208, 0.6); }
-        body.light-theme .border-zinc-900 { border-color: #d0d0d0; }
-        body.light-theme .border-zinc-800 { border-color: #c0c0c0; }
-        body.light-theme .border-zinc-700 { border-color: #b0b0b0; }
-        body.light-theme .hover\:bg-zinc-800:hover { background-color: #d0d0d0; }
-        body.light-theme .group:hover .group-hover\:opacity-100 { opacity: 1; }
-        
-        body.light-theme .hero-glow {
-            background: radial-gradient(circle at center, rgba(34, 211, 238, 0.1) 0%, transparent 70%);
+
+        /* Subtle Dark Mode Palette */
+        body.dark-mode {
+            --bg-paper: #120D0A;
+            --bg-card: #1C140F;
+            --text-dark: #FAF5F0;
+            --text-muted: #D5C9C0;
+            --text-faint: #9E8E83;
+            --border-line: #33251E;
+            --border-hover: #FAF5F0;
+            --accent-magenta: #F472B6;
+            --magenta-light: #2A1420;
+            background-color: #120D0A;
+            color: #FAF5F0;
         }
-        
-        body.light-theme .selection\:bg-cyan-500\/30::selection {
-            background-color: rgba(34, 211, 238, 0.3);
+
+        body.dark-mode .classic-nav {
+            background: rgba(18, 13, 10, 0.95);
+            border-bottom: 1px solid var(--border-line);
         }
-        
-        body.light-theme ::-webkit-scrollbar-track { background: #f5f5f5; }
-        body.light-theme ::-webkit-scrollbar-thumb { background: #c0c0c0; border-radius: 4px; }
-        body.light-theme ::-webkit-scrollbar-thumb:hover { background: #b0b0b0; }
-        
-        body.light-theme .divide-zinc-800\/50 { border-color: rgba(208, 208, 208, 0.5); }
-        body.light-theme .from-white { background: linear-gradient(to bottom, #000 0%, #666 100%); }
-        body.light-theme .to-zinc-500 { color: #666; }
-        body.light-theme .bg-gradient-to-b { background-image: linear-gradient(to bottom, var(--tw-gradient-stops)); }
-        body.light-theme .border-cyan-500\/30 { border-color: rgba(6, 182, 212, 0.3); }
-        body.light-theme .border-purple-500\/30 { border-color: rgba(168, 85, 247, 0.3); }
-        body.light-theme .border-emerald-500\/30 { border-color: rgba(16, 185, 129, 0.3); }
-        body.light-theme .border-orange-500\/30 { border-color: rgba(249, 115, 22, 0.3); }
-        body.light-theme .from-cyan-500\/10 { background-color: rgba(6, 182, 212, 0.1); }
-        body.light-theme .from-purple-500\/10 { background-color: rgba(168, 85, 247, 0.1); }
-        body.light-theme .from-emerald-500\/10 { background-color: rgba(16, 185, 129, 0.1); }
-        body.light-theme .from-orange-500\/10 { background-color: rgba(249, 115, 22, 0.1); }
-        body.light-theme .text-cyan-400 { color: #06b6d4 !important; }
-        body.light-theme .text-purple-400 { color: #a855f7 !important; }
-        body.light-theme .text-emerald-400 { color: #10b981 !important; }
-        body.light-theme .text-orange-400 { color: #f97316 !important; }
-        body.light-theme .bg-cyan-500 { background-color: #06b6d4; }
-        body.light-theme .font-bold { font-weight: 700; }
-        body.light-theme a { color: #06b6d4; }
-        body.light-theme .overflow-x-hidden { overflow-x: hidden; }
-        body.light-theme .to-zinc-500::selection { color: #666; }
-        
-        /* Hero Title in Light Theme */
-        body.light-theme h1 {
-            color: #fff !important;
-            background: none !important;
-            -webkit-background-clip: unset !important;
-            -webkit-text-fill-color: unset !important;
+
+        body.dark-mode .editorial-card {
+            background-color: #1C140F;
+            border-color: #33251E;
         }
+
+        body.dark-mode .editorial-card:hover {
+            border-color: #F472B6;
+        }
+
+        body.dark-mode .bg-white {
+            background-color: #1C140F !important;
+        }
+
+        body.dark-mode .hero-slideshow-frame {
+            background: radial-gradient(circle at center, #1B120E 0%, #080504 100%);
+            border-color: #33251E;
+            box-shadow: 0 24px 50px -12px rgba(0, 0, 0, 0.8);
+        }
+
+        body.dark-mode .figure-card {
+            background-color: #1C140F;
+            border-color: #33251E;
+        }
+
+        body.dark-mode .figure-card:hover {
+            border-color: #F472B6;
+            box-shadow: 0 14px 30px -8px rgba(0, 0, 0, 0.6);
+        }
+
+        body.dark-mode .figure-media-box {
+            background-color: #120D0A;
+            border-bottom-color: #33251E;
+        }
+
+        body.dark-mode .figure-caption-box {
+            background-color: #1C140F;
+        }
+
+        body.dark-mode .text-espresso {
+            color: #FAF5F0 !important;
+        }
+
+        body.dark-mode .text-taupe {
+            color: #D5C9C0 !important;
+        }
+
+        body.dark-mode .border-borderSepia {
+            border-color: #33251E !important;
+        }
+
+        /* Custom Fine Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-paper); }
+        ::-webkit-scrollbar-thumb { background: #D5CBC1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #991B5B; }
     </style>
 </head>
-<body class="text-zinc-100 selection:bg-cyan-500/30 overflow-x-hidden">
+<body class="selection:bg-pink-100 selection:text-pink-900 antialiased">
 
-    <!-- Navigation -->
-    <nav class="absolute w-full z-50 glass-nav">
-        <div class="w-full px-6 h-20 flex items-center justify-center gap-20">
-            <div class="flex gap-20 text-lg font-medium text-zinc-400">
-                <a href="#overview" class="hover:text-white transition-colors">Overview</a>
-                <a href="#team" class="hover:text-white transition-colors">Team</a>
-                <a href="#phases" class="hover:text-white transition-colors">Phases</a>
-                <a href="#stats" class="hover:text-white transition-colors">Tech Specs</a>
-            </div>
-            <!-- Theme Toggle -->
-            <button id="theme-toggle" onclick="toggleTheme()" class="p-2 rounded-lg bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 transition-colors text-zinc-400 hover:text-white">
-                <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-                <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-            </button>
-        </div>
-    </nav>
+    <!-- Minimalist Navigation Bar with Explicit Team Button -->
+    <header class="fixed top-0 w-full z-50 classic-nav">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#991B5B]"></span>
+                <span class="text-base font-bold text-espresso tracking-tight">Autonomous UAV Swarm</span>
+            </a>
 
-    <!-- Hero Section -->
-    <section class="relative pt-20 md:pt-40 pb-10 md:pb-20 px-4 md:px-6 flex flex-col items-center text-center overflow-hidden min-h-screen md:min-h-auto flex justify-center">
-        <!-- Slideshow Background -->
-        <div class="slideshow-container">
-            <div class="slide active" style="background-image: url('firstpagebackground/slide1.jpg');"></div>
-            <div class="slide" style="background-image: url('firstpagebackground/slide2.jpg');"></div>
-            <div class="slide" style="background-image: url('firstpagebackground/slide3.jpg');"></div>
-            <div class="slide-overlay"></div>
-        </div>
-        <div class="absolute top-0 -z-10 w-full h-[600px] hero-glow"></div>
-        
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-medium text-cyan-400 mb-6 animate-pulse">
-            <div class="w-2 h-2 rounded-full bg-cyan-400"></div>
-            ACTIVE RESEARCH PROJECT
-        </div>
-        
-        <h1 class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-4 md:mb-6 bg-gradient-to-b from-white to-zinc-500 bg-clip-text text-transparent leading-tight md:leading-normal">
-            Custom Drone PLatform <br> for Swarming & Edge AI Applications
-        </h1>
-        
-        <p class="max-w-2xl text-base md:text-lg lg:text-xl text-zinc-400 mb-6 md:mb-10 leading-relaxed px-2">
-            A hardware-optimized micro-UAV platform featuring onboard Edge AI and swarm intelligence for autonomous multi-mission coordination.
-        </p>
+            <nav class="hidden md:flex items-center gap-7 text-xs uppercase tracking-wider text-taupe font-semibold">
+                <a href="#overview" class="hover:text-espresso transition-colors">Overview</a>
+                <a href="#benchmarking" class="hover:text-espresso transition-colors">Benchmarks</a>
+                <a href="#lifecycle" class="hover:text-espresso transition-colors">Phases</a>
+                <a href="#team" class="hover:text-espresso transition-colors">Team</a>
+            </nav>
 
-        <div class="flex flex-col sm:flex-row gap-3 md:gap-4 w-full sm:w-auto justify-center px-2">
-            <button onclick="document.getElementById('phases').scrollIntoView({behavior:'smooth'})" class="px-6 md:px-8 py-3 md:py-4 bg-cyan-500 text-black font-bold rounded-lg hover:bg-cyan-400 transition-all shadow-[0_0_20px_rgba(34,211,238,0.3)] text-sm md:text-base">
-                Explore Phases
-            </button>
-            <button onclick="downloadWhitepaper()" class="px-6 md:px-8 py-3 md:py-4 bg-zinc-900 border border-zinc-800 font-bold rounded-lg hover:bg-zinc-800 transition-all text-sm md:text-base">
-                Download Whitepaper
-            </button>
-        </div>
-    </section>
-
-    <!-- Page Separator -->
-    <div class="page-divider"></div>
-
-    <!-- Team Section -->
-    <section id="team" class="max-w-7xl mx-auto px-6 py-20 border-b border-zinc-900">
-        <div class="mb-16">
-            <h2 class="text-5xl md:text-6xl font-bold mb-12 text-white text-center -mt-8 team-heading-underline">Team</h2>
-
-            <!-- Team Members -->
-            <div class="mb-16 px-2 md:px-0">
-                <h3 class="text-xl md:text-2xl font-bold mb-6 md:mb-8 text-white">Members</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
-                    <!-- Member 1 -->
-                    <div class="flex flex-col items-center text-center">
-                        <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-gradient-to-br from-cyan-500/20 to-cyan-400/10 border border-cyan-500/30 flex items-center justify-center mb-4 md:mb-6 overflow-hidden">
-                            <img src="teamimages/laraib.jpg" alt="Laraib Fatima" class="w-full h-full object-cover">
-                        </div>
-                        <h4 class="text-lg md:text-xl font-bold text-white mb-2">Laraib Fatima</h4>
-                        <p class="text-xs text-zinc-500 mt-2">Hardware Integration & Firmware </p>
-                        <p class="text-xs md:text-sm mb-2 mt-2"><a href="https://www.linkedin.com/in/laraib-fatima-5586b6265" class="text-blue-400 hover:text-blue-300 transition">LinkedIn</a> | <a href="https://github.com/LaraibFatima8" class="text-blue-400 hover:text-blue-300 transition">GitHub</a></p>
-                    </div>
-
-                    <!-- Member 2 -->
-                    <div class="flex flex-col items-center text-center">
-                        <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-gradient-to-br from-purple-500/20 to-purple-400/10 border border-purple-500/30 flex items-center justify-center mb-4 md:mb-6 overflow-hidden">
-                            <img src="teamimages/saad karim.jpg" alt="Mian Saad Karim" class="w-full h-full object-cover">
-                        </div>
-                        <h4 class="text-lg md:text-xl font-bold text-white mb-2">Mian Saad Karim</h4>
-                        <p class="text-xs text-zinc-500 mt-2">Flight Control </p>
-                        <p class="text-xs md:text-sm mb-2 mt-2"><a href="https://www.linkedin.com/in/mian-saad-karim/" class="text-blue-400 hover:text-blue-300 transition">LinkedIn</a> | <a href="https://github.com/saadkarim754" class="text-blue-400 hover:text-blue-300 transition">GitHub</a></p>
-                    </div>
-
-                    <!-- Member 3 -->
-                    <div class="flex flex-col items-center text-center">
-                        <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-gradient-to-br from-emerald-500/20 to-emerald-400/10 border border-emerald-500/30 flex items-center justify-center mb-4 md:mb-6 overflow-hidden">
-                            <img src="teamimages/khuzaifa.jpg" alt="Muhammad Khuzaifa" class="w-full h-full object-cover">
-                        </div>
-                        <h4 class="text-lg md:text-xl font-bold text-white mb-2">Muhammad Khuzaifa</h4>
-                        <p class="text-xs text-zinc-500 mt-2">AI & Firmware</p>
-                        <p class="text-xs md:text-sm mb-2 mt-2"><a href="https://www.linkedin.com/in/muhammad-khuzaifa/" class="text-blue-400 hover:text-blue-300 transition">LinkedIn</a> | <a href="https://github.com/khuzaifa5188" class="text-blue-400 hover:text-blue-300 transition">GitHub</a></p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Supervisors/Advisory -->
-            <h3 class="text-xl md:text-2xl font-bold mb-6 md:mb-8 text-white px-2 md:px-0">Supervision</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 px-2 md:px-0 max-w-2xl mx-auto">
-                <div class="group bg-zinc-900/10 border border-zinc-700/40 rounded-xl p-6 flex flex-col items-center text-center hover:border-orange-500/40 transition-colors">
-                    <div class="w-24 h-24 rounded-full bg-gradient-to-br from-orange-500/20 to-orange-400/10 border border-orange-500/30 flex items-center justify-center mb-4 overflow-hidden">
-                        <img src="teamimages/dr waqas.png" alt="Dr. Waqas Ahmad" class="w-full h-full object-cover">
-                    </div>
-                    <h4 class="text-lg font-bold text-white mb-1"><a href="mailto:waqas@pieas.edu.pk" class="hover:text-blue-400 transition-colors cursor-pointer">Dr. Waqas Ahmad</a></h4>
-                    <p class="text-xs text-zinc-600 opacity-0 group-hover:opacity-100 transition-opacity">waqas@pieas.edu.pk</p>
-                    <p class="text-sm text-blue-400 font-medium">Supervisor</p>
-                    <p class="text-xs text-zinc-500 mt-3">Department of Electrical Engineering, PIEAS</p>
-                </div>
-
-                <!-- Supervisor 2 -->
-                <div class="group bg-zinc-900/10 border border-zinc-700/40 rounded-xl p-6 flex flex-col items-center text-center hover:border-cyan-500/40 transition-colors">
-                    <div class="w-24 h-24 rounded-full bg-gradient-to-br from-cyan-500/20 to-cyan-400/10 border border-cyan-500/30 flex items-center justify-center mb-4 overflow-hidden">
-                        <img src="teamimages/cosupervisor.jpg" alt="Co-Supervisor" class="w-full h-full object-cover">
-                    </div>
-                    <h4 class="text-lg font-bold text-white mb-1"><a href="mailto:info@safshikan.com" class="hover:text-blue-400 transition-colors cursor-pointer">Arham Hassan</a></h4>
-                    <p class="text-xs text-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity">info@safshikan.com</p>
-                    <p class="text-sm text-blue-400 font-medium">Co-Supervisor</p>
-                    <p class="text-xs text-zinc-500 mt-3">CTO SAFSHIKAN</p>
-                </div>
+            <div class="flex items-center gap-3">
+                <!-- Dedicated Team Navigation Button -->
+                <a href="#team" class="px-3.5 py-1.5 rounded-md border border-borderSepia bg-white text-xs font-semibold uppercase tracking-wider text-espresso hover:border-espresso hover:text-[#991B5B] transition-all flex items-center gap-1.5 shadow-xs">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#991B5B]"></span>
+                    Team
+                </a>
+                <button onclick="downloadWhitepaper()" class="px-3.5 py-1.5 rounded-md border border-[#991B5B]/30 bg-magentaSubtle/50 text-xs font-semibold uppercase tracking-wider text-[#991B5B] hover:bg-[#991B5B] hover:text-white transition-all">
+                    Thesis PDF
+                </button>
+                <button id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Palette Mode" class="p-2 text-taupe hover:text-espresso transition-colors">
+                    <svg id="theme-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    <svg id="theme-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
             </div>
         </div>
-    </section>
+    </header>
 
-    <!-- Page Separator -->
-    <div class="page-divider"></div>
+    <!-- Hero Section: Split 2-Column Layout (Text on Left, Rolling Images on Right) -->
+    <section class="relative pt-24 pb-14 md:pt-28 md:pb-20 px-6 max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10 lg:gap-12 items-center">
+            
+            <!-- Left Column: Clear Text with Generous Margins & Clean Background -->
+            <div class="lg:col-span-6 text-left space-y-4">
+                <!-- Sub-Header Metadata Badge -->
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-paper border border-borderSepia shadow-2xs">
+                    <span class="w-2 h-2 rounded-full bg-[#991B5B]"></span>
+                    <span class="text-xs uppercase tracking-wider text-[#991B5B] font-bold">PIEAS &times; SAFSHIKAN &bull; BS FYP Thesis</span>
+                </div>
 
-    <!-- Project Overview Section -->
-    <section id="overview" class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-20 border-b border-zinc-900">
-        <div class="mb-12">
-            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-white">Project Overview</h2>
-            <div class="bg-gradient-to-br from-zinc-700/40 to-zinc-800/20 border border-zinc-800 rounded-2xl p-6 md:p-8 lg:p-12 backdrop-blur-sm">
-                <p class="text-base md:text-lg text-zinc-300 leading-relaxed mb-6">
-                    The project aims to develop a deployable swarm of lightweight, low-cost UAVs utilizing decentralized communication and onboard AI to detect victims autonomously in disaster-stricken areas. Rapid response is critical when infrastructure is compromised, making ground access impossible.
+                <!-- Main Thesis Title -->
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl text-espresso font-extrabold leading-[1.15] tracking-tight">
+                    UAV Swarm for Autonomous <br>
+                    <span class="text-[#991B5B]">Disaster Assessment</span>
+                </h1>
+
+                <!-- Research Paper Reference Box -->
+                <div class="p-4 rounded-xl editorial-card border border-borderSepia bg-white">
+                    <span class="text-[10px] uppercase tracking-wider text-umber font-bold block mb-1">Peer-Reviewed Research Publication</span>
+                    <h2 class="text-sm sm:text-base text-espresso font-bold leading-snug">
+                        &ldquo;A Dual-MCU Flight Controller Architecture for Onboard Edge AI and UAV Swarming Applications&rdquo;
+                    </h2>
+                </div>
+
+                <!-- Context Description -->
+                <p class="text-taupe text-sm sm:text-base leading-relaxed font-normal pt-1">
+                    In this UAV swarm project, we developed an autonomous, decentralized micro-UAV swarm platform engineered for rapid disaster assessment in communication-denied environments—combining onboard TinyML computer vision inference with peer-to-peer ESP-NOW mesh networking.
                 </p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-6 md:mt-8">
-                    <div class="bg-gradient-to-br from-zinc-500/10 to-zinc-400/5 border border-zinc-500/30 rounded-xl p-5 md:p-6">
-                        <p class="text-blue-400 font-bold text-xs md:text-sm uppercase tracking-wide mb-2">Problem Statement</p>
-                        <p class="text-zinc-300 text-xs md:text-sm leading-relaxed">
-                            Scaling UAV swarms and deploying onboard Edge AI usually requires high-end, heavy, and cost-prohibitive hardware, making experimental validation difficult within strict budget constraints.
-                    </div>
-                    <div class="bg-gradient-to-br from-zinc-500/10 to-zinc-400/5 border border-zinc-500/30 rounded-xl p-5 md:p-6">
-                        <p class="text-blue-400 font-bold text-xs md:text-sm uppercase tracking-wide mb-2">Key Objective</p>
-                        <p class="text-zinc-300 text-xs md:text-sm leading-relaxed">
-                            A lightweight, low-cost micro-UAV proof-of-concept designed specifically to bench-test swarm networking protocols and localized AI processing without the need for expensive, deployment-grade infrastructure.
-                        </p>
-                    </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap items-center gap-3 pt-2 text-xs uppercase tracking-wider font-bold">
+                    <a href="#lifecycle" class="px-5 py-2.5 rounded-lg bg-espresso text-paper hover:bg-[#991B5B] transition-colors shadow-sm">
+                        Explore Phases
+                    </a>
+                    <a href="#architecture" class="px-5 py-2.5 rounded-lg bg-white border border-borderSepia text-espresso hover:border-espresso transition-colors shadow-sm">
+                        Architecture
+                    </a>
+                    <a href="#benchmarking" class="px-5 py-2.5 rounded-lg bg-white border border-borderSepia text-espresso hover:border-espresso transition-colors shadow-sm">
+                        Benchmarks
+                    </a>
+                    <a href="#team" class="px-5 py-2.5 rounded-lg bg-white border border-borderSepia text-espresso hover:border-espresso transition-colors shadow-sm">
+                        Research Team
+                    </a>
                 </div>
+            </div>
+
+            <!-- Right Column: Rolling Slideshow Showcase (Enlarged & Centered) -->
+            <div class="lg:col-span-6 w-full">
+                <div class="hero-slideshow-frame group relative">
+                    <!-- Slides Container -->
+                    <div id="hero-slides-wrapper" class="w-full h-full relative">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <!-- Bottom Gradient Overlay with Caption (No Number Displayed) -->
+                    <div class="absolute bottom-0 inset-x-0 p-4 sm:p-5 bg-gradient-to-t from-black/90 via-black/60 to-transparent pointer-events-none z-10 flex flex-col justify-end">
+                        <div class="flex items-center justify-between gap-3">
+                            <div class="min-w-0">
+                                <h3 id="hero-slide-title" class="text-xs sm:text-sm font-bold text-white truncate tracking-tight"></h3>
+                                <p id="hero-slide-caption" class="text-[10px] sm:text-xs text-white/80 line-clamp-1 mt-0.5 font-normal"></p>
+                            </div>
+                            <span class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-white/15 text-white/90 shrink-0 border border-white/20">
+                                Inspect Figure
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Slide Controls -->
+                    <button onclick="prevHeroSlide()" aria-label="Previous Slide" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/55 hover:bg-black/85 text-white flex items-center justify-center text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity z-20 shadow-md">
+                        &#8592;
+                    </button>
+                    <button onclick="nextHeroSlide()" aria-label="Next Slide" class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/55 hover:bg-black/85 text-white flex items-center justify-center text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity z-20 shadow-md">
+                        &#8594;
+                    </button>
+                </div>
+                <div class="flex items-center justify-between text-[11px] text-umber font-medium mt-2 px-1">
+                    <span>Hardware Benchmarks &amp; Flight Imagery</span>
+                    <span>Click image to inspect in high-res</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="editorial-divider max-w-6xl mx-auto"></div>
+
+    <!-- Key Experimental Metrics Section -->
+    <section class="max-w-6xl mx-auto px-6 py-12">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-5 text-left">
+            <div class="editorial-card p-4 sm:p-5">
+                <span class="text-[11px] uppercase tracking-wider text-umber font-bold block mb-1">Architecture</span>
+                <span class="text-xl sm:text-2xl text-espresso font-extrabold tracking-tight">Dual-MCU</span>
+                <p class="text-xs text-taupe mt-1 font-medium">STM32F405 (168MHz FPU) + ESP32-S3 (240MHz SIMD)</p>
+            </div>
+            <div class="editorial-card p-4 sm:p-5">
+                <span class="text-[11px] uppercase tracking-wider text-umber font-bold block mb-1">Edge Inference</span>
+                <span class="text-xl sm:text-2xl text-espresso font-extrabold tracking-tight">290&ndash;387 ms</span>
+                <p class="text-xs text-taupe mt-1 font-medium">Quantized Int8 MobileNetV2 with &gt;94.7% accuracy</p>
+            </div>
+            <div class="editorial-card p-4 sm:p-5">
+                <span class="text-[11px] uppercase tracking-wider text-umber font-bold block mb-1">Mesh Range</span>
+                <span class="text-xl sm:text-2xl text-espresso font-extrabold tracking-tight">125 m LOS</span>
+                <p class="text-xs text-taupe mt-1 font-medium">&gt;95% packet delivery rate via ESP-NOW ad-hoc mesh</p>
+            </div>
+            <div class="editorial-card p-4 sm:p-5">
+                <span class="text-[11px] uppercase tracking-wider text-umber font-bold block mb-1">Hardware Cost</span>
+                <span class="text-xl sm:text-2xl text-espresso font-extrabold tracking-tight">&lt; $50 BOM</span>
+                <p class="text-xs text-taupe mt-1 font-medium">Custom 4-layer PCB with Faraday ground shielding</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="editorial-divider max-w-6xl mx-auto"></div>
+
+    <!-- Section 01: System Architecture & Dual-MCU FreeRTOS Decoupling -->
+    <section id="architecture" class="max-w-6xl mx-auto px-6 py-16 scroll-mt-20">
+        <div class="mb-10 text-left">
+            <span class="text-xs uppercase tracking-wider text-[#991B5B] font-bold block mb-1.5">01 / System Architecture</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-espresso tracking-tight">
+                Decoupled Flight Dynamics &amp; Companion Edge Intelligence
+            </h2>
+            <p class="text-taupe text-sm font-normal mt-1 max-w-3xl leading-relaxed">
+                Conventional autonomous drone architectures rely on bulky companion computers (Raspberry Pi or Nvidia Jetson) weighing 45g+ and drawing 5–15W. Our architecture decouples deterministic real-time flight stabilization from high-level TinyML computer vision across two dedicated microcontrollers on a single board.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-left">
+            <!-- MCU 1: STM32F405 Flight Controller -->
+            <div class="editorial-card p-6">
+                <div class="flex items-center justify-between mb-3 border-b border-borderSepia pb-3">
+                    <div>
+                        <span class="text-[10px] uppercase tracking-wider text-[#991B5B] font-bold block">Autopilot Core</span>
+                        <h3 class="text-lg font-bold text-espresso tracking-tight">STM32F405RGT6 Flight Controller</h3>
+                    </div>
+                    <span class="px-2.5 py-1 rounded bg-paper border border-borderSepia text-xs font-mono font-bold text-espresso">168 MHz ARM</span>
+                </div>
+                <ul class="space-y-2 text-xs text-taupe font-normal leading-relaxed">
+                    <li class="flex items-start gap-2">
+                        <span class="text-[#991B5B] font-bold">&bull;</span>
+                        <span><strong class="text-espresso font-semibold">Autopilot Firmware:</strong> Custom ArduCopter 4.5.7 target running deterministic 400 Hz inner attitude &amp; rate PID loops.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-[#991B5B] font-bold">&bull;</span>
+                        <span><strong class="text-espresso font-semibold">Sensor Suite:</strong> High-bandwidth ICM-42688-P 6-axis IMU over 24 MHz SPI, SPL06-001 precision barometer over I2C, and QMC5883L magnetometer.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-[#991B5B] font-bold">&bull;</span>
+                        <span><strong class="text-espresso font-semibold">Autonomous Navigation:</strong> GPS-guided waypoints, altitude hold, automated takeoff, loiter, and Return-to-Launch (RTL).</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- MCU 2: ESP32-S3 Companion Processor -->
+            <div class="editorial-card p-6">
+                <div class="flex items-center justify-between mb-3 border-b border-borderSepia pb-3">
+                    <div>
+                        <span class="text-[10px] uppercase tracking-wider text-[#991B5B] font-bold block">AI &amp; Mesh Core</span>
+                        <h3 class="text-lg font-bold text-espresso tracking-tight">ESP32-S3-WROOM-1 Companion</h3>
+                    </div>
+                    <span class="px-2.5 py-1 rounded bg-paper border border-borderSepia text-xs font-mono font-bold text-espresso">240 MHz Dual-Core</span>
+                </div>
+                <ul class="space-y-2 text-xs text-taupe font-normal leading-relaxed">
+                    <li class="flex items-start gap-2">
+                        <span class="text-[#991B5B] font-bold">&bull;</span>
+                        <span><strong class="text-espresso font-semibold">TinyML Perception:</strong> Quantized MobileNetV2 neural networks accelerated with Xtensa vector SIMD instructions.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-[#991B5B] font-bold">&bull;</span>
+                        <span><strong class="text-espresso font-semibold">Decentralized Mesh:</strong> Peer-to-peer 2.4 GHz ESP-NOW ad-hoc mesh protocol for node-to-node telemetry without WiFi routers.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-[#991B5B] font-bold">&bull;</span>
+                        <span><strong class="text-espresso font-semibold">MAVLink v2 Bridge:</strong> Dedicated asynchronous UART link at 57,600 baud streaming telemetry and injecting guided waypoints.</span>
+                    </li>
+                </ul>
             </div>
         </div>
 
-        <!-- Benchmarking Table -->
-        <div class="mb-12">
-            <h3 class="text-xl md:text-2xl font-bold mb-6 text-white">Benchmarking & Hardware Selection</h3>
-            <div class="overflow-x-auto bg-gradient-to-br from-zinc-700/40 to-zinc-800/20 border border-zinc-800 rounded-2xl">
-                <table class="w-full text-left">
-                    <thead class="bg-zinc-700/50 border-b border-zinc-800">
-                        <tr>
-                            <th class="px-3 md:px-6 py-3 md:py-4 text-xs font-bold uppercase text-blue-400">Feature</th>
-                            <th class="px-3 md:px-6 py-3 md:py-4 text-xs font-bold uppercase text-zinc-400">Crazyflie</th>
-                            <th class="px-3 md:px-6 py-3 md:py-4 text-xs font-bold uppercase text-zinc-400">DJI Tello</th>
-                            <th class="px-3 md:px-6 py-3 md:py-4 text-xs font-bold uppercase text-blue-400">Our Platform</th>
+        <!-- FreeRTOS Task Scheduling & AHB Bus Contention -->
+        <div class="editorial-card p-6 text-left">
+            <h3 class="text-base font-bold text-espresso tracking-tight mb-2">
+                FreeRTOS CPU Affinity &amp; AHB Bus Contention Resolution
+            </h3>
+            <p class="text-xs text-taupe leading-relaxed mb-4">
+                On the ESP32-S3, the camera Direct Memory Access (DMA) and the WiFi DMA controller share the internal Advanced High-performance Bus (AHB). Running concurrent camera capture and WiFi transmissions causes severe DMA starvation and frame corruption. Our firmware implements a camera-suspend gating protocol: camera capture is executed on Core 1, and the camera peripheral is deinitialized before enabling the WiFi MAC for ESP-NOW packet broadcasting (~80 ms cycle overhead), completely eliminating DMA bus artifacts.
+            </p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs font-normal">
+                    <thead>
+                        <tr class="border-b border-borderSepia text-[11px] uppercase tracking-wider text-umber bg-paper/60">
+                            <th class="px-4 py-2.5 font-bold">CPU Core</th>
+                            <th class="px-4 py-2.5 font-bold">Task Name</th>
+                            <th class="px-4 py-2.5 font-bold">Priority</th>
+                            <th class="px-4 py-2.5 font-bold">Stack / Buffer</th>
+                            <th class="px-4 py-2.5 font-bold">Subsystem Responsibility</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-zinc-800/50">
-                        <tr class="hover:bg-zinc-800/20 transition-colors">
-                            <td class="px-3 md:px-6 py-3 md:py-4 font-medium text-zinc-300 text-xs md:text-base">Weight</td>
-                            <td class="px-3 md:px-6 py-3 md:py-4 text-zinc-400 text-xs md:text-base">27g</td>
-                            <td class="px-3 md:px-6 py-3 md:py-4 text-zinc-400 text-xs md:text-base">80g</td>
-                            <td class="px-3 md:px-6 py-3 md:py-4 text-zinc-400 text-xs md:text-base">68g</td>
+                    <tbody class="divide-y border-borderSepia text-taupe">
+                        <tr>
+                            <td class="px-4 py-2.5 font-bold text-espresso">Core 1</td>
+                            <td class="px-4 py-2.5 font-mono text-espresso">cam_pump</td>
+                            <td class="px-4 py-2.5 font-bold text-[#991B5B]">15 (Highest)</td>
+                            <td class="px-4 py-2.5">4 KB + DMA</td>
+                            <td class="px-4 py-2.5">DVP camera frame capture from OV2640 sensor into internal memory</td>
                         </tr>
-                        <tr class="hover:bg-zinc-800/20 transition-colors">
-                            <td class="px-3 md:px-6 py-3 md:py-4 font-medium text-zinc-300 text-xs md:text-base">Cost (Approx)</td>
-                            <td class="px-3 md:px-6 py-3 md:py-4 text-zinc-400 text-xs md:text-base">&gt;PKR 60k</td>
-                            <td class="px-3 md:px-6 py-3 md:py-4 text-zinc-400 text-xs md:text-base">&gt;PKR 30k</td>
-                            <td class="px-3 md:px-6 py-3 md:py-4 text-zinc-400 text-xs md:text-base">&lt;PKR 15k</td>
+                        <tr>
+                            <td class="px-4 py-2.5 font-bold text-espresso">Core 1</td>
+                            <td class="px-4 py-2.5 font-mono text-espresso">infer</td>
+                            <td class="px-4 py-2.5">4 (Medium)</td>
+                            <td class="px-4 py-2.5">32 KB PSRAM</td>
+                            <td class="px-4 py-2.5">TensorFlow Lite Micro / Edge Impulse MobileNetV2 INT8 inference</td>
                         </tr>
-                        <tr class="hover:bg-zinc-800/20 transition-colors">
-                            <td class="px-3 md:px-6 py-3 md:py-4 font-medium text-zinc-300 text-xs md:text-base">AI Capability</td>
-                            <td class="px-3 md:px-6 py-3 md:py-4 text-zinc-500 text-xs md:text-base">Limited</td>
-                            <td class="px-3 md:px-6 py-3 md:py-4 text-red-400 text-xs md:text-base">No</td>
-                            <td class="px-3 md:px-6 py-3 md:py-4 text-emerald-400 font-bold text-xs md:text-base">Yes (Edge AI)</td>
+                        <tr>
+                            <td class="px-4 py-2.5 font-bold text-espresso">Core 0</td>
+                            <td class="px-4 py-2.5 font-mono text-espresso">wifi_ap</td>
+                            <td class="px-4 py-2.5 font-bold text-[#991B5B]">23 (Real-time)</td>
+                            <td class="px-4 py-2.5">8 KB</td>
+                            <td class="px-4 py-2.5">SoftAP web server &amp; connectionless ESP-NOW mesh packet dispatcher</td>
                         </tr>
-                        <tr class="hover:bg-zinc-800/20 transition-colors">
-                            <td class="px-3 md:px-6 py-3 md:py-4 font-medium text-zinc-300 text-xs md:text-base">Open Firmware</td>
-                            <td class="px-3 md:px-6 py-3 md:py-4 text-emerald-400 text-xs md:text-base">Yes</td>
-                            <td class="px-3 md:px-6 py-3 md:py-4 text-red-400 text-xs md:text-base">No</td>
-                            <td class="px-3 md:px-6 py-3 md:py-4 text-emerald-400 font-bold text-xs md:text-base">Yes</td>
+                        <tr>
+                            <td class="px-4 py-2.5 font-bold text-espresso">Core 0</td>
+                            <td class="px-4 py-2.5 font-mono text-espresso">mav_rx</td>
+                            <td class="px-4 py-2.5">7 (High)</td>
+                            <td class="px-4 py-2.5">4 KB RingBuffer</td>
+                            <td class="px-4 py-2.5">UART MAVLink v2 frame decoding (heartbeat, attitude, GPS, battery)</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2.5 font-bold text-espresso">Core 0</td>
+                            <td class="px-4 py-2.5 font-mono text-espresso">mav_hb</td>
+                            <td class="px-4 py-2.5">3 (Low)</td>
+                            <td class="px-4 py-2.5">2 KB</td>
+                            <td class="px-4 py-2.5">State machine heartbeat emission &amp; command injection to ArduPilot</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-
-        <!-- Team & Institution -->
-        
     </section>
 
-    <!-- Page Separator -->
-    <div class="page-divider"></div>
+    <div class="editorial-divider max-w-6xl mx-auto"></div>
 
-    <!-- Stats Section -->
-    <section id="stats" class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16 border-y border-zinc-900 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-        <div class="text-center">
-            <div class="text-2xl md:text-3xl font-bold text-white">5km</div>
-            <div class="text-[8px] md:text-[10px] text-zinc-500 uppercase tracking-[0.15em] md:tracking-[0.2em] mt-1 md:mt-2">Max Range</div>
+    <!-- Section 02: Edge AI Perception & TinyML Validation -->
+    <section id="ai-models" class="max-w-6xl mx-auto px-6 py-16 scroll-mt-20">
+        <div class="mb-10 text-left">
+            <span class="text-xs uppercase tracking-wider text-[#991B5B] font-bold block mb-1.5">02 / Edge AI &amp; TinyML</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-espresso tracking-tight">
+                Quantized Neural Inference on Microcontrollers
+            </h2>
+            <p class="text-taupe text-sm font-normal mt-1 max-w-3xl leading-relaxed">
+                Rather than offloading video streams to high-power cloud or ground servers—which fail in infrastructure-denied disaster environments—all computer vision models execute locally on the ESP32-S3. Models are trained using transfer learning on MobileNetV2 and quantized to Int8 using post-training quantization.
+            </p>
         </div>
-        <div class="text-center">
-            <div class="text-2xl md:text-3xl font-bold text-white">15min</div>
-            <div class="text-[8px] md:text-[10px] text-zinc-500 uppercase tracking-[0.15em] md:tracking-[0.2em] mt-1 md:mt-2">Flight Time</div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-left">
+            <!-- Fire & Smoke Detection -->
+            <div class="editorial-card p-6">
+                <span class="text-[10px] uppercase tracking-wider text-[#991B5B] font-bold block mb-1">Classifier 01</span>
+                <h3 class="text-lg font-bold text-espresso tracking-tight mb-2">Wildfire &amp; Hazard Smoke Detection</h3>
+                <p class="text-xs text-taupe leading-relaxed mb-4">
+                    Trained on 3,762 disaster aerial and ground images across three discrete classes: <strong class="text-espresso">Fire</strong>, <strong class="text-espresso">Smoke</strong>, and <strong class="text-espresso">Normal Background</strong>. Evaluates incoming frames to pinpoint active ignition fronts and smoke plumes from altitudes of 5 to 15 meters.
+                </p>
+                <div class="p-3 bg-paper rounded-lg border border-borderSepia text-xs space-y-1.5">
+                    <div class="flex justify-between"><span class="text-umber font-semibold">Temporal Consistency Filter:</span><span class="font-bold text-espresso">&ge; 75% confidence over 3 frames</span></div>
+                    <div class="flex justify-between"><span class="text-umber font-semibold">Inference Latency:</span><span class="font-mono font-bold text-espresso">290 ms / frame</span></div>
+                    <div class="flex justify-between"><span class="text-umber font-semibold">Int8 Model Footprint:</span><span class="font-mono font-bold text-espresso">319 KB</span></div>
+                    <div class="flex justify-between"><span class="text-umber font-semibold">Validation Accuracy:</span><span class="font-bold text-[#991B5B]">94.7%</span></div>
+                </div>
+            </div>
+
+            <!-- Person / Survivor Detection -->
+            <div class="editorial-card p-6">
+                <span class="text-[10px] uppercase tracking-wider text-[#991B5B] font-bold block mb-1">Classifier 02</span>
+                <h3 class="text-lg font-bold text-espresso tracking-tight mb-2">Search &amp; Rescue Human Survivor Detection</h3>
+                <p class="text-xs text-taupe leading-relaxed mb-4">
+                    Transfer-learned binary detector trained on 3,000 images (<strong class="text-espresso">Person</strong> vs. <strong class="text-espresso">No Person</strong>). Engineered to locate trapped survivors in rubble, floodwaters, and collapse zones during autonomous aerial reconnaissance at altitudes up to 10 meters.
+                </p>
+                <div class="p-3 bg-paper rounded-lg border border-borderSepia text-xs space-y-1.5">
+                    <div class="flex justify-between"><span class="text-umber font-semibold">Decision Threshold:</span><span class="font-bold text-espresso">&ge; 80% single-frame confidence</span></div>
+                    <div class="flex justify-between"><span class="text-umber font-semibold">Inference Latency:</span><span class="font-mono font-bold text-espresso">387 ms / frame</span></div>
+                    <div class="flex justify-between"><span class="text-umber font-semibold">Int8 Model Footprint:</span><span class="font-mono font-bold text-espresso">321 KB</span></div>
+                    <div class="flex justify-between"><span class="text-umber font-semibold">Validation Accuracy:</span><span class="font-bold text-[#991B5B]">95.2%</span></div>
+                </div>
+            </div>
         </div>
-        <div class="text-center">
-            <div class="text-2xl md:text-3xl font-bold text-white">68g</div>
-            <div class="text-[8px] md:text-[10px] text-zinc-500 uppercase tracking-[0.15em] md:tracking-[0.2em] mt-1 md:mt-2">Weight</div>
-        </div>
-        <div class="text-center">
-            <div class="text-2xl md:text-3xl font-bold text-white">15+</div>
-            <div class="text-[8px] md:text-[10px] text-zinc-500 uppercase tracking-[0.15em] md:tracking-[0.2em] mt-1 md:mt-2">Swarm Units</div>
+
+        <!-- Inference Benchmark Table (Directly from Paper Table I) -->
+        <div class="editorial-card p-6 text-left">
+            <h3 class="text-base font-bold text-espresso tracking-tight mb-2">
+                On-Device TinyML Inference Benchmarks (ESP32-S3 @ 240 MHz)
+            </h3>
+            <p class="text-xs text-taupe leading-relaxed mb-4">
+                Empirical validation results extracted directly from Table I of our published research paper, highlighting sub-400ms edge latency within 220 KB peak RAM consumption:
+            </p>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs font-normal">
+                    <thead>
+                        <tr class="border-b border-borderSepia text-[11px] uppercase tracking-wider text-umber bg-paper/60">
+                            <th class="px-5 py-3 font-bold">Model Pipeline</th>
+                            <th class="px-5 py-3 font-bold">Input Resolution</th>
+                            <th class="px-5 py-3 font-bold">Quantization</th>
+                            <th class="px-5 py-3 font-bold">Flash Size</th>
+                            <th class="px-5 py-3 font-bold">Inference Time</th>
+                            <th class="px-5 py-3 font-bold">Peak RAM</th>
+                            <th class="px-5 py-3 font-bold text-espresso">Accuracy</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y border-borderSepia text-taupe">
+                        <tr>
+                            <td class="px-5 py-3 font-semibold text-espresso">Fire &amp; Smoke Detection</td>
+                            <td class="px-5 py-3">96 &times; 96 RGB</td>
+                            <td class="px-5 py-3 font-mono">Int8 Post-Training</td>
+                            <td class="px-5 py-3 font-mono">319 KB</td>
+                            <td class="px-5 py-3 font-mono font-bold text-espresso">290 ms</td>
+                            <td class="px-5 py-3 font-mono">198 KB</td>
+                            <td class="px-5 py-3 font-bold text-[#991B5B]">94.7% (F1: 73.6%)</td>
+                        </tr>
+                        <tr>
+                            <td class="px-5 py-3 font-semibold text-espresso">Human Survivor Detection</td>
+                            <td class="px-5 py-3">96 &times; 96 RGB</td>
+                            <td class="px-5 py-3 font-mono">Int8 Post-Training</td>
+                            <td class="px-5 py-3 font-mono">321 KB</td>
+                            <td class="px-5 py-3 font-mono font-bold text-espresso">387 ms</td>
+                            <td class="px-5 py-3 font-mono">212 KB</td>
+                            <td class="px-5 py-3 font-bold text-[#991B5B]">95.2% (F1: 73.7%)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
 
-    <!-- Page Separator -->
-    <div class="page-divider"></div>
+    <div class="editorial-divider max-w-6xl mx-auto"></div>
 
-    <!-- Phases Section - Vertical Display -->
-    <section id="phases" class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-20 border-b border-zinc-900">
-        <div class="mb-12 md:mb-16">
-            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-8 md:mb-12 text-white">Development Lifecycle</h2>
-            
-            <!-- Development Flow Diagram -->
-            <div class="mb-12 md:mb-16 overflow-x-auto">
-                <div class="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-2 min-w-max md:min-w-auto">
-                    <!-- Prototyping Box -->
-                    <div onclick="document.getElementById('phase-prototyping').scrollIntoView({behavior:'smooth'})" class="flow-box cursor-pointer group relative flex-shrink-0">
-                        <div class="w-32 h-24 md:w-40 md:h-28 bg-gradient-to-br from-purple-500/20 to-purple-400/10 border-2 border-purple-500/50 rounded-lg flex items-center justify-center hover:border-purple-500 hover:from-purple-500/30 transition-all">
-                            <div class="text-center">
-                                <p class="text-purple-400 font-bold text-xs uppercase tracking-wide">Phase 1</p>
-                                <p class="text-white font-bold text-sm">Prototyping</p>
-                            </div>
+    <!-- Section 03: Decentralized Swarm Mesh (ESP-NOW) & Search Coverage -->
+    <section id="mesh-network" class="max-w-6xl mx-auto px-6 py-16 scroll-mt-20">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start text-left">
+            <div class="md:col-span-4">
+                <span class="text-xs uppercase tracking-wider text-[#991B5B] font-bold block mb-1.5">03 / Swarm Mesh Network</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-espresso tracking-tight leading-snug">
+                    Decentralized ESP-NOW Telemetry Mesh
+                </h2>
+                <p class="text-xs text-taupe mt-3 leading-relaxed">
+                    Disasters destroy cell towers and internet infrastructure. Our platform relies on connectionless peer-to-peer ESP-NOW packets operating on 2.4 GHz Channel 1, bypassing the association overhead, handshake latency, and range limits of conventional Wi-Fi access points.
+                </p>
+            </div>
+
+            <div class="md:col-span-8 space-y-5">
+                <div class="editorial-card p-6">
+                    <h3 class="text-base font-bold text-espresso tracking-tight mb-2">
+                        Empirical Flight Range &amp; Packet Delivery Validation
+                    </h3>
+                    <p class="text-xs text-taupe leading-relaxed mb-4">
+                        Two-node inter-drone communication was tested at distances from 10m to 150m in an open-field environment during live flight. The mesh maintained <strong class="text-espresso font-semibold">&gt;95% packet delivery rate up to 125 meters line-of-sight</strong> at 500 ms broadcast intervals. Beyond 125m, packet loss exceeded 20%, establishing the effective single-hop mesh boundary.
+                    </p>
+                    <div class="grid grid-cols-3 gap-3 text-center">
+                        <div class="p-3 bg-paper rounded-lg border border-borderSepia">
+                            <span class="text-[10px] uppercase font-bold text-umber block">Mesh Range</span>
+                            <span class="text-lg font-extrabold text-espresso">125 m</span>
+                            <span class="text-[10px] text-taupe block">&gt;95% PDR Line-of-Sight</span>
                         </div>
-                    </div>
-
-                    <!-- Arrow 1 -->
-                    <div class="hidden md:block flex-1 h-12 relative">
-                        <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 200 48">
-                            <defs>
-                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" style="stop-color:#a855f7;stop-opacity:0.5" />
-                                    <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.5" />
-                                </linearGradient>
-                            </defs>
-                            <path id="path1" d="M 10 24 Q 100 8 190 24" stroke="url(#grad1)" stroke-width="2" fill="none" stroke-dasharray="250" stroke-dashoffset="250" class="animate-arrow-dash"/>
-                            <g class="animate-arrowhead">
-                                <animateMotion dur="2.5s" repeatCount="indefinite" begin="0s">
-                                    <mpath href="#path1"/>
-                                </animateMotion>
-                                <polygon points="0,-3 6,0 0,3" fill="#06b6d4" opacity="0.9"/>
-                            </g>
-                        </svg>
-                    </div>
-
-                    <!-- Designing Box -->
-                    <div onclick="document.getElementById('phase-designing').scrollIntoView({behavior:'smooth'})" class="flow-box cursor-pointer group relative flex-shrink-0">
-                        <div class="w-32 h-24 md:w-40 md:h-28 bg-gradient-to-br from-cyan-500/20 to-cyan-400/10 border-2 border-cyan-500/50 rounded-lg flex items-center justify-center hover:border-cyan-500 hover:from-cyan-500/30 transition-all">
-                            <div class="text-center">
-                                <p class="text-cyan-400 font-bold text-xs uppercase tracking-wide">Phase 2</p>
-                                <p class="text-white font-bold text-sm">Designing</p>
-                            </div>
+                        <div class="p-3 bg-paper rounded-lg border border-borderSepia">
+                            <span class="text-[10px] uppercase font-bold text-umber block">Update Rate</span>
+                            <span class="text-lg font-extrabold text-espresso">2.0 Hz</span>
+                            <span class="text-[10px] text-taupe block">500 ms Periodic Beacon</span>
                         </div>
-                    </div>
-
-                    <!-- Arrow 2 -->
-                    <div class="hidden md:block flex-1 h-12 relative">
-                        <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 200 48">
-                            <defs>
-                                <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.5" />
-                                    <stop offset="100%" style="stop-color:#10b981;stop-opacity:0.5" />
-                                </linearGradient>
-                            </defs>
-                            <path id="path2" d="M 10 24 Q 100 40 190 24" stroke="url(#grad2)" stroke-width="2" fill="none" stroke-dasharray="250" stroke-dashoffset="250" class="animate-arrow-dash" style="animation-delay: 0s;"/>
-                            <g class="animate-arrowhead">
-                                <animateMotion dur="2.5s" repeatCount="indefinite" begin="0s">
-                                    <mpath href="#path2"/>
-                                </animateMotion>
-                                <polygon points="0,-3 6,0 0,3" fill="#10b981" opacity="0.9"/>
-                            </g>
-                        </svg>
-                    </div>
-
-                    <!-- Testing Box -->
-                    <div onclick="document.getElementById('phase-testing').scrollIntoView({behavior:'smooth'})" class="flow-box cursor-pointer group relative flex-shrink-0">
-                        <div class="w-32 h-24 md:w-40 md:h-28 bg-gradient-to-br from-emerald-500/20 to-emerald-400/10 border-2 border-emerald-500/50 rounded-lg flex items-center justify-center hover:border-emerald-500 hover:from-emerald-500/30 transition-all">
-                            <div class="text-center">
-                                <p class="text-emerald-400 font-bold text-xs uppercase tracking-wide">Phase 3</p>
-                                <p class="text-white font-bold text-sm">Testing</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Arrow 3 -->
-                    <div class="hidden md:block flex-1 h-12 relative">
-                        <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 200 48">
-                            <defs>
-                                <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.5" />
-                                    <stop offset="100%" style="stop-color:#f97316;stop-opacity:0.5" />
-                                </linearGradient>
-                            </defs>
-                            <path id="path3" d="M 10 24 Q 100 8 190 24" stroke="url(#grad3)" stroke-width="2" fill="none" stroke-dasharray="250" stroke-dashoffset="250" class="animate-arrow-dash" style="animation-delay: 0s;"/>
-                            <g class="animate-arrowhead">
-                                <animateMotion dur="2.5s" repeatCount="indefinite" begin="0s">
-                                    <mpath href="#path3"/>
-                                </animateMotion>
-                                <polygon points="0,-3 6,0 0,3" fill="#f97316" opacity="0.9"/>
-                            </g>
-                        </svg>
-                    </div>
-
-                    <!-- Manufacturing Box -->
-                    <div onclick="document.getElementById('phase-manufacturing').scrollIntoView({behavior:'smooth'})" class="flow-box cursor-pointer group relative flex-shrink-0">
-                        <div class="w-32 h-24 md:w-40 md:h-28 bg-gradient-to-br from-orange-500/20 to-orange-400/10 border-2 border-orange-500/50 rounded-lg flex items-center justify-center hover:border-orange-500 hover:from-orange-500/30 transition-all">
-                            <div class="text-center">
-                                <p class="text-orange-400 font-bold text-xs uppercase tracking-wide">Phase 4</p>
-                                <p class="text-white font-bold text-sm">Manufacturing</p>
-                            </div>
+                        <div class="p-3 bg-paper rounded-lg border border-borderSepia">
+                            <span class="text-[10px] uppercase font-bold text-umber block">Search Area</span>
+                            <span class="text-lg font-extrabold text-[#991B5B]">N &times; Area</span>
+                            <span class="text-[10px] text-taupe block">Linear Multi-Node Scaling</span>
                         </div>
                     </div>
                 </div>
-            </div>
+
+                <div class="editorial-card p-6">
+                    <h3 class="text-base font-bold text-espresso tracking-tight mb-2">
+                        Compact Telemetry Payload &amp; SoftAP Ground Station
+                    </h3>
+                    <p class="text-xs text-taupe leading-relaxed">
+                        Each ESP-NOW frame packs compressed GPS coordinates (latitude, longitude, altitude), heading, battery voltage, flight status, and AI detection alert flags (fire confidence, survivor coordinates). Simultaneously, Node 1 acts as a local SoftAP hotspot broadcasting a captive-portal mobile web dashboard, enabling rescue teams on the ground to monitor swarm telemetry on any smartphone or tablet without external software or internet connectivity.
+                    </p>
                 </div>
-            </div>
-            
-            <!-- Phases Vertical Stack -->
-            <div id="phases-container" class="space-y-12 md:space-y-16 mt-12 md:mt-20">
-                <!-- Phases will be rendered here by JS -->
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12 border-t border-zinc-900 text-center">
-        <div class="text-zinc-500 text-xs md:text-sm">
-            Custom Drone Platform for Swarming & Edge AI Applications.
+    <div class="editorial-divider max-w-6xl mx-auto"></div>
+
+    <!-- Section 04: Hardware Miniaturization & Custom 4-Layer PCB -->
+    <section id="hardware-pcb" class="max-w-6xl mx-auto px-6 py-16 scroll-mt-20">
+        <div class="mb-10 text-left">
+            <span class="text-xs uppercase tracking-wider text-[#991B5B] font-bold block mb-1.5">04 / Hardware Engineering</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-espresso tracking-tight">
+                Custom 4-Layer Flight Controller &amp; Micro-Airframe
+            </h2>
+            <p class="text-taupe text-sm font-normal mt-1 max-w-3xl leading-relaxed">
+                To evolve from the F450 validation testbed into an ultra-portable swarm node, the complete avionics suite was miniaturized into a single 4-layer custom printed circuit board integrated with a custom 3D-printed airframe.
+            </p>
         </div>
-        <div class="text-zinc-600 text-xs md:text-sm mt-2">
-            Building smarter solutions for a safer future.
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+            <!-- 4-Layer Stackup -->
+            <div class="editorial-card p-6">
+                <span class="text-[10px] uppercase tracking-wider text-[#991B5B] font-bold block mb-1">Faraday Shielding</span>
+                <h3 class="text-base font-bold text-espresso tracking-tight mb-2">4-Layer Stackup Design</h3>
+                <p class="text-xs text-taupe leading-relaxed">
+                    Uses a <strong class="text-espresso font-semibold">Signal &ndash; Ground &ndash; Power &ndash; Signal</strong> layer ordering. Internal solid ground plane provides a continuous return path and isolates high-frequency RF radiation from the sensitive analog IMU traces and barometer.
+                </p>
+            </div>
+
+            <!-- Power System -->
+            <div class="editorial-card p-6">
+                <span class="text-[10px] uppercase tracking-wider text-[#991B5B] font-bold block mb-1">Buck-Boost Power</span>
+                <h3 class="text-base font-bold text-espresso tracking-tight mb-2">TPS63070 Regulation</h3>
+                <p class="text-xs text-taupe leading-relaxed">
+                    Accepts 2S–4S LiPo inputs (7.4V–16.8V) through a high-efficiency TI TPS63070 buck-boost converter producing a stable 5V rail. Feeds two independent low-noise 3.3V LDO stages for the STM32 sensor lines and the ESP32-S3 module.
+                </p>
+            </div>
+
+            <!-- Airframe & Motors -->
+            <div class="editorial-card p-6">
+                <span class="text-[10px] uppercase tracking-wider text-[#991B5B] font-bold block mb-1">Additive Manufacturing</span>
+                <h3 class="text-base font-bold text-espresso tracking-tight mb-2">18g PLA Micro-Airframe</h3>
+                <p class="text-xs text-taupe leading-relaxed">
+                    Custom CAD-modeled chassis with 65mm propeller clearance, downward-facing OV2640 camera mount, vibration-damped IMU housing, and onboard TI DRV8837 low-$R_{DS(on)}$ H-bridge motor drivers powering coreless micro-motors.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="editorial-divider max-w-6xl mx-auto"></div>
+
+    <!-- Section 05: Comparative Benchmarking Section (Directly from Paper Table IV) -->
+    <section id="benchmarking" class="max-w-6xl mx-auto px-6 py-16 scroll-mt-20">
+        <div class="mb-6 text-left">
+            <span class="text-xs uppercase tracking-wider text-[#991B5B] font-bold block mb-1.5">05 / Comparative Analysis</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-espresso tracking-tight">Empirical Platform Benchmarking</h2>
+            <p class="text-taupe text-sm font-normal mt-1 max-w-2xl">
+                Direct comparative analysis published in Table IV of our research paper, contrasting our integrated Dual-MCU node against standard commercial and experimental drone platforms.
+            </p>
+        </div>
+
+        <div class="editorial-card overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs sm:text-sm">
+                    <thead>
+                        <tr class="border-b border-borderSepia text-xs uppercase tracking-wider text-umber bg-paper/60">
+                            <th class="px-6 py-3.5 font-bold">Architecture Characteristic</th>
+                            <th class="px-6 py-3.5 font-semibold">Bitcraze Crazyflie 2.1</th>
+                            <th class="px-6 py-3.5 font-semibold">DJI Tello EDU</th>
+                            <th class="px-6 py-3.5 font-semibold">Pixhawk + Raspberry Pi</th>
+                            <th class="px-6 py-3.5 font-bold text-espresso border-l border-borderSepia bg-white">Our Dual-MCU Testbed</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y border-borderSepia text-taupe font-normal">
+                        <tr>
+                            <td class="px-6 py-3.5 text-espresso font-semibold">Open Source Ecosystem</td>
+                            <td class="px-6 py-3.5">Full Open Source</td>
+                            <td class="px-6 py-3.5">Closed SDK</td>
+                            <td class="px-6 py-3.5">Partial Open Source</td>
+                            <td class="px-6 py-3.5 font-bold text-[#991B5B] border-l border-borderSepia bg-white">Full Open Source</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-3.5 text-espresso font-semibold">Onboard Edge AI Inference</td>
+                            <td class="px-6 py-3.5">External AI deck required</td>
+                            <td class="px-6 py-3.5">None (Video stream only)</td>
+                            <td class="px-6 py-3.5">Yes (High-power SBC)</td>
+                            <td class="px-6 py-3.5 font-bold text-espresso border-l border-borderSepia bg-white">Native INT8 TinyML on ESP32-S3</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-3.5 text-espresso font-semibold">Inter-Drone Mesh Protocol</td>
+                            <td class="px-6 py-3.5">Proprietary 2.4 GHz radio</td>
+                            <td class="px-6 py-3.5">Centralized Wi-Fi AP</td>
+                            <td class="px-6 py-3.5">External router required</td>
+                            <td class="px-6 py-3.5 font-bold text-espresso border-l border-borderSepia bg-white">Decentralized ESP-NOW Mesh (125m)</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-3.5 text-espresso font-semibold">Autopilot Firmware Stack</td>
+                            <td class="px-6 py-3.5">Crazyflie OS</td>
+                            <td class="px-6 py-3.5">Closed Firmware</td>
+                            <td class="px-6 py-3.5">ArduCopter / PX4</td>
+                            <td class="px-6 py-3.5 font-bold text-espresso border-l border-borderSepia bg-white">Full ArduCopter 4.5.7 Target</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-3.5 text-espresso font-semibold">Companion Computer Weight</td>
+                            <td class="px-6 py-3.5">N/A</td>
+                            <td class="px-6 py-3.5">N/A</td>
+                            <td class="px-6 py-3.5 font-mono">45 g (RPi Zero 2W / 4B)</td>
+                            <td class="px-6 py-3.5 font-bold text-espresso border-l border-borderSepia bg-white font-mono">8 g (Integrated Module)</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-3.5 text-espresso font-semibold">Total Node Hardware Cost</td>
+                            <td class="px-6 py-3.5">&gt; PKR 60,000 ($220+)</td>
+                            <td class="px-6 py-3.5">&gt; PKR 35,000 ($130)</td>
+                            <td class="px-6 py-3.5 font-mono">&gt; PKR 50,000 ($180+)</td>
+                            <td class="px-6 py-3.5 font-bold text-[#991B5B] border-l border-borderSepia bg-white font-mono">&lt; PKR 14,000 (&lt; $50 BOM)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <div class="editorial-divider max-w-6xl mx-auto"></div>
+
+    <!-- Development Lifecycle / Phases (Phase 01 through Phase 04) -->
+    <section id="lifecycle" class="max-w-6xl mx-auto px-6 py-16">
+        <div class="mb-10 text-left">
+            <span class="text-xs uppercase tracking-wider text-[#991B5B] font-bold block mb-1.5">03 / Engineering Evolution</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-espresso tracking-tight">Development Phases &amp; Comprehensive Media</h2>
+            <p class="text-taupe text-sm font-normal mt-1 max-w-2xl">
+                Complete engineering documentation across all four developmental phases, featuring bench electrical validation, PCB designs, in-flight TinyML tests, and micro-airframe assemblies.
+            </p>
+        </div>
+
+        <!-- Rendered Phase Cards Container -->
+        <div id="phases-container" class="space-y-12">
+            <!-- Dynamically populated by JS -->
+        </div>
+    </section>
+
+    <div class="editorial-divider max-w-6xl mx-auto"></div>
+
+    <!-- Authors & Supervision Section (Using WebP Images) -->
+    <section id="team" class="max-w-6xl mx-auto px-6 py-16 scroll-mt-20">
+        <div class="mb-10 text-left">
+            <span class="text-xs uppercase tracking-wider text-[#991B5B] font-bold block mb-1.5">04 / Research Team</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-espresso tracking-tight">Project Authors &amp; Advisors</h2>
+            <p class="text-taupe text-sm font-normal mt-0.5">
+                Department of Electrical Engineering, Pakistan Institute of Engineering &amp; Applied Sciences (PIEAS) &bull; SAFSHIKAN
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <!-- Laraib Fatima -->
+            <div class="editorial-card p-6 flex flex-col justify-between">
+                <div>
+                    <div class="w-24 h-24 overflow-hidden rounded-full mb-4 border-2 border-borderSepia">
+                        <img src="assets/images/team-laraib.webp" alt="Laraib Fatima" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold text-espresso tracking-tight">Laraib Fatima</h3>
+                    <div class="text-xs uppercase tracking-wider text-[#991B5B] font-bold my-1.5">
+                        Flight Control
+                    </div>
+                    <p class="text-xs text-taupe font-normal leading-relaxed mb-4">
+                        Attitude estimation algorithms, sensor fusion tuning on ICM-42688-P IMU, custom ArduPilot compilation, and flight stability control loops.
+                    </p>
+                </div>
+                <div class="pt-3 border-t border-borderSepia text-xs font-semibold text-taupe flex items-center gap-3">
+                    <a href="https://www.linkedin.com/in/laraib-fatima-5586b6265" target="_blank" rel="noopener noreferrer" class="hover:text-espresso underline underline-offset-2">LinkedIn</a>
+                    <span>&bull;</span>
+                    <a href="https://github.com/LaraibFatima8" target="_blank" rel="noopener noreferrer" class="hover:text-espresso underline underline-offset-2">GitHub</a>
+                </div>
+            </div>
+
+            <!-- Mian Saad Karim -->
+            <div class="editorial-card p-6 flex flex-col justify-between">
+                <div>
+                    <div class="w-24 h-24 overflow-hidden rounded-full mb-4 border-2 border-borderSepia">
+                        <img src="assets/images/team-saad.webp" alt="Mian Saad Karim" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold text-espresso tracking-tight">Mian Saad Karim</h3>
+                    <div class="text-xs uppercase tracking-wider text-[#991B5B] font-bold my-1.5">
+                        Hardware &amp; Firmware Integration
+                    </div>
+                    <p class="text-xs text-taupe font-normal leading-relaxed mb-4">
+                        Custom 4-layer flight controller PCB design in Altium, power distribution network, inter-processor MAVLink UART bridge, and physical SMD assembly.
+                    </p>
+                </div>
+                <div class="pt-3 border-t border-borderSepia text-xs font-semibold text-taupe flex items-center gap-3">
+                    <a href="https://www.linkedin.com/in/mian-saad-karim/" target="_blank" rel="noopener noreferrer" class="hover:text-espresso underline underline-offset-2">LinkedIn</a>
+                    <span>&bull;</span>
+                    <a href="https://github.com/saadkarim754" target="_blank" rel="noopener noreferrer" class="hover:text-espresso underline underline-offset-2">GitHub</a>
+                    <span>&bull;</span>
+                    <a href="https://saadkarim754.github.io/" target="_blank" rel="noopener noreferrer" class="text-[#991B5B] font-bold hover:underline underline-offset-2">Portfolio</a>
+                </div>
+            </div>
+
+            <!-- Muhammad Khuzaifa -->
+            <div class="editorial-card p-6 flex flex-col justify-between">
+                <div>
+                    <div class="w-24 h-24 overflow-hidden rounded-full mb-4 border-2 border-borderSepia">
+                        <img src="assets/images/team-khuzaifa.webp" alt="Muhammad Khuzaifa" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold text-espresso tracking-tight">Muhammad Khuzaifa</h3>
+                    <div class="text-xs uppercase tracking-wider text-[#991B5B] font-bold my-1.5">
+                        AI &amp; Firmware
+                    </div>
+                    <p class="text-xs text-taupe font-normal leading-relaxed mb-4">
+                        Edge Impulse quantized INT8 model training, survivor and fire recognition pipeline, and decentralized ESP-NOW ad-hoc mesh routing.
+                    </p>
+                </div>
+                <div class="pt-3 border-t border-borderSepia text-xs font-semibold text-taupe flex items-center gap-3">
+                    <a href="https://www.linkedin.com/in/muhammad-khuzaifa/" target="_blank" rel="noopener noreferrer" class="hover:text-espresso underline underline-offset-2">LinkedIn</a>
+                    <span>&bull;</span>
+                    <a href="https://github.com/khuzaifa5188" target="_blank" rel="noopener noreferrer" class="hover:text-espresso underline underline-offset-2">GitHub</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Academic & Co-Supervision -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="editorial-card p-5 flex items-center gap-4">
+                <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-borderSepia shrink-0">
+                    <img src="assets/images/team-dr-waqas.webp" alt="Dr. Waqas Ahmad" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <h4 class="text-base font-bold text-espresso">Dr. Waqas Ahmad</h4>
+                    <span class="text-xs uppercase tracking-wider text-[#991B5B] font-bold block">Project Supervisor</span>
+                    <p class="text-xs text-taupe font-medium mt-0.5">Department of Electrical Engineering, PIEAS</p>
+                    <a href="mailto:waqas@pieas.edu.pk" class="text-xs text-umber hover:text-espresso transition-colors font-medium">waqas@pieas.edu.pk</a>
+                </div>
+            </div>
+
+            <div class="editorial-card p-5 flex items-center gap-4">
+                <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-borderSepia shrink-0">
+                    <img src="assets/images/team-arham-hassan.webp" alt="Arham Hassan" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <h4 class="text-base font-bold text-espresso">Arham Hassan</h4>
+                    <span class="text-xs uppercase tracking-wider text-[#991B5B] font-bold block">Co-Supervisor</span>
+                    <p class="text-xs text-taupe font-medium mt-0.5">Chief Technology Officer, SAFSHIKAN</p>
+                    <a href="mailto:info@safshikan.com" class="text-xs text-umber hover:text-espresso transition-colors font-medium">info@safshikan.com</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Editorial Footer -->
+    <footer class="border-t border-borderSepia py-10 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-taupe font-medium">
+            <div>
+                <span class="font-bold text-espresso">UAV Swarm for Autonomous Disaster Assessment</span> &mdash; BS Final Year Project Thesis
+            </div>
+            <div>
+                Nilore, Islamabad &bull; PIEAS &bull; SAFSHIKAN &bull; 2026
+            </div>
         </div>
     </footer>
 
-    <!-- Gallery Overlay -->
-    <div id="gallery-overlay" class="fixed inset-0 z-[110] hidden items-center justify-center bg-black w-screen h-screen">
-        <div id="gallery-content" class="w-full h-full relative">
-            <!-- Content will be injected by JS -->
+    <!-- Lightbox Gallery Modal with Multiple Prominent Exit Buttons -->
+    <div id="gallery-overlay" class="fixed inset-0 z-[120] hidden items-center justify-center bg-black/92 p-4 md:p-8 backdrop-blur-sm" onclick="handleBackdropClick(event)">
+        <!-- Prominent Pinned Top-Right Exit Button -->
+        <button onclick="closeLightbox()" aria-label="Exit Viewer" class="fixed top-5 right-5 z-[130] px-4 py-2 bg-espresso text-white hover:bg-[#991B5B] transition-all rounded-lg font-bold text-xs uppercase tracking-wider shadow-2xl flex items-center gap-2 border border-white/20">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" /></svg>
+            Exit [Esc]
+        </button>
+
+        <div id="gallery-content" class="w-full h-full relative flex flex-col items-center justify-center max-w-5xl" onclick="event.stopPropagation()">
+            <!-- Injected by JavaScript -->
         </div>
     </div>
 
+    <!-- Embedded Scripts -->
     <script>
-        // Theme toggle function
+        // Palette Mode Handler
         function toggleTheme() {
             const body = document.body;
-            const sunIcon = document.getElementById('theme-icon-sun');
-            const moonIcon = document.getElementById('theme-icon-moon');
+            const sunIcon = document.getElementById('theme-sun');
+            const moonIcon = document.getElementById('theme-moon');
             
-            body.classList.toggle('light-theme');
+            body.classList.toggle('dark-mode');
             
-            // Update icon visibility
-            if (body.classList.contains('light-theme')) {
+            if (body.classList.contains('dark-mode')) {
                 sunIcon.classList.add('hidden');
                 moonIcon.classList.remove('hidden');
-                localStorage.setItem('theme', 'light');
+                localStorage.setItem('monograph_theme', 'dark');
             } else {
                 sunIcon.classList.remove('hidden');
                 moonIcon.classList.add('hidden');
-                localStorage.setItem('theme', 'dark');
+                localStorage.setItem('monograph_theme', 'light');
             }
         }
 
-        // Load theme on page load
         function loadTheme() {
-            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const saved = localStorage.getItem('monograph_theme') || 'light';
             const body = document.body;
-            const sunIcon = document.getElementById('theme-icon-sun');
-            const moonIcon = document.getElementById('theme-icon-moon');
-            
-            if (savedTheme === 'light') {
-                body.classList.add('light-theme');
-                sunIcon.classList.add('hidden');
-                moonIcon.classList.remove('hidden');
+            const sunIcon = document.getElementById('theme-sun');
+            const moonIcon = document.getElementById('theme-moon');
+            if (saved === 'dark') {
+                body.classList.add('dark-mode');
+                if (sunIcon) sunIcon.classList.add('hidden');
+                if (moonIcon) moonIcon.classList.remove('hidden');
             }
         }
 
-        // Load theme when page starts
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', loadTheme);
-        } else {
-            loadTheme();
-        }
+        // Hero Showcase Slideshow Data & Interactive Controls (Expanded Curated Pool)
+        const heroSlidesData = [
+            { url: 'assets/images/both-drones.webp', title: 'F450 Testbed & Custom Micro-Drone', caption: 'Comparative validation testbed alongside custom 18g micro-airframe' },
+            { url: 'assets/images/custom-drone-final-top.webp', title: 'Assembled Micro-Drone (Top View)', caption: 'Carbon/PLA airframe with 3.5-inch props and integrated avionics' },
+            { url: 'assets/images/custom-drone-final-bottom.webp', title: 'Assembled Micro-Drone (Bottom View)', caption: 'Direct-drive coreless motor wiring and central LiPo bay' },
+            { url: 'assets/images/v3-top-bottom-pcb.webp', title: 'Custom 4-Layer Flight Controller', caption: 'STM32F405 + ESP32-S3 dual-MCU architecture with Faraday ground plane' },
+            { url: 'assets/images/custom-fc-soldered-top.webp', title: 'Soldered Custom FC Board (Top View)', caption: 'SMT assembly showing STM32F405, ICM-42688-P IMU, and power stage' },
+            { url: 'assets/images/custom-fc-soldered-bottom.webp', title: 'Soldered Custom FC Board (Bottom View)', caption: 'ESP32-S3 module, antenna keepout zone, and passive decoupling' },
+            { url: 'assets/images/live-person-detection-drone-in-flight.webp', title: 'In-Flight Survivor Detection', caption: 'Real-time INT8 FOMO MobileNetV2 inference during active flight' },
+            { url: 'assets/images/live-multiple-persons-detection.webp', title: 'Multi-Person Aerial Detection', caption: 'Concurrent multi-target detection in outdoor open-field trials' },
+            { url: 'assets/images/pixhawk-based-drone-labeled.webp', title: 'Instrumented Flight Testbed', caption: 'F450 multirotor testbed validating telemetry and ESP-NOW mesh' },
+            { url: 'assets/images/esp32s3-onboard-pixhawk-based-drone.webp', title: 'ESP32-S3 AI Module on Testbed', caption: 'Isolated companion intelligence payload and DVP camera gimbal' },
+            { url: 'assets/images/3d-printed-real.webp', title: 'Fabricated 3D Micro-Airframe', caption: 'Lightweight PLA airframe engineered for 65mm propeller clearance' },
+            { url: 'assets/images/drone-3d-frame-rendering.webp', title: 'CAD Airframe Structural Modeling', caption: 'Finite-element stress distribution and center-of-gravity optimization' },
+            { url: 'assets/images/drone-architecture.webp', title: 'Dual-MCU System Architecture', caption: 'Decoupled flight dynamics (STM32) and companion AI/Mesh (ESP32-S3)' },
+            { url: 'assets/images/oscilloscope-bench-validation.webp', title: 'Power Integrity & Signal Analysis', caption: 'Oscilloscope validation of buck-boost rails under dynamic motor load' }
+        ];
 
-        const phaseData = {
-            designing: {
-                title: "Designing Phase",
-                colorClass: "cyan",
-                colorBg: "from-cyan-500/10 to-cyan-400/5",
-                borderColor: "border-cyan-500/30",
-                tags: ["STM32", "4-Layer PCB", "EMI Reduction"],
-                desc: "Advanced the system from a general-purpose prototype to a custom-engineered 4-layer PCB, integrating the STM32 for real-time flight control and the ESP32 for high-speed swarm communication. This multi-layer approach allowed for dedicated power and ground planes, significantly reducing electromagnetic interference (EMI) and ensuring stable signal integrity for the Edge AI within a highly compact footprint.",
-                img: "https://images.unsplash.com/photo-1558444479-c8f010b91939?auto=format&fit=crop&q=80&w=800",
-                multimedia: {
-                    videos: [],
-                    photos: [
-                        "designing-media/designing-1.png",
-                        "designing-media/designing-2.png",
-                        "designing-media/designing-3.png"
-                    ]
-                }
-            },
-            prototyping: {
-                title: "Prototyping Phase",
-                colorClass: "purple",
-                colorBg: "from-purple-500/10 to-purple-400/5",
-                borderColor: "border-purple-500/30",
-                tags: ["Veroboard", "Signal Integrity", "Vibration Resistance"],
-                desc: "Transitioned the system architecture from a temporary breadboard prototype to a permanent, soldered veroboard layout. This phase minimized parasitic capacitance and signal noise, drastically reduced the hardware footprint, and established a mechanically stable platform capable of enduring the vibrations inherent to UAV flight testing.",
-                img: "prototyping.jpg",
-                multimedia: {
-                    videos: [
-                        "prototyping,multimedia/veroboardvvvideo.mp4",
-                        "prototyping,multimedia/PXL_20251020_062310826~2.mp4"
-                    ],
-                    photos: [
-                        "prototyping,multimedia/veroboard1.jpg",
-                        "prototyping,multimedia/PXL_20250820_084742945.jpg"
-                    ]
-                }
-            },
-            testing: {
-                title: "Testing Phase",
-                colorClass: "emerald",
-                colorBg: "from-emerald-500/10 to-emerald-400/5",
-                borderColor: "border-emerald-500/30",
-                tags: ["Coming Soon"],
-                desc: "Coming Soon",
-                img: "https://images.unsplash.com/photo-1506947411487-a56738267384?auto=format&fit=crop&q=80&w=800"
-            },
-            manufacturing: {
-                title: "Manufacturing Phase",
-                colorClass: "orange",
-                colorBg: "from-orange-500/10 to-orange-400/5",
-                borderColor: "border-orange-500/30",
-                tags: ["Coming Soon"],
-                desc: "Coming Soon",
-                img: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=800"
-            }
-        };
+        let currentHeroSlide = 0;
+        let heroSlideTimer = null;
 
-        const phaseOrder = ['prototyping', 'designing', 'testing', 'manufacturing'];
+        function initHeroSlideshow() {
+            const wrapper = document.getElementById('hero-slides-wrapper');
+            if (!wrapper) return;
 
-        function getColorClasses(phase) {
-            const colorMap = {
-                purple: { text: 'text-purple-400', bg: 'bg-purple-500/10', hex: '#a855f7' },
-                cyan: { text: 'text-cyan-400', bg: 'bg-cyan-500/10', hex: '#06b6d4' },
-                emerald: { text: 'text-emerald-400', bg: 'bg-emerald-500/10', hex: '#10b981' },
-                orange: { text: 'text-orange-400', bg: 'bg-orange-500/10', hex: '#f97316' }
-            };
-            return colorMap[phaseData[phase].colorClass];
-        }
-
-        function renderPhaseCard(phaseId, index) {
-            const phase = phaseData[phaseId];
-            const colors = getColorClasses(phaseId);
-
-            let mediaHTML = '';
-            if (phase.multimedia) {
-                const totalItems = (phase.multimedia.videos.length || 0) + (phase.multimedia.photos.length || 0);
-                mediaHTML = `
-                    <div class="mt-8 pt-8 border-t border-zinc-800">
-                        <p class="text-sm font-bold text-zinc-400 uppercase tracking-widest mb-6">Media Gallery</p>
-                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                `;
-                
-                // Show all videos
-                if (phase.multimedia.videos.length > 0) {
-                    phase.multimedia.videos.forEach((video, idx) => {
-                        mediaHTML += `
-                            <div onclick="openGallery('${phaseId}', 'videos', ${idx})" class="aspect-square bg-zinc-800 rounded-lg cursor-pointer hover:opacity-75 transition-opacity relative group overflow-hidden">
-                                <video class="w-full h-full object-cover" preload="metadata">
-                                    <source src="${video}" type="video/mp4">
-                                </video>
-                                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all flex items-center justify-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="white" class="group-hover:scale-110 transition-transform"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                                </div>
-                                <span class="absolute top-2 left-2 px-2 py-1 bg-black/70 text-white text-xs font-bold rounded">VIDEO</span>
-                            </div>
-                        `;
-                    });
-                }
-                
-                // Show all photos
-                if (phase.multimedia.photos.length > 0) {
-                    phase.multimedia.photos.forEach((photo, idx) => {
-                        mediaHTML += `
-                            <div onclick="openGallery('${phaseId}', 'photos', ${idx})" class="aspect-square bg-zinc-800 rounded-lg cursor-pointer hover:opacity-75 transition-opacity relative group overflow-hidden">
-                                <img src="${photo}" class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-                                </div>
-                                <span class="absolute top-2 left-2 px-2 py-1 bg-black/70 text-white text-xs font-bold rounded">PHOTO</span>
-                            </div>
-                        `;
-                    });
-                }
-
-                mediaHTML += `</div></div>`;
-            }
-
-            return `
-                <div class="bg-gradient-to-br from-zinc-700/40 to-zinc-800/20 border ${phase.borderColor} rounded-2xl p-8 md:p-12 scroll-mt-20" id="phase-${phaseId}">
-                    
-                    <h3 class="text-3xl md:text-4xl font-bold mb-6 text-white">${phase.title}</h3>
-                    
-                    <p class="text-lg text-zinc-300 leading-relaxed mb-8">${phase.desc}</p>
-                    
-                    <!-- Tags -->
-                    <div class="flex flex-wrap gap-2 mb-8">
-                        ${phase.tags.map(t => `<span class="px-3 py-1 bg-zinc-800/60 border border-zinc-700 text-zinc-400 text-xs font-bold uppercase rounded-lg">${t}</span>`).join('')}
+            let slidesHtml = '';
+            heroSlidesData.forEach((s, idx) => {
+                slidesHtml += `
+                    <div class="hero-slide ${idx === 0 ? 'active' : ''}" 
+                         style="background-image: url('${s.url}');" 
+                         onclick="openCustomLightbox('${s.url}', '${s.title.replace(/'/g, "\\'")}')" 
+                         title="Click to view full image">
                     </div>
-                    
-                    ${mediaHTML}
+                `;
+            });
+            wrapper.innerHTML = slidesHtml;
+            updateHeroSlideInfo();
+            startHeroSlideTimer();
+        }
+
+        function updateHeroSlideInfo() {
+            const data = heroSlidesData[currentHeroSlide];
+            const titleEl = document.getElementById('hero-slide-title');
+            const captionEl = document.getElementById('hero-slide-caption');
+
+            if (titleEl) titleEl.textContent = data.title;
+            if (captionEl) captionEl.textContent = data.caption;
+
+            const slides = document.querySelectorAll('.hero-slide');
+            slides.forEach((sl, idx) => {
+                if (idx === currentHeroSlide) {
+                    sl.classList.add('active');
+                } else {
+                    sl.classList.remove('active');
+                }
+            });
+        }
+
+        function nextHeroSlide() {
+            currentHeroSlide = (currentHeroSlide + 1) % heroSlidesData.length;
+            updateHeroSlideInfo();
+            resetHeroSlideTimer();
+        }
+
+        function prevHeroSlide() {
+            currentHeroSlide = (currentHeroSlide - 1 + heroSlidesData.length) % heroSlidesData.length;
+            updateHeroSlideInfo();
+            resetHeroSlideTimer();
+        }
+
+        function startHeroSlideTimer() {
+            if (heroSlideTimer) clearInterval(heroSlideTimer);
+            heroSlideTimer = setInterval(() => {
+                currentHeroSlide = (currentHeroSlide + 1) % heroSlidesData.length;
+                updateHeroSlideInfo();
+            }, 4000);
+        }
+
+        function resetHeroSlideTimer() {
+            startHeroSlideTimer();
+        }
+
+        function openCustomLightbox(url, label) {
+            const overlay = document.getElementById('gallery-overlay');
+            const content = document.getElementById('gallery-content');
+            content.innerHTML = `
+                <div class="max-w-4xl max-h-[75vh] flex items-center justify-center my-auto w-full">
+                    <img src="${url}" alt="${label}" class="max-w-full max-h-[72vh] object-contain rounded-lg border border-white/20 shadow-2xl">
+                </div>
+                <div class="mt-3 text-center text-white w-full">
+                    <h4 class="text-base sm:text-lg font-bold text-white tracking-tight">${label}</h4>
+                    <p class="text-xs text-white/70 font-semibold tracking-wider uppercase mt-0.5 mb-2.5">Hero Showcase Visual</p>
+                    <button onclick="closeLightbox()" class="px-5 py-2 rounded-lg bg-white/10 hover:bg-[#991B5B] text-white border border-white/25 text-xs font-bold uppercase tracking-wider transition-all shadow-md">
+                        ✕ Close &amp; Return [Esc]
+                    </button>
                 </div>
             `;
-        }
-
-        function renderPhases() {
-            const container = document.getElementById('phases-container');
-            let html = '';
-            phaseOrder.forEach((phaseId, index) => {
-                html += renderPhaseCard(phaseId, index);
-            });
-            container.innerHTML = html;
-        }
-
-        // Gallery functions
-        let currentGalleryPhase = '';
-        let currentGalleryType = '';
-        let currentGalleryIndex = 0;
-
-        function openGallery(phase, type, index) {
-            currentGalleryPhase = phase;
-            currentGalleryType = type;
-            currentGalleryIndex = index;
-            updateGalleryDisplay();
-            const galleryOverlay = document.getElementById('gallery-overlay');
-            galleryOverlay.classList.remove('hidden');
-            galleryOverlay.classList.add('flex');
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
             document.body.style.overflow = 'hidden';
         }
 
-        function closeGallery() {
-            const galleryOverlay = document.getElementById('gallery-overlay');
-            const galleryContent = document.getElementById('gallery-content');
+        // Comprehensive Phase Data with Academic Captions (No Image Counters, Research-Grade Layout)
+        const phaseData = {
+            prototyping: {
+                number: "Phase 01",
+                numId: "1",
+                title: "Phase 1: Prototyping & Electrical Validation",
+                subtitle: "Bench-Top Electrical Characterization & Vibration Validation",
+                tags: ["Breadboard Setup", "Boost Converter", "Veroboard Assembly", "MAVLink Bridge", "Signal Integrity", "Vibration Test"],
+                desc: "Initial development validated the dual-MCU electrical logic from breadboard wiring through semi-permanent veroboard soldered layouts. Measured motor current draws under load, added boost regulation for power stability, and verified the STM32F405-to-ESP32-S3 UART bridge under motor vibration stresses.",
+                items: [
+                    { type: "image", url: "assets/images/v1-breadboard-setup.webp", label: "Initial Breadboard Setup", caption: "Dual-MCU logic validation and pin-to-pin signal routing on laboratory bench." },
+                    { type: "image", url: "assets/images/v1-desk-setup.webp", label: "Laboratory Bench Station", caption: "Benchtop testing environment with regulated DC supplies and logic probes." },
+                    { type: "image", url: "assets/images/v1-boost-converter-added.webp", label: "Power Rail Boost Converter", caption: "MT3608 boost stage tested to stabilize the 5V logic supply during motor ramps." },
+                    { type: "image", url: "assets/images/v1-veroboard-setup.webp", label: "Veroboard Component Soldering (Top)", caption: "Point-to-point soldered veroboard mounting STM32 and ESP32-S3 modules." },
+                    { type: "image", url: "assets/images/v1-veroboard-back.webp", label: "Veroboard Wiring & Traces (Back)", caption: "Underside point-to-point wiring establishing 57,600 baud MAVLink UART." },
+                    { type: "image", url: "assets/images/veroboard-soldered-prototype.webp", label: "Full Soldered Veroboard Testbed", caption: "Completed proto-board assembly prior to high-RPM motor vibration stress runs." },
+                    { type: "image", url: "assets/images/oscilloscope-bench-validation.webp", label: "Oscilloscope Power & Signal Analysis", caption: "Voltage ripple characterization and inductive transient noise suppression." },
+                    { type: "gif", url: "assets/gifs/v1-motor-current-test.gif", label: "Motor Current & Load Dynamics", caption: "Dynamometer current draw measurement of single 8520 coreless motor under full load." },
+                    { type: "gif", url: "assets/gifs/v1-breadboard-spin-test.gif", label: "Breadboard Multi-Motor Spin Test", caption: "Throttle ramp-up testing validating PWM outputs from flight controller." },
+                    { type: "gif", url: "assets/gifs/v1-wifi-ui-imu-test.gif", label: "Wi-Fi Telemetry & IMU Integration", caption: "Real-time attitude orientation streaming from ICM-42688-P IMU over Wi-Fi." },
+                    { type: "gif", url: "assets/gifs/v1-veroboard-vibration-test.gif", label: "Veroboard Vibration Stress Test", caption: "Structural vibration testing verifying solder integrity under active harmonics." }
+                ]
+            },
+            designing: {
+                number: "Phase 02",
+                numId: "2",
+                title: "Phase 2: CAD Modeling & Custom PCB Design",
+                subtitle: "Integrated 4-Layer PCB, EMI Mitigation, and Airframe Co-Design",
+                tags: ["EasyEDA / Altium", "Custom PCB", "Weight Optimization", "Faraday GND Plane", "CAD Airframe"],
+                desc: "Evolved the benchtop veroboard into custom printed circuit boards. Isolated high-frequency RF traces from sensitive analog sensor lines with solid internal ground and power planes. Modeled custom lightweight CAD airframes with precise center-of-gravity balancing, propeller clearance, and structural rigidity.",
+                items: [
+                    { type: "image", url: "assets/images/v2-two-pcbs.webp", label: "Fabricated Dual-Layer PCBs", caption: "Early fabricated revision boards for trace verification and component fitment." },
+                    { type: "image", url: "assets/images/v2-assembled-pcb.webp", label: "Populated & Soldered Board Assembly", caption: "Populated PCB with STM32F405, ESP32-S3, and low-dropout regulators." },
+                    { type: "image", url: "assets/images/v2-easyeda-pcb-design.webp", label: "EDA PCB Layout & Routing", caption: "Schematic layout demonstrating separated RF and analog IMU ground planes." },
+                    { type: "image", url: "assets/images/v2-weight-board.webp", label: "Avionics Board Weight Measurement", caption: "Precision scale weight measurement of populated flight controller PCB (~8g)." },
+                    { type: "image", url: "assets/images/v2-weight-full-drone.webp", label: "Fully Assembled Airframe Weight", caption: "Total all-up micro-drone flight mass including 1S LiPo battery (~45g)." },
+                    { type: "image", url: "assets/images/v2-drone-weight-scale.webp", label: "Precision Scale Flight Weight", caption: "Tare weight verification of bare 3D-printed PLA micro-airframe (~18g)." },
+                    { type: "image", url: "assets/images/p2-pcb-render-top.webp", label: "Custom PCB 3D Top Render", caption: "Altium 3D render showing STM32F405, ICM-42688-P, and antenna keepout." },
+                    { type: "image", url: "assets/images/p2-pcb-render-bottom.webp", label: "Custom PCB 3D Bottom Render", caption: "Altium 3D render showing ESP32-S3, power regulators, and motor drive pads." },
+                    { type: "image", url: "assets/images/drone-architecture.webp", label: "Dual-MCU System Architecture Diagram", caption: "Decoupled system architecture diagram showing UART, SPI, and FreeRTOS tasks." },
+                    { type: "image", url: "assets/images/esp32-schm.webp", label: "ESP32-S3 Schematics", caption: "Schematic schematic showing camera DVP, PSRAM interface, and UART bridge." },
+                    { type: "image", url: "assets/images/stm32-schm.webp", label: "STM32F405 Autopilot Schematics", caption: "Schematic showing STM32F405RGT6 LQFP-64 pinout and external oscillators." },
+                    { type: "image", url: "assets/images/cad-design-assembly.webp", label: "CAD Airframe Assembly & Stress Analysis", caption: "Exploded 3D assembly model illustrating camera gimbal and motor mounts." },
+                    { type: "image", url: "assets/images/cad-rotor-clearance.webp", label: "CAD Rotor Clearance & Propwash Study", caption: "Computational rotor clearance analysis ensuring clean aerodynamic airflow." },
+                    { type: "image", url: "assets/images/cad-center-of-gravity.webp", label: "CAD Center-of-Gravity (CoG) Balancing", caption: "Center-of-gravity optimization along roll, pitch, and yaw inertial axes." },
+                    { type: "gif", url: "assets/gifs/v2-drone-working-demo.gif", label: "Functional Flight Electronics Demo", caption: "Bench-top functional demonstration of custom electronics driving coreless motors." }
+                ]
+            },
+            testing: {
+                number: "Phase 03",
+                numId: "3",
+                title: "Phase 3: Flight Testing & Edge AI Inference",
+                subtitle: "Pixhawk Testbed, Real-Time Survivor Detection, and ESP-NOW Mesh",
+                tags: ["Pixhawk F450 Testbed", "Quantized INT8 MobileNetV2", "Survivor Search", "ESP-NOW Mesh", "MAVLink Telemetry"],
+                desc: "Validated the complete Dual-MCU firmware stack on an active flight testbed under real dynamic flight conditions. The ESP32-S3 executed quantized TinyML models locally, detecting humans and hazards at 550ms latency while relaying guided commands to ArduPilot over MAVLink and broadcasting peer-to-peer telemetry over ESP-NOW mesh (>95% packet delivery up to 125m).",
+                items: [
+                    { type: "image", url: "assets/images/pixhawk-based-drone-labeled.webp", label: "Instrumented Pixhawk F450 Testbed", caption: "Complete validation drone annotated with Pixhawk, ESP32-S3, and telemetry radio." },
+                    { type: "image", url: "assets/images/esp32s3-onboard-pixhawk-based-drone.webp", label: "ESP32-S3 AI Module Mounted on Testbed", caption: "Companion computing unit with downward-looking OV2640 camera on arm." },
+                    { type: "image", url: "assets/images/live-person-detection-drone-in-flight.webp", label: "In-Flight Live Person Detection Telemetry", caption: "Real-time web HUD capturing live survivor detection bounding box during flight." },
+                    { type: "image", url: "assets/images/live-multiple-persons-detection.webp", label: "Multi-Person Survivor Detection in Field", caption: "Concurrent multi-person detection evaluated in an open-field search trial." },
+                    { type: "image", url: "assets/images/live-dashboard-feed-and-arm-disarm-buttons.webp", label: "Mesh Ground Station Control Interface", caption: "Captive-portal web interface displaying live HUD telemetry, attitude, and arm controls." },
+                    { type: "image", url: "assets/images/confusion-matrix.webp", label: "Edge Impulse INT8 Classification Matrix", caption: "Validation confusion matrix for quantized MobileNetV2 fire and survivor models." },
+                    { type: "image", url: "assets/images/drone-single-vs-swarm-converage-comparison.webp", label: "Single Drone vs Swarm Coverage Analysis", caption: "Empirical simulation comparing single-UAV vs decentralized swarm search speeds." },
+                    { type: "gif", url: "assets/gifs/v3-test1-hover-flight.gif", label: "Testbed Stable Hover Flight Test", caption: "Outdoor GUIDED mode autonomous takeoff and 5-meter hover test sequence." },
+                    { type: "gif", url: "assets/gifs/v3-test2-guided-flight.gif", label: "Guided Autonomous Navigation Test", caption: "Companion-directed autonomous navigation trajectory executed via MAVLink." },
+                    { type: "gif", url: "assets/gifs/v3-esp32-human-detection.gif", label: "ESP32 Real-Time Human Detection Stream", caption: "Live video stream overlay demonstrating on-device INT8 FOMO inference at 1.5 FPS." },
+                    { type: "gif", url: "assets/gifs/v3-two-drone-bench-test.gif", label: "Dual Drone Synchronized Bench Test", caption: "Two-node ESP-NOW packet exchange verifying bidirectional telemetry link." }
+                ]
+            },
+            manufacturing: {
+                number: "Phase 04",
+                numId: "4",
+                title: "Phase 4: Micro-Airframe Assembly & Miniaturization",
+                subtitle: "Custom 4-Layer Flight Controller, SMD Assembly, and 18g Micro Airframe",
+                tags: ["Custom Flight Controller", "SMD Stencil Soldering", "3D-Printed Airframe", "18g Lightweight", "BOM Optimization"],
+                desc: "Miniaturized the entire dual-processor system onto a compact custom 4-layer flight controller PCB ($50 BOM) housing the STM32F405, ESP32-S3, ICM-42688-P IMU, SPL06 barometer, and dual power regulators. Integrated into an 18g custom 3D-printed airframe engineered for agile micro-swarm deployments.",
+                items: [
+                    { type: "image", url: "assets/images/v3-top-bottom-pcb.webp", label: "Integrated 4-Layer Flight Controller", caption: "Fabricated 4-layer flight controller with internal solid ground Faraday plane." },
+                    { type: "image", url: "assets/images/v3-pcbs-size-comparison.webp", label: "PCB Size Comparison Across Iterations", caption: "Miniaturization timeline from veroboard to the final custom 4-layer flight board." },
+                    { type: "image", url: "assets/images/custom-fc-soldered-top.webp", label: "Soldered Custom FC Board (Top View)", caption: "SMD stencil soldered board top showing STM32F405, ICM-42688-P IMU, and power stage." },
+                    { type: "image", url: "assets/images/custom-fc-soldered-bottom.webp", label: "Soldered Custom FC Board (Bottom View)", caption: "Underside assembly showing ESP32-S3 module, antenna keepout, and passives." },
+                    { type: "image", url: "assets/images/custom-drone-final-top.webp", label: "Assembled Micro-Drone (Top View)", caption: "Complete assembled micro-drone with 3.5-inch props and integrated avionics." },
+                    { type: "image", url: "assets/images/custom-drone-final-bottom.webp", label: "Assembled Micro-Drone (Bottom View)", caption: "Underside view showing motor driver routing and central LiPo retention bracket." },
+                    { type: "image", url: "assets/images/both-drones.webp", label: "F450 Testbed vs Custom Micro-Drone", caption: "Physical scale comparison between large F450 testbed and miniature 18g drone." },
+                    { type: "image", url: "assets/images/3d-printed-real.webp", label: "3D-Printed Airframe Real Structure", caption: "Additive-manufactured 18g PLA airframe showing motor pods and camera mount." },
+                    { type: "image", url: "assets/images/drone-3d-frame-rendering.webp", label: "CAD Rendering of Micro Airframe", caption: "Parametric CAD design model showing structural stiffening ribs and prop clearance." },
+                    { type: "gif", url: "assets/gifs/v3-custom-fc-first-powerup.gif", label: "Custom FC Initial Power-Up & Diagnostics", caption: "Initial power-up smoke test verifying TPS63070 buck-boost 5V and 3.3V rails." },
+                    { type: "gif", url: "assets/gifs/v3-arm-propeller-spin.gif", label: "Drone Arm & Propeller Spin Test", caption: "Dynamic motor throttle test on assembled micro-drone arm structure." },
+                    { type: "gif", url: "assets/gifs/v3-single-motor-test.gif", label: "High-RPM Motor Thrust Test", caption: "Static thrust and current draw measurement of coreless motor with 65mm propeller." },
+                    { type: "gif", url: "assets/gifs/v3-app-overview.gif", label: "Mobile App Ground Station Interface", caption: "Responsive web application connecting directly to drone SoftAP access point." },
+                    { type: "gif", url: "assets/gifs/drone-motor-spin-vibration.gif", label: "Dynamic Motor Vibration Test", caption: "High-frequency vibration testing evaluating IMU silicone dampening mounts." }
+                ]
+            }
+        };
+
+        const phaseList = ['prototyping', 'designing', 'testing', 'manufacturing'];
+
+        function renderPhases() {
+            const container = document.getElementById('phases-container');
+            if (!container) return;
             
-            // Stop any playing videos
-            const videoElement = galleryContent.querySelector('video');
-            if (videoElement) {
-                videoElement.pause();
-                videoElement.currentTime = 0;
-                videoElement.src = '';
-                videoElement.load();
-            }
-            
-            // Clear the gallery content
-            galleryContent.innerHTML = '';
-            
-            galleryOverlay.classList.add('hidden');
-            galleryOverlay.classList.remove('flex');
-            document.body.style.overflow = 'auto';
-            if (document.fullscreenElement) {
-                document.exitFullscreen();
-            }
-        }
+            let html = '';
+            phaseList.forEach(key => {
+                const p = phaseData[key];
+                
+                let mediaCards = '';
+                p.items.forEach((item, idx) => {
+                    const isGif = item.type === 'gif';
+                    mediaCards += `
+                        <div onclick="openLightbox('${key}', ${idx})" class="figure-card group" title="Click to inspect high-resolution visual">
+                            <div class="figure-media-box">
+                                <img src="${item.url}" alt="${item.label}" loading="lazy">
+                                <span class="absolute top-3 left-3 px-2 py-0.5 ${isGif ? 'bg-[#991B5B] text-white' : 'bg-[#1B130E]/85 text-white'} text-[10px] font-mono font-bold uppercase tracking-wider rounded shadow-xs">
+                                    ${isGif ? 'Video Demo (GIF)' : `Fig. ${p.numId}.${idx + 1}`}
+                                </span>
+                            </div>
+                            <div class="figure-caption-box">
+                                <h4 class="text-xs sm:text-sm font-bold text-espresso group-hover:text-[#991B5B] transition-colors leading-snug">
+                                    ${item.label}
+                                </h4>
+                                <p class="text-[11px] text-taupe leading-relaxed font-normal">
+                                    ${item.caption || p.subtitle}
+                                </p>
+                                <span class="text-[10px] text-umber font-semibold mt-1 flex items-center gap-1 group-hover:text-espresso transition-colors">
+                                    Inspect High-Resolution &rarr;
+                                </span>
+                            </div>
+                        </div>
+                    `;
+                });
 
-        function updateGalleryDisplay() {
-            const data = phaseData[currentGalleryPhase];
-            if (!data.multimedia) return;
+                html += `
+                    <article class="editorial-card p-5 sm:p-7 md:p-8 text-left" id="phase-${key}">
+                        <div class="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-borderSepia pb-3.5 mb-4 gap-1.5">
+                            <div>
+                                <span class="text-xs uppercase tracking-wider text-[#991B5B] font-bold block mb-0.5">${p.number}</span>
+                                <h3 class="text-lg sm:text-xl md:text-2xl text-espresso font-bold tracking-tight">${p.title}</h3>
+                            </div>
+                            <span class="text-xs text-umber font-semibold">${p.subtitle}</span>
+                        </div>
 
-            const items = currentGalleryType === 'videos' ? data.multimedia.videos : data.multimedia.photos;
-            const currentItem = items[currentGalleryIndex];
-            const galleryContent = document.getElementById('gallery-content');
-            const isVideo = currentGalleryType === 'videos';
+                        <p class="text-taupe text-xs sm:text-sm font-normal leading-relaxed mb-4 max-w-4xl">${p.desc}</p>
 
-            // Stop any currently playing video before updating
-            const oldVideo = galleryContent.querySelector('video');
-            if (oldVideo) {
-                oldVideo.pause();
-                oldVideo.currentTime = 0;
-            }
+                        <!-- Tag Pills -->
+                        <div class="flex flex-wrap gap-1.5 mb-6">
+                            ${p.tags.map(t => `<span class="px-2 py-0.5 bg-paper border border-borderSepia rounded text-taupe text-[11px] font-semibold">${t}</span>`).join('')}
+                        </div>
 
-            galleryContent.innerHTML = `
-                <button onclick="closeGallery()" class="absolute top-4 right-4 z-10 p-3 bg-black/70 text-white rounded-full hover:bg-black transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-                </button>
-
-                <div class="w-full h-full flex items-center justify-center bg-black">
-                    ${isVideo ? `
-                        <video class="max-w-full max-h-full" id="gallery-video" controls autoplay>
-                            <source src="${currentItem}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    ` : `
-                        <img src="${currentItem}" class="max-w-full max-h-full object-contain">
-                    `}
-                </div>
-
-                <button onclick="previousGalleryItem()" class="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 bg-black/70 text-white rounded-full hover:bg-black transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-                </button>
-                <button onclick="nextGalleryItem()" class="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 bg-black/70 text-white rounded-full hover:bg-black transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                </button>
-
-                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-full text-sm">
-                    ${currentGalleryIndex + 1} / ${items.length}
-                </div>
-            `;
-        }
-
-        function nextGalleryItem() {
-            const data = phaseData[currentGalleryPhase];
-            const items = currentGalleryType === 'videos' ? data.multimedia.videos : data.multimedia.photos;
-            currentGalleryIndex = (currentGalleryIndex + 1) % items.length;
-            updateGalleryDisplay();
-        }
-
-        function previousGalleryItem() {
-            const data = phaseData[currentGalleryPhase];
-            const items = currentGalleryType === 'videos' ? data.multimedia.videos : data.multimedia.photos;
-            currentGalleryIndex = (currentGalleryIndex - 1 + items.length) % items.length;
-            updateGalleryDisplay();
-        }
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            const galleryOverlay = document.getElementById('gallery-overlay');
-            if (galleryOverlay && !galleryOverlay.contains(e.target)) {
-                // Handle any other click logic if needed
-            }
-        });
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            const galleryOverlay = document.getElementById('gallery-overlay');
-            if (galleryOverlay && galleryOverlay.classList.contains('flex')) {
-                if (e.key === 'ArrowRight') nextGalleryItem();
-                if (e.key === 'ArrowLeft') previousGalleryItem();
-                if (e.key === 'Escape') closeGallery();
-            }
-        });
-
-        // Slideshow Function
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const totalSlides = slides.length;
-        
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.remove('active');
-                if (i === index) {
-                    slide.classList.add('active');
-                }
+                        <!-- Media Grid (Spacious 3-Column Academic Figure Cards) -->
+                        <div>
+                            <div class="flex items-center justify-between mb-3.5">
+                                <span class="text-xs uppercase tracking-wider text-umber font-bold">Engineering Figures &amp; Field Demonstrations</span>
+                                <span class="text-xs text-umber">Click any figure to inspect</span>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                                ${mediaCards}
+                            </div>
+                        </div>
+                    </article>
+                `;
             });
-        }
-        
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            showSlide(currentSlide);
-        }
-        
-        function startSlideshow() {
-            // Change slide every 5 seconds
-            setInterval(nextSlide, 5000);
-        }
-        
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            renderPhases();
-            startSlideshow();
-        });
-        if (document.readyState !== 'loading') {
-            renderPhases();
-            startSlideshow();
+
+            container.innerHTML = html;
         }
 
-        // PDF Download Function
+        // Lightbox Handler with Multiple Exit Buttons & Keyboard Navigation
+        let activeKey = '';
+        let activeIdx = 0;
+
+        function openLightbox(key, idx) {
+            activeKey = key;
+            activeIdx = idx;
+            renderLightbox();
+            const overlay = document.getElementById('gallery-overlay');
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const overlay = document.getElementById('gallery-overlay');
+            const content = document.getElementById('gallery-content');
+            content.innerHTML = '';
+            overlay.classList.add('hidden');
+            overlay.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        function handleBackdropClick(event) {
+            if (event.target.id === 'gallery-overlay') {
+                closeLightbox();
+            }
+        }
+
+        function renderLightbox() {
+            const data = phaseData[activeKey];
+            const item = data.items[activeIdx];
+            const content = document.getElementById('gallery-content');
+
+            content.innerHTML = `
+                <!-- Media Content Wrapper -->
+                <div class="max-w-4xl max-h-[72vh] flex items-center justify-center my-auto w-full">
+                    <img src="${item.url}" alt="${item.label}" class="max-w-full max-h-[70vh] object-contain rounded-lg border border-white/20 shadow-2xl">
+                </div>
+
+                <!-- Caption and Exit Button (No count displayed) -->
+                <div class="mt-3 text-center text-white w-full">
+                    <h4 class="text-base sm:text-lg font-bold text-white tracking-tight">${item.label}</h4>
+                    <p class="text-xs text-white/70 font-semibold tracking-wider uppercase mt-0.5 mb-2.5">${data.title} &bull; ${item.type === 'gif' ? 'Demonstration Animation' : 'Technical Figure'}</p>
+                    
+                    <div class="flex items-center justify-center gap-3">
+                        <button onclick="closeLightbox()" class="px-5 py-2 rounded-lg bg-white/10 hover:bg-[#991B5B] text-white border border-white/25 text-xs font-bold uppercase tracking-wider transition-all shadow-md">
+                            ✕ Close &amp; Return [Esc]
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Navigation Arrows -->
+                ${data.items.length > 1 ? `
+                    <button onclick="prevLightbox()" aria-label="Previous" class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-3 text-white/80 hover:text-white text-2xl font-bold bg-black/40 hover:bg-black/70 rounded-full transition-colors">
+                        &#8592;
+                    </button>
+                    <button onclick="nextLightbox()" aria-label="Next" class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-3 text-white/80 hover:text-white text-2xl font-bold bg-black/40 hover:bg-black/70 rounded-full transition-colors">
+                        &#8594;
+                    </button>
+                ` : ''}
+        }
+
+        function nextLightbox() {
+            const list = phaseData[activeKey].items;
+            activeIdx = (activeIdx + 1) % list.length;
+            renderLightbox();
+        }
+
+        function prevLightbox() {
+            const list = phaseData[activeKey].items;
+            activeIdx = (activeIdx - 1 + list.length) % list.length;
+            renderLightbox();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            const overlay = document.getElementById('gallery-overlay');
+            if (overlay && overlay.classList.contains('flex')) {
+                if (e.key === 'ArrowRight') nextLightbox();
+                if (e.key === 'ArrowLeft') prevLightbox();
+                if (e.key === 'Escape') closeLightbox();
+            }
+        });
+
+        // PDF Generation
         async function downloadWhitepaper() {
-            const button = event.target;
-            const originalText = button.textContent;
-            button.textContent = 'Generating PDF...';
-            button.disabled = true;
+            const btn = event?.target;
+            const original = btn ? btn.textContent : '';
+            if (btn) btn.textContent = 'Generating PDF...';
 
             try {
-                // Fetch README.md
-                const response = await fetch('README.md');
-                const markdownContent = await response.text();
-
-                // Convert markdown to HTML
-                const htmlContent = markdownToHTML(markdownContent);
-
-                // Create a temporary element for PDF generation
+                const res = await fetch('README.md');
+                const md = await res.text();
+                
                 const element = document.createElement('div');
-                element.innerHTML = htmlContent;
-                element.style.padding = '20px';
-                element.style.fontFamily = "'Inter', sans-serif";
-                element.style.lineHeight = '1.6';
-                element.style.color = '#1f2937';
-                element.style.backgroundColor = '#fff';
+                element.innerHTML = `
+                    <div style="font-family: 'Plus Jakarta Sans', sans-serif; padding: 25px; color: #1B130E; line-height: 1.6;">
+                        <h1 style="font-size: 20pt; font-weight: 800; margin-bottom: 8px;">UAV Swarm for Autonomous Disaster Assessment</h1>
+                        <p style="font-size: 11pt; color: #991B5B; margin-bottom: 24px; font-weight: 600;">Based on: A Dual-MCU Flight Controller Architecture for Onboard Edge AI and UAV Swarming Applications</p>
+                        <hr style="border: none; border-top: 1px solid #E5DED6; margin-bottom: 20px;">
+                        <div style="font-size: 10pt; line-height: 1.6;">
+                            ${md.replace(/# (.*?)\n/g, '<h2 style="font-size: 14pt; margin-top: 16px; font-weight: 700; color: #1B130E;">$1</h2>')
+                               .replace(/## (.*?)\n/g, '<h3 style="font-size: 12pt; margin-top: 12px; font-weight: 600; color: #3D2F27;">$1</h3>')
+                               .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                               .replace(/\n\n/g, '<p style="margin-bottom: 12px;"></p>')}
+                        </div>
+                    </div>
+                `;
 
-                // PDF options
-                const options = {
+                const opt = {
                     margin: 10,
-                    filename: 'Custom_Drone_Platform_Whitepaper.pdf',
+                    filename: 'UAV_Swarm_Autonomous_Disaster_Assessment.pdf',
                     image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2, useCORS: true },
-                    jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
                 };
 
-                // Generate PDF
-                await html2pdf().set(options).from(element).save();
-
-                button.textContent = originalText;
-                button.disabled = false;
-            } catch (error) {
-                console.error('Error generating PDF:', error);
-                button.textContent = 'Download Failed';
-                button.disabled = false;
-                setTimeout(() => {
-                    button.textContent = originalText;
-                    button.disabled = false;
-                }, 2000);
+                await html2pdf().set(opt).from(element).save();
+                if (btn) btn.textContent = original;
+            } catch (err) {
+                console.error("PDF generation failed:", err);
+                if (btn) {
+                    btn.textContent = 'Download Failed';
+                    setTimeout(() => { btn.textContent = original; }, 2000);
+                }
             }
         }
 
-        // Convert Markdown to HTML
-        function markdownToHTML(markdown) {
-            let html = markdown;
-
-            // Headers
-            html = html.replace(/^### (.*?)$/gm, '<h3 style="font-size: 1.5em; font-weight: bold; margin-top: 1.5em; margin-bottom: 0.5em; color: #000;">$1</h3>');
-            html = html.replace(/^## (.*?)$/gm, '<h2 style="font-size: 1.875em; font-weight: bold; margin-top: 1.5em; margin-bottom: 0.5em; color: #000;">$1</h2>');
-            html = html.replace(/^# (.*?)$/gm, '<h1 style="font-size: 2.25em; font-weight: bold; margin-top: 1em; margin-bottom: 0.5em; color: #000;">$1</h1>');
-
-            // Bold and italic
-            html = html.replace(/\*\*(.*?)\*\*/g, '<strong style="font-weight: bold;">$1</strong>');
-            html = html.replace(/\*(.*?)\*/g, '<em style="font-style: italic;">$1</em>');
-
-            // Lists
-            html = html.replace(/^\* (.*?)$/gm, '<li style="margin-left: 1.5em; margin-bottom: 0.3em;">$1</li>');
-            html = html.replace(/^\✓ (.*?)$/gm, '<li style="margin-left: 1.5em; margin-bottom: 0.3em;">✓ $1</li>');
-            html = html.replace(/^✓ (.*?)$/gm, '<li style="margin-left: 1.5em; margin-bottom: 0.3em;">✓ $1</li>');
-            html = html.replace(/(<li.*?<\/li>)/s, '<ul style="list-style: none;">$1</ul>');
-
-            // Links
-            html = html.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" style="color: #06b6d4; text-decoration: underline;">$1</a>');
-
-            // Code blocks
-            html = html.replace(/```([\s\S]*?)```/g, '<pre style="background: #f3f4f6; padding: 1em; border-radius: 0.5em; overflow-x: auto; margin: 1em 0;"><code style="font-family: monospace;">$1</code></pre>');
-
-            // Inline code
-            html = html.replace(/`(.*?)`/g, '<code style="background: #f3f4f6; padding: 0.2em 0.4em; border-radius: 0.3em; font-family: monospace; color: #d97706;">$1</code>');
-
-            // Horizontal rules
-            html = html.replace(/^---$/gm, '<hr style="margin: 2em 0; border: none; border-top: 1px solid #e5e7eb;">');
-
-            // Tables
-            html = html.replace(/^\| (.*?) \|$/gm, (match) => {
-                const cells = match.split('|').filter(c => c.trim()).map(c => c.trim());
-                return '<tr style="border-bottom: 1px solid #d1d5db;"><td style="padding: 0.75em; border-right: 1px solid #e5e7eb;">' + cells.join('</td><td style="padding: 0.75em; border-right: 1px solid #e5e7eb;">') + '</td></tr>';
-            });
-
-            // Paragraphs
-            html = html.split('\n\n').map(para => {
-                if (!para.match(/^(<[^>]+>|---|\||```)/)) {
-                    return '<p style="margin-bottom: 1em; line-height: 1.6;">' + para + '</p>';
-                }
-                return para;
-            }).join('');
-
-            // Wrap tables
-            html = html.replace(/(<tr.*?<\/tr>)/s, '<table style="width: 100%; border-collapse: collapse; margin: 1em 0;">$1</table>');
-
-            return html;
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTheme();
+            initHeroSlideshow();
+            renderPhases();
+        });
+        if (document.readyState !== 'loading') {
+            loadTheme();
+            initHeroSlideshow();
+            renderPhases();
         }
     </script>
 </body>
